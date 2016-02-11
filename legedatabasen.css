@@ -1,0 +1,14 @@
+
+body {
+    background-color: #aaaaaa;
+}
+
+.swiper-container {
+    width: 600px;
+    height: 300px;
+}
+
+.modal-backdrop.in {
+    opacity: 1.0;
+    background-color: #eeeeee;
+}
