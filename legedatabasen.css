@@ -12,3 +12,8 @@ body {
     opacity: 1.0;
     background-color: #eeeeee;
 }
+
+.score {
+    color: #888888;
+    font-size: 0.6em;
+}

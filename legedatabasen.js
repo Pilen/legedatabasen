@@ -38,7 +38,7 @@ function prepare_categories() {
 
 function insert_buttons(lege) {
     $("#lege").append(lege.map(function(leg) {
-        leg.node = $('<li role="presentation"><a href="#'+leg.url+'">'+leg.name+'</a></li>');
+        leg.node = $('<li role="presentation"><a href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></li>');
         return leg.node;
     }));
 }
@@ -92,6 +92,7 @@ function filter() {
 
     $("#lege").children().detach();
     $("#lege").append(lege.map(function(leg) {
+        leg.node.find(".score").text(leg.score);
         leg.node.show();
         return leg.node;
     }));
