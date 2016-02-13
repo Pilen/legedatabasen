@@ -16,9 +16,9 @@ function prepare_categories() {
     var category_map = {};
     categories.map(function(category) {
         var name = category
-                .name
-                .toLowerCase()
-                .replace(/lege?/g, "");
+            .name
+            .toLowerCase()
+            .replace(/lege?/g, "");
         category_map[name] = category;
     });
     lege.map(function(leg) {
@@ -61,8 +61,9 @@ function filter() {
     $("#lege").children().hide();
 
     // $("#lege").children().fadeOut(0, function() {
-        var lege = current_category.entries.filter(function(leg) {
-            leg.score = 0;
+    var lege = current_category.entries.filter(function(leg) {
+        leg.score = 0;
+        if (current_search) {
             if (leg.name.indexOf(current_search) != -1) {
                 leg.score += 1000
             }
@@ -74,17 +75,19 @@ function filter() {
             if (leg.description.indexOf(current_search) != -1) {
                 leg.score += 1;
             }
-
             return leg.score > 0;
-        });
-        lege.sort(function(a, b) {
-            var value = b.score - a.score; // Sort decending
-            return value || a.name.localeCompare(b.name);
-        });
-        // l = lege;
+        } else {
+            return true;
+        }
+    });
+    lege.sort(function(a, b) {
+        var value = b.score - a.score; // Sort decending
+        return value || a.name.localeCompare(b.name);
+    });
+    // l = lege;
 
-        // $("#lege").empty();
-        // insert_buttons(lege);
+    // $("#lege").empty();
+    // insert_buttons(lege);
     // });
 
     $("#lege").children().detach();
