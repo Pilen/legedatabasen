@@ -9,6 +9,9 @@ var categories = [{name:"Alle", entries:[]},
 var category_swiper;
 var unknown_categories = [];
 var lege_map = {};
+var current_category;
+var current_search;
+
 function prepare_categories() {
     var category_map = {};
     categories.map(function(category) {
@@ -19,9 +22,9 @@ function prepare_categories() {
         category_map[name] = category;
     });
     lege.map(function(leg) {
+        category_map["alle"].entries.push(leg);
         leg.tags.map(function(tag) {
             tag = tag.toLowerCase().replace(/lege?/g, "");
-            category_map["alle"].entries.push(leg);
             if (!category_map[tag]) {
                 unknown_categories.push(tag);
             } else {
@@ -33,10 +36,10 @@ function prepare_categories() {
     console.log(unknown_categories.length + " unknown categories in `unknown_categories'");
 }
 
-function insert_buttons() {
-
+function insert_buttons(lege) {
     $("#lege").append(lege.map(function(leg) {
-        return '<li role="presentation"><a href="#'+leg.url+'">'+leg.name+'</a></li>';
+        leg.node = $('<li role="presentation"><a href="#'+leg.url+'">'+leg.name+'</a></li>');
+        return leg.node;
     }));
 }
 
@@ -53,6 +56,58 @@ function show_leg() {
     }
 }
 
+function filter() {
+    console.log(".");
+    $("#lege").children().hide();
+
+    // $("#lege").children().fadeOut(0, function() {
+        var lege = current_category.entries.filter(function(leg) {
+            leg.score = 0;
+            if (leg.name.indexOf(current_search) != -1) {
+                leg.score += 1000
+            }
+            leg.tags.map(function(tag) {
+                if (tag.indexOf(current_search) != -1) {
+                    leg.score += 100;
+                }
+            });
+            if (leg.description.indexOf(current_search) != -1) {
+                leg.score += 1;
+            }
+
+            return leg.score > 0;
+        });
+        lege.sort(function(a, b) {
+            var value = b.score - a.score; // Sort decending
+            return value || a.name.localeCompare(b.name);
+        });
+        // l = lege;
+
+        // $("#lege").empty();
+        // insert_buttons(lege);
+    // });
+
+    $("#lege").children().detach();
+    $("#lege").append(lege.map(function(leg) {
+        leg.node.show();
+        return leg.node;
+    }));
+}
+
+
+function swipe(swiper) {
+    var index = parseInt(swiper.slides[swiper.activeIndex].getAttribute("data-swiper-slide-index"));
+    var lege = categories[index].entries;
+    current_category = categories[index];
+    filter();
+
+}
+
+function search_update(event) {
+    var search_text = $("#search-box")[0].value;
+    current_search = search_text;
+    filter();
+}
 
 function init() {
     prepare_categories();
@@ -76,12 +131,14 @@ function init() {
         grabCursor: true,
         keyboardControl: true
     });
-
+    category_swiper.on("slideChangeEnd", swipe);
 
     $(".modal").on("hidden.bs.modal", function() {
         window.location.hash = "";
     });
-    insert_buttons();
+    $("#search-box").on("input", search_update);
+    current_category = categories[0];
+    insert_buttons(lege);
     show_leg();
     console.log("Ready");
 }
