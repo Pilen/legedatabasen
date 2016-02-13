@@ -113,6 +113,12 @@ function search_update(event) {
     filter();
 }
 
+function clear_search() {
+    $("#search-box")[0].value = "";
+    current_search = "";
+    filter();
+}
+
 function init() {
     prepare_categories();
 
@@ -141,6 +147,7 @@ function init() {
         window.location.hash = "";
     });
     $("#search-box").on("input", search_update);
+    $("#clear-search").on("click", clear_search);
     current_category = categories[0];
     insert_buttons(lege);
     show_leg();
