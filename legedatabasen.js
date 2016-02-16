@@ -255,11 +255,23 @@ function SearchIndex() {
                 querys.map(function(q) {
                     var trie = item.tries[i];
                     var node = trie_lookup(trie, q);
+                    console.log("\n\n",item.document, node);
                     var percentage = overlap(node.word, q);
-                    field_score += percentage * node.words;
-                    field_score += percentage * node.prefix * 0.5;
+                    // percentage = 1;
+                    // var percentage = percentage*percentage;
+                    var a = percentage * (node.words?1:0);
+                    var b = percentage * (node.prefix?1:0) * 0.9;
+                    var c = percentage * (node.substring?1:0) * 0.8
+                    // field_score += percentage * (node.words?1:0);
+                    // field_score += percentage * (node.prefix?0.1:0) * 0.9;// * 0.5;
+                    // field_score += percentage * (node.substring?1:0) * 0.8;// * 0.25;
+                    field_score += a + b + c;
                     // field_score += percentage;
-                    // console.log(node.word+"::   "+"p:"+percentage+" * w:"+node.words+" = "+percentage*node.words+"\t s:"+node.prefix+", ps.:"+percentage*node.prefix*0.5);
+                    // console.log(node.word+"::   "+"p:"+percentage+" * w:"+node.words+" = "+percentage*node.words+"\t s:"+node.prefix+", ps.:"+percentage*node.prefix);
+                    console.log(node.word+"::   "+
+                                percentage+"*"+node.words+"w = "+a+"\t "+
+                                percentage+"*"+node.prefix+"p = "+b+"\t "+
+                                percentage+"*"+node.substring+"s = "+c);
                 });
                 score += field_score * this._fields[i].weight;
             }
@@ -289,28 +301,38 @@ var tokenize = function(text) {
     return text;
 };
 
-  var make_trie = function(tokens) {
+var make_trie = function(tokens) {
     var trie = {word: "",
                 children: {},
                 words: 0,
-                prefix: 0};
+                prefix: 0,
+                substring: 0};
 
     tokens.map(function(token) {
-        var node = trie;
-        for (var i = 0; i < token.length; i++) {
-            var new_node = node.children[token[i]]
-            if (!new_node) {
-                new_node = {word: node.word + token[i],
-                            children: {},
-                            words: 0,
-                            prefix: 0};
-                node.children[token[i]] = new_node;
+        for (var j = 0; j < token.length; j++) {
+            var node = trie;
+            for (var i = j; i < token.length; i++) {
+                var new_node = node.children[token[i]]
+                if (!new_node) {
+                    new_node = {word: node.word + token[i],
+                                children: {},
+                                words: 0,
+                                prefix: 0,
+                                substring: 0};
+                    node.children[token[i]] = new_node;
+                }
+                if (j == 0) {
+                    if (i == (token.length - 1)) {
+                        new_node.words+=1;
+                    } else {
+                        new_node.prefix += (i+1) / token.length;
+                    }
+                } else {
+                    new_node.substring += (i - j + 1) / token.length;
+                }
+                node = new_node;
             }
-            new_node.prefix += (i+1)/(token.length/2);
-            node = new_node;
         }
-        node.words+=1;
-        node.prefix--;
     });
     return trie;
 }
@@ -343,16 +365,19 @@ var overlap = function(w1, w2) {
 
 
 function id(x){return x;};
-// s = new SearchIndex()
-//     .add_field(id)
-//     .id_function(id)
-//     .add("abc")
-//     .add("abb")
-//     .add("abekat")
-//     .add("ablele")
-//     .add("abe")
-//     .add("abc abb abekat ablele abe")
-//     .compile();
+s = new SearchIndex()
+    .add_field(id)
+    .id_function(id)
+    .add("abc")
+    .add("abb")
+    .add("abekat")
+    .add("ablele")
+    .add("abe")
+    .add("abc abb abekat ablele abe")
+    .add("væbner")
+    .add("senior")
+    .add("seniorvæbner")
+    .compile();
 
 
-t = make_trie(["abc", "abb", "abekat", "abelle"]);
+// t = make_trie(["abc", "abb", "abekat", "abelle"]);
