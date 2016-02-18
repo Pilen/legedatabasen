@@ -129,7 +129,7 @@ function init() {
 
     search = new SearchIndex()
         .add_field("description")
-        .add_field("name", 10)
+        .add_field("name", 2)
         .id_function("url")
         .add(lege)
         .compile();
@@ -170,13 +170,19 @@ $(window).on("hashchange", show_leg);
 $(document).ready(init);
 
 
-function SearchIndex() {
+function SearchIndex(options) {
     this._documents = [];
     this._items = {};
     this._fields = [];
     this._get_id = function(document) {return document.id;};
     this._compiled = false;
 
+    options = options || {};
+    var _overlap_power = options.overlap_power || 10;
+    var _length_power = options.length_power || 10;
+    var _word_weight = options.word_length || 1.0;
+    var _prefix_weight = options.prefix_weight || 0.99;
+    var _substring_weight = options.substring_weight || 0.98;
 
 
     this.add_field = function(field, weight) {
@@ -255,24 +261,26 @@ function SearchIndex() {
                 querys.map(function(q) {
                     var trie = item.tries[i];
                     var node = trie_lookup(trie, q);
-                    console.log("\n\n",item.document, node);
+                    // console.log("\n\n",item.document, node);
                     var percentage = overlap(node.word, q);
                     // percentage = 1;
-                    // var percentage = percentage*percentage;
-                    var a = percentage * (node.words?1:0);
-                    var b = percentage * (node.prefix?1:0) * 0.9;
-                    var c = percentage * (node.substring?1:0) * 0.8
+                    // Squaring as an aproximation of normalization across frequencies (TF-IDF)
+                    var percentage = Math.pow(percentage, _overlap_power);
+                    var length = Math.pow(q.length, _length_power);
+                    var a = percentage * length * (node.words?1:0) * node.words * _word_weight;
+                    var b = percentage * length * (node.prefix?1:0) * node.prefix * _prefix_weight;
+                    var c = percentage * length * (node.substring?1:0) * node.substring * _substring_weight;
                     // field_score += percentage * (node.words?1:0);
                     // field_score += percentage * (node.prefix?0.1:0) * 0.9;// * 0.5;
                     // field_score += percentage * (node.substring?1:0) * 0.8;// * 0.25;
                     field_score += a + b + c;
                     // field_score += percentage;
                     // console.log(node.word+"::   "+"p:"+percentage+" * w:"+node.words+" = "+percentage*node.words+"\t s:"+node.prefix+", ps.:"+percentage*node.prefix);
-                    console.log(node.word+"::   "+
-                                percentage+"*"+node.words+"w = "+a+"\t "+
-                                percentage+"*"+node.prefix+"p = "+b+"\t "+
-                                percentage+"*"+node.substring+"s = "+c);
+                    // console.log(node.word+"::   "+ percentage+"*"+node.words+"w = "+a+"\t "+ percentage+"*"+node.prefix+"p = "+b+"\t "+ percentage+"*"+node.substring+"s = "+c);
+                    // console.log(document.url, node)
+                    // console.log(node.word+"::   "+percentage+"%\t a:"+a+"\t b:"+b+"\t c:"+c+" = "+(a+b+c));
                 });
+                // console.log(field_score, this._fields[i].weight);
                 score += field_score * this._fields[i].weight;
             }
             return {id:id, document:item.document, score: score};
@@ -359,25 +367,32 @@ var overlap = function(w1, w2) {
         }
     }
     return (i * 2) / (length1 + length2);
+    // return i;
 }
+
 
 // }
 
 
 function id(x){return x;};
-s = new SearchIndex()
-    .add_field(id)
-    .id_function(id)
-    .add("abc")
-    .add("abb")
-    .add("abekat")
-    .add("ablele")
-    .add("abe")
-    .add("abc abb abekat ablele abe")
-    .add("væbner")
-    .add("senior")
-    .add("seniorvæbner")
-    .compile();
-
+// s = new SearchIndex()
+//     .add_field(id)
+//     .id_function(id)
+//     .add("abc")
+//     .add("abb")
+//     .add("abekat")
+//     .add("ablele")
+//     .add("abe")
+//     .add("abc abb abekat ablele abe")
+//     .add("væbner")
+//     .add("senior")
+//     .add("seniorvæbner")
+//     .compile();
 
 // t = make_trie(["abc", "abb", "abekat", "abelle"]);
+
+s = new SearchIndex()
+    .add_field(id, 1)
+    .id_function(id)
+    .add([lege.map(function(x){return x.description;}).join(" ")])
+    .compile();
