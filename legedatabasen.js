@@ -170,12 +170,21 @@ $(window).on("hashchange", show_leg);
 $(document).ready(init);
 
 
+
+
+
+
+
+
+
+
+
 function SearchIndex(options) {
     this._documents = [];
-    this._items = {};
     this._fields = [];
     this._get_id = function(document) {return document.id;};
     this._compiled = false;
+    this._trie = trie_create();
 
     options = options || {};
     var _overlap_power = options.overlap_power || 10;
@@ -221,15 +230,12 @@ function SearchIndex(options) {
         if (this._compiled) {throw Error("SearchIndex already this._compiled");}
         this._compiled = true;
         this._documents.map(function(document) {
-            var tries = this._fields.map(function(field) {
-                var data = field.get(document);
-                var trie = make_trie(tokenize(data));
-                return trie;
-            });
             var id = this._get_id(document);
             if (typeof id === "undefined") {throw Error("SearchIndex encountered an undefined id");}
-            var item = {document: document, tries: tries};
-            this._items[id] = item;
+            this._fields.map(function(field) {
+                var data = field.get(document);
+                trie_insert(this._trie, tokenize(data), id, field.weight);
+            }, this);
         }, this);
         return this;
     };
@@ -245,8 +251,7 @@ function SearchIndex(options) {
         if (!querys || !querys[0]) {
             return documents.map(function(document) {
                 var id = this._get_id(document);
-                var item = this._items[id]; // This might actually be unneeded
-                return {document: item.document,
+                return {document: document,
                         id: id,
                         score: 0};
             }, this);
@@ -254,36 +259,26 @@ function SearchIndex(options) {
 
         var result = documents.map(function(document) {
             var id = this._get_id(document);
-            var item = this._items[id];
             var score = 0;
-            for (var i = 0; i < this._fields.length; i++) {
-                var field_score = 0;
-                querys.map(function(q) {
-                    var trie = item.tries[i];
-                    var node = trie_lookup(trie, q);
-                    // console.log("\n\n",item.document, node);
-                    var percentage = overlap(node.word, q);
-                    // percentage = 1;
-                    // Squaring as an aproximation of normalization across frequencies (TF-IDF)
-                    var percentage = Math.pow(percentage, _overlap_power);
-                    var length = Math.pow(q.length, _length_power);
-                    var a = percentage * length * (node.words?1:0) * node.words * _word_weight;
-                    var b = percentage * length * (node.prefix?1:0) * node.prefix * _prefix_weight;
-                    var c = percentage * length * (node.substring?1:0) * node.substring * _substring_weight;
-                    // field_score += percentage * (node.words?1:0);
-                    // field_score += percentage * (node.prefix?0.1:0) * 0.9;// * 0.5;
-                    // field_score += percentage * (node.substring?1:0) * 0.8;// * 0.25;
-                    field_score += a + b + c;
-                    // field_score += percentage;
-                    // console.log(node.word+"::   "+"p:"+percentage+" * w:"+node.words+" = "+percentage*node.words+"\t s:"+node.prefix+", ps.:"+percentage*node.prefix);
-                    // console.log(node.word+"::   "+ percentage+"*"+node.words+"w = "+a+"\t "+ percentage+"*"+node.prefix+"p = "+b+"\t "+ percentage+"*"+node.substring+"s = "+c);
-                    // console.log(document.url, node)
-                    // console.log(node.word+"::   "+percentage+"%\t a:"+a+"\t b:"+b+"\t c:"+c+" = "+(a+b+c));
-                });
-                // console.log(field_score, this._fields[i].weight);
-                score += field_score * this._fields[i].weight;
-            }
-            return {id:id, document:item.document, score: score};
+            querys.map(function(q) {
+                var node = trie_lookup(this._trie, q, id);
+                var percentage = (node.depth * 2) / (node.depth + q.length);
+                // var percentage = overlap(node.word, q);
+                // percentage = 1;
+                // Squaring as an aproximation of normalization across frequencies (TF-IDF)
+                percentage = Math.pow(percentage, _overlap_power);
+                var length = Math.pow(node.depth, _length_power);
+                var a = percentage * length * (node.score.words?1:0) * node.score.words * _word_weight;
+                var b = percentage * length * (node.score.prefix?1:0) * node.score.prefix * _prefix_weight;
+                var c = percentage * length * (node.score.substring?1:0) * node.score.substring * _substring_weight;
+                score += a + b + c;
+                // field_score += percentage;
+                // console.log(node.word+"::   "+"p:"+percentage+" * w:"+node.words+" = "+percentage*node.words+"\t s:"+node.prefix+", ps.:"+percentage*node.prefix);
+                // console.log(node.word+"::   "+ percentage+"*"+node.words+"w = "+a+"\t "+ percentage+"*"+node.prefix+"p = "+b+"\t "+ percentage+"*"+node.substring+"s = "+c);
+                // console.log(document.url, node)
+                // console.log(node.word+"::   "+percentage+"%\t a:"+a+"\t b:"+b+"\t c:"+c+" = "+(a+b+c));
+            }, this);
+            return {id:id, document:document, score: score};
         }, this);
 
         result.sort(function(a, b) {return b.score - a.score;});
@@ -309,34 +304,42 @@ var tokenize = function(text) {
     return text;
 };
 
-var make_trie = function(tokens) {
-    var trie = {word: "",
-                children: {},
-                words: 0,
-                prefix: 0,
-                substring: 0};
+// var trie = {children: {},
+            // scores: {}};
+            // words: 0,
+            // prefix: 0,
+            // substring: 0};
 
+var trie_create = function() {
+    return {children: {},
+            scores: {}};
+}
+
+var trie_insert = function(trie, tokens, id, weight) {
+    trie.scores[id] = {words: 0, prefix:0, substring:0};
     tokens.map(function(token) {
         for (var j = 0; j < token.length; j++) {
             var node = trie;
             for (var i = j; i < token.length; i++) {
                 var new_node = node.children[token[i]]
                 if (!new_node) {
-                    new_node = {word: node.word + token[i],
-                                children: {},
-                                words: 0,
-                                prefix: 0,
-                                substring: 0};
+                    new_node = {children: {},
+                                scores: {}};
                     node.children[token[i]] = new_node;
+                }
+                var score = new_node.scores[id];
+                if (!score) {
+                    score = {words: 0, prefix:0, substring:0};
+                    new_node.scores[id] = score;
                 }
                 if (j == 0) {
                     if (i == (token.length - 1)) {
-                        new_node.words+=1;
+                        score.words+=1 * weight;
                     } else {
-                        new_node.prefix += (i+1) / token.length;
+                        score.prefix += ((i+1) / token.length) * weight;
                     }
                 } else {
-                    new_node.substring += (i - j + 1) / token.length;
+                    score.substring += ((i - j + 1) / token.length) * weight;
                 }
                 node = new_node;
             }
@@ -345,16 +348,16 @@ var make_trie = function(tokens) {
     return trie;
 }
 
-var trie_lookup = function(trie, token) {
+var trie_lookup = function(trie, token, id) {
     var node = trie;
     for (var i = 0; i < token.length; i++) {
         var next = node.children[token[i]];
-        if (!next) {
-            return node;
+        if (!next || typeof next.scores[id] === "undefined") {
+            break;
         }
         node = next;
     }
-    return node;
+    return {score:node.scores[id], depth:i};
 }
 
 var overlap = function(w1, w2) {
@@ -375,24 +378,24 @@ var overlap = function(w1, w2) {
 
 
 function id(x){return x;};
-// s = new SearchIndex()
-//     .add_field(id)
-//     .id_function(id)
-//     .add("abc")
-//     .add("abb")
-//     .add("abekat")
-//     .add("ablele")
-//     .add("abe")
-//     .add("abc abb abekat ablele abe")
-//     .add("væbner")
-//     .add("senior")
-//     .add("seniorvæbner")
-//     .compile();
+s = new SearchIndex()
+    .add_field(id)
+    .id_function(id)
+    .add("abc")
+    .add("abb")
+    .add("abekat")
+    .add("ablele")
+    .add("abe")
+    .add("abc abb abekat ablele abe")
+    .add("væbner")
+    .add("senior")
+    .add("seniorvæbner")
+    .compile();
 
 // t = make_trie(["abc", "abb", "abekat", "abelle"]);
 
-s = new SearchIndex()
-    .add_field(id, 1)
-    .id_function(id)
-    .add([lege.map(function(x){return x.description;}).join(" ")])
-    .compile();
+// s = new SearchIndex()
+//     .add_field(id, 1)
+//     .id_function(id)
+//     .add([lege.map(function(x){return x.description;}).join(" ")])
+//     .compile();
