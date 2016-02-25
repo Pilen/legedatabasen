@@ -4,13 +4,19 @@ function SearchIndex(options) {
     this._get_id = function(document) {return document.id;};
     this._compiled = false;
     this._trie = new trie();
+    this._document_length = {};
+    this._avg_document_length = 0;
 
     options = options || {};
-    var _overlap_power = options.overlap_power || 10;
-    var _length_power = options.length_power || 10;
-    var _word_weight = options.word_weight || 1.0;
-    var _prefix_weight = options.prefix_weight || 0.99;
-    var _substring_weight = options.substring_weight || 0.98;
+    this.options = {
+        k: options.k || 1.2,
+        b: options.b || 0.75,
+        overlap_power: options.overlap_power || 10,
+        length_power: options.length_power || 10,
+        word_weight: options.word_weight || 1.0,
+        prefix_weight: options.prefix_weight || 1.0,
+        substring_weight: options.substring_weight || 1.0
+    };
 
 
     this.add_field = function(field, weight) {
@@ -53,9 +59,14 @@ function SearchIndex(options) {
             if (typeof id === "undefined") {throw Error("SearchIndex encountered an undefined id");}
             this._fields.map(function(field) {
                 var data = field.get(document);
-                this._trie.insert(tokenize(data), id, field.weight);
+                var tokens = tokenize(data);
+                this._document_length[id] = (this._document_length[id] || 0) + tokens.length; // Sum of all fields
+                this._avg_document_length += this._document_length[id] / this._documents.length;
+                this._trie.insert(tokens, id, field.weight);
             }, this);
         }, this);
+
+
         return this;
     };
 
@@ -85,12 +96,27 @@ function SearchIndex(options) {
                 // var percentage = overlap(node.word, q);
                 // percentage = 1;
                 // Squaring as an aproximation of normalization across frequencies (TF-IDF)
-                percentage = Math.pow(percentage, _overlap_power);
-                var length = Math.pow(node.depth, _length_power);
-                var a = percentage * length * (node.score.words?1:0) * node.score.words * _word_weight;
-                var b = percentage * length * (node.score.prefix?1:0) * node.score.prefix * _prefix_weight;
-                var c = percentage * length * (node.score.substring?1:0) * node.score.substring * _substring_weight;
-                score += a + b + c;
+                percentage = Math.pow(percentage, this.options.overlap_power);
+                var length = Math.pow(node.depth, this.options.length_power);
+                var a = percentage * length * (1/node.length) * (node.score.words?1:0) * node.score.words * this.options.word_weight;
+                var b = percentage * length * (1/node.length) * (node.score.prefix?1:0) * node.score.prefix * this.options.prefix_weight;
+                var c = percentage * length * (1/node.length) * (node.score.substring?1:0) * node.score.substring * this.options.substring_weight;
+
+                // var freq = Math.log(1 +
+                //                     node.score.words * this.options.word_weight +
+                //                     node.score.prefix * this.options.prefix_weight +
+                //                     node.score.substring * this.options.substring_weight);
+                var freq = (node.score.words * this.options.word_weight +
+                            node.score.prefix * this.options.prefix_weight +
+                            node.score.substring * this.options.substring_weight);
+                // console.log("freq:", freq);
+                freq = freq * percentage * length;
+                var idf = Math.log(this._documents.length / node.count);
+                var k = this.options.k;
+                var b = this.options.b;
+                var term_score = idf * ((freq * (k + 1)) / (freq + k*(1 - b + b * (this._document_length[id] / this._avg_document_length))));
+                term_score = freq;
+                score += term_score;
                 // field_score += percentage;
                 // console.log(node.word+"::   "+"p:"+percentage+" * w:"+node.words+" = "+percentage*node.words+"\t s:"+node.prefix+", ps.:"+percentage*node.prefix);
                 // console.log(node.word+"::   "+ percentage+"*"+node.words+"w = "+a+"\t "+ percentage+"*"+node.prefix+"p = "+b+"\t "+ percentage+"*"+node.substring+"s = "+c);
@@ -153,7 +179,9 @@ function SearchIndex(options) {
                 }
                 node = next;
             }
-            return {score:node.scores[id], depth:i};
+            var count = Object.keys(node.scores).length;
+            var score = node.scores[id];
+            return {score:score, count:count, depth:i};
         };
 
         this.normalize = function() {
