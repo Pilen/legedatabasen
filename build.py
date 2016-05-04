@@ -62,10 +62,10 @@ def build_lege():
                     leg[key] = value
                 elif key == "youtube":
                     leg[key] = "null" if value == "" else strn(value)
-                elif key == "tags":
-                    taglist = (strn(tag.strip()) for tag in value.split(","))
-                    tags = "[" + ", ".join(taglist) + "]"
-                    leg[key] = tags
+                # elif key == "tags":
+                    # taglist = (strn(tag.strip()) for tag in value.split(","))
+                    # tags = "[" + ", ".join(taglist) + "]"
+                    # leg[key] = tags
                 else:
                     leg[key] = strn(value)
             lege.append(leg)

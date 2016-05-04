@@ -25,10 +25,10 @@ for row in reader:
     filename = row[0].lower().replace(" ", "_").replace("/", "|") + ".leg"
     filename = os.path.join("lege", filename)
 
-    taglist = (strn(tag.strip()) for tag in row[5].split(","))
-    tags = ",".join(taglist)
+    # taglist = (strn(tag.strip()) for tag in row[5].split(","))
+    # tags = ",".join(taglist)
 
-    tags = row[5]
+    # tags = row[5]
 
     result = ["name: " + strn(row[0]),
               "teaser: " + strn(row[1]),
