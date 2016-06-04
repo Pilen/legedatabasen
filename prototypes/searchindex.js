@@ -1,5 +1,18 @@
 var work = 0;
 
+//// SearchIndex
+// A general solution for searching in a collection of documents
+// A document could be anything really, an article, a product, a blogpost,
+// pretty much anything. You must supply the methods for accesing data in each
+// document by its `fields'.
+//
+// A SearchIndex works as follows: First it is created, with a possible set of options.
+// Then the SearchIndex is configured, specifying fields, how to access ids, adding documents.
+// Then the SearchIndex is compiled, during compilation various indexes are created depending on the search method.
+// After compilation the SearchIndex is static in the sense that the configuration cant be changed.
+// When the SearchIndex has been compiled it can be searched.
+//
+// Searching ...
 function SearchIndex(options) {
     this._documents = [];
     this._fields = [];
@@ -11,22 +24,35 @@ function SearchIndex(options) {
     this._words = {};
 
     this._search_methods = {};
-    this._method = "trie"
 
+    this._filters = {};
+    this._timer = null;
+
+    // Create a copy of the given options, with default values for any missing
     options = options || {};
-    this.options = {
+    this.optieons = {
         k: options.k || 1.2,
         b: options.b || 0.75,
         overlap_power: options.overlap_power || 10,
         length_power: options.length_power || 10,
         word_weight: options.word_weight || 1.0,
         prefix_weight: options.prefix_weight || 1.0,
-        substring_weight: options.substring_weight || 1.0
+        substring_weight: options.substring_weight || 1.0,
+        callback: options.callback,
+        method: options.method || "trie",
+        delay: options.delay || 200
     };
 
 
+    //////// Configuration ////////
+    // Before compile is called
+
+    // Add a new field to the search index.
+    // A field is a a property of each document that should be searched.
+    // Fields can be assigned a weight specifying the importance of finding a match in this field for a document.
+    //
     this.add_field = function(field, weight) {
-        if (this._compiled) {throw Error("SearchIndex already this._compiled");}
+        if (this._compiled) {throw Error("SearchIndex already compiled");}
         if (typeof(weight) === "undefined") {
             weight = 1.0;
         }
@@ -37,8 +63,9 @@ function SearchIndex(options) {
         this._fields.push({get:get, weight:weight});
         return this;
     };
+    // Add a document or an array of documents to the searchindex.
     this.add = function(documents) {
-        if (this._compiled) {throw Error("SearchIndex already this._compiled");}
+        if (this._compiled) {throw Error("SearchIndex already compiled");}
         if (documents instanceof Array) {
             this._documents = this._documents.concat(documents);
         } else {
@@ -46,8 +73,25 @@ function SearchIndex(options) {
         }
         return this;
     };
+
+    // Remove documents
+    // Removes either the document with the given id.
+    // Or, if no id is given, removes ALL documents from the SearchIndex.
+    this.remove = function(id) {
+        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (typeof document === "undefined") {
+            this._documents = [];
+        }
+        this._documents = this._documents.filter(function (document) {
+            return id !== this._get_id(document);
+        })
+    }
+
+    // Specify how to find the id of each document.
+    // Accepts either a function or a property name.
+    // Beaware that the id of a document should NOT change after the searchindex has been compiled.
     this.id = function(id) {
-        if (this._compiled) {throw Error("SearchIndex already this._compiled");}
+        if (this._compiled) {throw Error("SearchIndex already compiled");}
         if (typeof id === "function") {
             this._get_id = id;
         } else {
@@ -56,12 +100,74 @@ function SearchIndex(options) {
         return this;
     };
 
+    // Specify the search method.
+    // The searchmethod is the name of the internal algorithm for calculating results.
     this.method = function(method) {
-        this._method = method;
+        this.options.method = method;
+        return this;
+    };
+
+    // Set a callback that will recieve the results of searching.
+    // This is a way of using the SearchIndex asynchronously.
+    // When the search query is changed, the SearchIndex will wait for delay milliseconds before calculating the result.
+    // And then call the given callback with the results.
+    // This way you can simply hook an input field directly with the SearchIndex and the calculation will only be done when the user stops typing.
+    //
+    // If you want the results immediately, call the `get_ranking' method.
+    this.callback = function(func) {
+        this.options.callback = callback;
+        return this;
+    };
+
+    // Set the delay before calculating search results and calling the callback.
+    // Internally a timer is used and reset everytime the search query is changed, only firing after the delay has passed.
+    // Updating filters will trigger immediately.
+    // The delay is specified in milliseconds.
+    this.delay = function(delay) {
+        this.options.delay = delay;
+        return this;
     }
 
+    // Create a new filter
+    // While the search query will change the resulting ranking of the documents, filters will entirely remove documents not matching.
+    // Filters are basically functions being run on every document, if it returns true it is kept else it is discarded from the results.
+    // Filters have: a name (string), a predicate function, and a preprocess function
+    //
+    this.create_filter = function(name, func, preprocess) {
+        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (this._filters[name]) {throw Error("SearchIndex already has a filter named " + name);}
+        this._filters[name] = {func: func,
+                               arg: undefined,
+                               preprocess: preprocess};
+    };
+
+    this.create_selection = function(name) {
+        function exists(document, arg) {
+            if (arg) {
+                var id = this._get_id(document);
+                return Boolean(arg[id]);
+            } else {
+                return true;
+            }
+        };
+        function preprocess(arg) {
+            var set = {};
+            arg.map(function(document){
+                var id = this._get_id(document);
+                set[id] = true;
+            }, this);
+        }
+        this.create_filter(name, exists, preprocess);
+    };
+
+    // Compile the SearchIndex.
+    // Serveral of the internal algorithms require a slightly timeconsuming preprocessing step.
+    // This preprocessing is done by the compile method. Call it once you are done setting up the SearchIndex.
+    // Once compiled, the basic settings can no longer be modified and no new documents can be added.
+    // Only modifying the search query, updating the filters and getting a ranking is possible.
+    // If you want to modify a SearchIndex a new one has to be created.
     this.compile = function() {
-        if (this._compiled) {throw Error("SearchIndex already this._compiled");}
+        if (this._compiled) {throw Error("SearchIndex already compiled");}
         this._compiled = true;
         this._documents.map(function(document) {
             var id = this._get_id(document);
@@ -93,6 +199,9 @@ function SearchIndex(options) {
         return this;
     };
 
+    //////// Use ////////
+    // After compile is called
+
     this.search = function(query, documents) {
         if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
         work = 0;
@@ -111,15 +220,100 @@ function SearchIndex(options) {
             }, this);
         };
 
-        var result;
-        var f = this._search_methods[this._method];
+        var f = this._search_methods[this.options.method];
         var start_time = +new Date();
         var result = f.call(this, queries, documents);
         var end_time = +new Date();
         console.log("duration " + (end_time - start_time));
 
         return result;
+    };
+
+    this.update_filter = function(name, arg) {
+        var filter = this._filters[name];
+        if (!filter) {throw Error("SearchIndex does not have a filter named " + name);}
+        filter.arg = filter.preprocess(arg);
+    };
+
+    this.get_ranking = function() {
+
     }
+
+    //////// Internal ////////
+    // Internal methods, do NOT call these directly
+
+    this._search_methods.plain = function(queries, documents) {
+        var result = documents.map(function(document) {
+            var score = 0;
+            this._fields.map(function(field) {
+                var data = field.get(document);
+                queries.map(function(q) {
+                    work++;
+                    if (data.indexOf(q) != -1) {
+                        score += field.weight;
+                    }
+                });
+            });
+            var id = this._get_id(document);
+            return {id:id, document:document, score:score};
+        }, this);
+        result.sort(function(a, b) {return b.score - a.score;});
+        return result;
+    };
+
+    this._search_methods.regex = function(queries, documents) {
+        var RegExp_escape = function(s) {
+            return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        };
+
+        var reg = queries.map(function(q) {
+            return "(?:" + RegExp_escape(q) + ")";
+        }).join("|");
+        var regex = new RegExp(reg, "gi");
+
+        var result = documents.map(function(document) {
+            var score = 0;
+            this._fields.map(function(field) {
+                var data = field.get(document);
+                work++;
+                var match = data.match(regex);
+                if (match) {
+                    score += match.length * field.weight;
+                }
+            });
+            var id = this._get_id(document);
+            return {id:id, document:document, score:score};
+        }, this);
+        result.sort(function(a, b) {return b.score - a.score;});
+        return result;
+    };
+
+    this._search_methods.hash = function(query, documents) {
+        work = 0;
+
+        if (!documents) {
+            documents = this._documents;
+        }
+
+        var queries = tokenize(query||"");
+
+        var result = documents.map(function(document) {
+            var score = 0;
+            this._fields.map(function(field) {
+                var data = field.get(document);
+                queries.map(function(q) {
+                    work++;
+                    if (data.indexOf(q) != -1) {
+                        score += field.weight;
+                    }
+                });
+            });
+            var id = this._get_id(document);
+            return {id:id, document:document, score:score};
+        }, this);
+        result.sort(function(a, b) {return b.score - a.score;});
+        return result;
+    };
 
     this._search_methods.trie = function(queries, documents) {
         var result = documents.map(function(document) {
@@ -128,13 +322,13 @@ function SearchIndex(options) {
             queries.map(function(query) {
                 var len = query.length;
                 for (var i = 0; i < len; i++) {
-                    q = query.substring(i, len);
+                    var q = query.substring(i, len);
                     this._fields.map(function(field, i) {
                         var combined_id = id + "/" + i;
                         var node = this._trie.lookup(q, combined_id);
                         // var percentage = (node.depth * 2) / (node.depth + q.length);
                         // var percentage = 1 / (1 + (q.length - node.depth));
-                        var percentage = node.depth / q.length
+                        var percentage = node.depth / q.length;
                         var term_score = 0;
                         if (node.score.words > 0) {
                             term_score = this.options.word_weight;
@@ -186,162 +380,6 @@ function SearchIndex(options) {
         result.sort(function(a, b) {return b.score - a.score;});
         return result;
     };
-
-    this._search_methods.plain = function(queries, documents) {
-        var result = documents.map(function(document) {
-            var score = 0;
-            this._fields.map(function(field) {
-                data = field.get(document);
-                queries.map(function(q) {
-                    work++;
-                    if (data.indexOf(q) != -1) {
-                        score += field.weight;
-                    }
-                })
-            })
-            var id = this._get_id(document);
-            return {id:id, document:document, score:score};
-        }, this);
-        result.sort(function(a, b) {return b.score - a.score;});
-        return result;
-    }
-
-    this._search_methods.regex = function(queries, documents) {
-        RegExp_escape = function(s) {
-            return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        };
-
-        var reg = queries.map(function(q) {
-            return "(?:" + RegExp_escape(q) + ")";
-        }).join("|")
-        var regex = new RegExp(reg, "gi");
-
-        var result = documents.map(function(document) {
-            var score = 0;
-            this._fields.map(function(field) {
-                data = field.get(document);
-                work++;
-                var match = data.match(regex);
-                if (match) {
-                    score += match.length * field.weight;
-                }
-            })
-            var id = this._get_id(document);
-            return {id:id, document:document, score:score};
-        }, this);
-        result.sort(function(a, b) {return b.score - a.score;});
-        return result;
-    }
-
-    this.hash = function(query, documents) {
-        work = 0;
-
-        if (!documents) {
-            documents = this._documents;
-        }
-
-        var queries = tokenize(query||"");
-
-        var result = documents.map(function(document) {
-            var score = 0;
-            this._fields.map(function(field) {
-                data = field.get(document);
-                queries.map(function(q) {
-                    work++;
-                    if (data.indexOf(q) != -1) {
-                        score += field.weight;
-                    }
-                })
-            })
-            var id = this._get_id(document);
-            return {id:id, document:document, score:score};
-        }, this);
-        result.sort(function(a, b) {return b.score - a.score;});
-        return result;
-    }
-
-
-    function trie() {
-        this._base_node = {children: {},
-                           scores: {},
-                           score: 0
-                          };
-        // TODO: Score not used?
-
-        this.insert = function(tokens, id, weight) {
-            this._base_node.scores[id] = {words: 0, prefix:0, substring:0};
-            tokens.map(function(token) {
-                for (var j = 0; j < token.length; j++) { // Insert all subfixess (starting from j)
-                    var node = this._base_node;
-                    for (var i = j; i < token.length; i++) { // Insert letters of subwords
-                        var new_node = node.children[token[i]];
-                        if (!new_node) {
-                            new_node = {children: {},
-                                        scores: {},
-                                        score: 0
-                                       };
-                            node.children[token[i]] = new_node;
-                        }
-                        // Get/create score
-                        var score = new_node.scores[id];
-                        if (!score) {
-                            score = {words: 0, prefix:0, substring:0};
-                            new_node.scores[id] = score;
-                        }
-                        // Calculate score
-                        if (j == 0) { // Start of full word
-                            if (i == (token.length - 1)) { // To end of full word
-                                score.words += 1 * weight;
-                            } else {
-                                score.prefix += ((i + 1) / token.length) * weight;
-                            }
-                        } else {
-                            score.substring += ((i - j + 1) / token.length) * weight;
-                        }
-                        node = new_node;
-                    }
-                }
-            }, this);
-            return this;
-        };
-
-        this.lookup = function(token, id) {
-            var node = this._base_node;
-            for (var i = 0; i < token.length; i++) {
-                var next = node.children[token[i]];
-                if (!next || typeof next.scores[id] === "undefined") {
-                    break;
-                }
-                work++;
-                node = next;
-            }
-            var count = Object.keys(node.scores).length;
-            var score = node.scores[id];
-            return {score:score, count:count, depth:i};
-        };
-
-        // this.normalize = function() {
-        //     var nodes = [this._base_node];
-        //     while (nodes.length > 0) {
-        //         var node = nodes.pop();
-        //         var keys = Object.keys(node.scores);
-        //     }
-        // };
-
-        this.nodes = function() {
-            function recurse(node) {
-                var sum = 0;
-                var children = Object.keys(node.children)
-                sum += children.length;
-                for (var i = 0; i < children.length; i++) {
-                    var child = children[i];
-                    sum += recurse(node.children[child]);
-                }
-                return sum;
-            }
-            return recurse(this._base_node);
-        }
-    }
 }
 
 
@@ -372,3 +410,85 @@ var tokenize = function(text) {
 //     }
 //     return (i * 2) / (length1 + length2);
 // }
+
+function trie() {
+    this._base_node = {children: {},
+                       scores: {},
+                       score: 0
+                      };
+    // TODO: Score not used?
+
+    this.insert = function(tokens, id, weight) {
+        this._base_node.scores[id] = {words: 0, prefix:0, substring:0};
+        tokens.map(function(token) {
+            for (var j = 0; j < token.length; j++) { // Insert all subfixess (starting from j)
+                var node = this._base_node;
+                for (var i = j; i < token.length; i++) { // Insert letters of subwords
+                    var new_node = node.children[token[i]];
+                    if (!new_node) {
+                        new_node = {children: {},
+                                    scores: {},
+                                    score: 0
+                                   };
+                        node.children[token[i]] = new_node;
+                    }
+                    // Get/create score
+                    var score = new_node.scores[id];
+                    if (!score) {
+                        score = {words: 0, prefix:0, substring:0};
+                        new_node.scores[id] = score;
+                    }
+                    // Calculate score
+                    if (j == 0) { // Start of full word
+                        if (i == (token.length - 1)) { // To end of full word
+                            score.words += 1 * weight;
+                        } else {
+                            score.prefix += ((i + 1) / token.length) * weight;
+                        }
+                    } else {
+                        score.substring += ((i - j + 1) / token.length) * weight;
+                    }
+                    node = new_node;
+                }
+            }
+        }, this);
+        return this;
+    };
+
+    this.lookup = function(token, id) {
+        var node = this._base_node;
+        for (var i = 0; i < token.length; i++) {
+            var next = node.children[token[i]];
+            if (!next || typeof next.scores[id] === "undefined") {
+                break;
+            }
+            work++;
+            node = next;
+        }
+        var count = Object.keys(node.scores).length;
+        var score = node.scores[id];
+        return {score:score, count:count, depth:i};
+    };
+
+    // this.normalize = function() {
+    //     var nodes = [this._base_node];
+    //     while (nodes.length > 0) {
+    //         var node = nodes.pop();
+    //         var keys = Object.keys(node.scores);
+    //     }
+    // };
+
+    this.nodes = function() {
+        function recurse(node) {
+            var sum = 0;
+            var children = Object.keys(node.children);
+            sum += children.length;
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                sum += recurse(node.children[child]);
+            }
+            return sum;
+        }
+        return recurse(this._base_node);
+    };
+}
