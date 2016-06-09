@@ -12,13 +12,27 @@ var lege_map = {};
 var search;
 
 
-function insert_buttons(lege) {
+
+function insert_lege() {
     $("#lege").append(lege.map(function(leg) {
-        leg.node = $('<div class="grid-item"><a href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></div>');
+        leg.node = $('<div class="leg" score=0><a class="title" href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></div>');
         return leg.node;
     }));
 }
 
+function sort_lege(rankings) {
+    console.log(".");
+    lege.map(function(leg){
+        leg.node.attr("score", -1);
+        leg.node.find(".score").text(-1);
+    });
+    rankings.map(function(ranked) {
+        ranked.document.node.attr("score", ranked.score);
+        ranked.document.node.find(".score").text(ranked.score);
+    });
+    $("#lege").isotope("updateSortData").isotope();
+    return;
+}
 
 function show_leg() {
     var url = window.location.hash.slice(1);
@@ -30,33 +44,6 @@ function show_leg() {
         $(".modal-body").html(leg.description);
         $(".modal").modal("show");
     }
-}
-
-
-function sort_lege(rankings) {
-    console.log("until start duration: " + ((+ new Date()) - start_time));
-    start_time = +new Date();
-
-    console.log(".");
-    $("#lege").children().hide();
-
-    var lege = rankings.map(function(item) {
-        item.document.score = item.score;
-        return item.document;
-    });
-
-    lege.sort(function(a, b) {
-        var value = b.score - a.score; // Sort decending
-        return value || a.name.localeCompare(b.name);
-    });
-    $("#lege").children().detach();
-    $("#lege").append(lege.map(function(leg) {
-        leg.node.find(".score").text(leg.score);
-        leg.node.show();
-        return leg.node;
-    }));
-
-    console.log("Total duration: " + ((+ new Date()) - start_time));
 }
 
 
@@ -126,7 +113,22 @@ function init() {
     });
     $("#search-box").on("input", search_update);
     $("#clear-search").on("click", clear_search);
-    insert_buttons(lege);
+
+    insert_lege();
+    $("#lege").isotope({
+        itemSelector: ".leg",
+        layoutMode: "fitRows",
+        sortBy: ["score", "title"],
+        sortAscending: {score: false,
+                        title: true},
+        getSortData: {score:"[score]",
+                      title: "title"},
+        filter: function() {
+            var score = parseInt($(this).attr("score"));
+            return score >= 0;
+        }
+    });
+
     show_leg();
     console.log("Ready");
 }
