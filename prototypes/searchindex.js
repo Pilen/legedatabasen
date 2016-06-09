@@ -25,12 +25,13 @@ function SearchIndex(options) {
 
     this._search_methods = {};
 
+    this._query = "";
     this._filters = {};
     this._timer = null;
 
     // Create a copy of the given options, with default values for any missing
     options = options || {};
-    this.optieons = {
+    this._options = {
         k: options.k || 1.2,
         b: options.b || 0.75,
         overlap_power: options.overlap_power || 10,
@@ -84,8 +85,8 @@ function SearchIndex(options) {
         }
         this._documents = this._documents.filter(function (document) {
             return id !== this._get_id(document);
-        })
-    }
+        });
+    };
 
     // Specify how to find the id of each document.
     // Accepts either a function or a property name.
@@ -103,7 +104,7 @@ function SearchIndex(options) {
     // Specify the search method.
     // The searchmethod is the name of the internal algorithm for calculating results.
     this.method = function(method) {
-        this.options.method = method;
+        this._options.method = method;
         return this;
     };
 
@@ -114,8 +115,8 @@ function SearchIndex(options) {
     // This way you can simply hook an input field directly with the SearchIndex and the calculation will only be done when the user stops typing.
     //
     // If you want the results immediately, call the `get_ranking' method.
-    this.callback = function(func) {
-        this.options.callback = callback;
+    this.callback = function(callback) {
+        this._options.callback = callback;
         return this;
     };
 
@@ -124,9 +125,9 @@ function SearchIndex(options) {
     // Updating filters will trigger immediately.
     // The delay is specified in milliseconds.
     this.delay = function(delay) {
-        this.options.delay = delay;
+        this._options.delay = delay;
         return this;
-    }
+    };
 
     // Create a new filter
     // While the search query will change the resulting ranking of the documents, filters will entirely remove documents not matching.
@@ -136,9 +137,14 @@ function SearchIndex(options) {
     this.create_filter = function(name, func, preprocess) {
         if (this._compiled) {throw Error("SearchIndex already compiled");}
         if (this._filters[name]) {throw Error("SearchIndex already has a filter named " + name);}
+        var arg = undefined;
+        if (preprocess) {
+            arg = preprocess(arg);
+        }
         this._filters[name] = {func: func,
-                               arg: undefined,
+                               arg: arg,
                                preprocess: preprocess};
+        return this;
     };
 
     this.create_selection = function(name) {
@@ -202,51 +208,110 @@ function SearchIndex(options) {
     //////// Use ////////
     // After compile is called
 
-    this.search = function(query, documents) {
+    this.query = function(query) {
         if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
-        work = 0;
-
-        if (!documents) {
-            documents = this._documents;
-        }
-
-        var queries = tokenize(query||"");
-        if (!queries || !queries[0]) {
-            return documents.map(function(document) {
-                var id = this._get_id(document);
-                return {document: document,
-                        id: id,
-                        score: 0};
-            }, this);
-        };
-
-        var f = this._search_methods[this.options.method];
-        var start_time = +new Date();
-        var result = f.call(this, queries, documents);
-        var end_time = +new Date();
-        console.log("duration " + (end_time - start_time));
-
-        return result;
+        this._query = query || "";
+        return this._schedule_search();
     };
 
     this.update_filter = function(name, arg) {
+        if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
         var filter = this._filters[name];
         if (!filter) {throw Error("SearchIndex does not have a filter named " + name);}
         filter.arg = filter.preprocess(arg);
+        return this._schedule_search();
     };
 
-    this.get_ranking = function() {
+    // Perform the actual seach.
+    // Calculate the ranking of each document and use the filters.
+    // This method uses the filters to make a selection of documents and then calculates the rankings.
+    // Any callback specified for the SearchIndex will be called and the result set will be returned.
+    // This method is only really required to be called manually if no callback has been specified.
+    // The method is automatically called when the search query or filters are updated.
+    this.search = function() {
+        if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
+        work = 0;
 
-    }
+        // Stop timer
+        if (this._timer) {
+            window.clearTimeout(this._timer);
+        }
+        this._timer = null;
+
+        // Do filtering
+        var filters = Object.keys(this._filters).map(function(name){
+            return this._filters[name];
+        }, this);
+        // For every document every filter must return true
+        var selected = this._documents.filter(function(document) {
+            return filters.every(function(filter) {
+                return filter.func(document, filter.arg);
+            });
+        });
+
+        var tokens = tokenize(this._query);
+
+        // An empty search
+        if (!tokens || !tokens[0]) {
+            var result = selected.map(function(document) {
+                var id = this._get_id(document);
+                return {id: id,
+                        document: document,
+                        score: 0};
+            }, this);
+            if (this._options.callback) {
+                this._options.callback(result);
+            }
+            return result;
+        };
+
+        // Perform search (and measure duration)
+        var f = this._search_methods[this._options.method];
+        var start_time = +new Date();
+        var result = f.call(this, tokens, selected);
+        var end_time = +new Date();
+        console.log("Search duration: " + (end_time - start_time));
+
+        if (this._options.callback) {
+            this._options.callback(result);
+        }
+        return result;
+    };
 
     //////// Internal ////////
     // Internal methods, do NOT call these directly
+
+
+    // Start the timer or immediately call search
+    // If the delay is below zero or no callback is given, the search is performed immediately,
+    // else null is returned and the calculation is done asynchronously.
+    this._schedule_search = function() {
+        if (this._options.delay >= 0 && this._options.callback) {
+            if (this._timer) {
+                window.clearTimeout(this._timer);
+            }
+            var _this = this; // Used to avoid javascript quirkyness. See https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout#The_this_problem
+            window.setTimeout(function(){_this.search();}, this._options.delay);
+            return null;
+        } else {
+            return this.search();
+        }
+    };
+
+    this._search_methods.nop = function(queries, documents) {
+        return documents.map(function(document) {
+            return {id:this._get_id(document),
+                    document:document,
+                    score:1};
+        }, this);
+    };
 
     this._search_methods.plain = function(queries, documents) {
         var result = documents.map(function(document) {
             var score = 0;
             this._fields.map(function(field) {
                 var data = field.get(document);
+                data = data.toLowerCase();
                 queries.map(function(q) {
                     work++;
                     if (data.indexOf(q) != -1) {
@@ -331,11 +396,11 @@ function SearchIndex(options) {
                         var percentage = node.depth / q.length;
                         var term_score = 0;
                         if (node.score.words > 0) {
-                            term_score = this.options.word_weight;
+                            term_score = this._options.word_weight;
                         } else if (node.score.prefix > 0) {
-                            term_score = this.options.prefix_weight;
+                            term_score = this._options.prefix_weight;
                         } else if (node.score.substring > 0) {
-                            term_score = this.options.substring_weight;
+                            term_score = this._options.substring_weight;
                         }
                         score += percentage * term_score * field.weight;
                     }, this);
@@ -346,24 +411,24 @@ function SearchIndex(options) {
                 // // var percentage = overlap(node.word, q);
                 // // percentage = 1;
                 // // Squaring as an aproximation of normalization across frequencies (TF-IDF)
-                // percentage = Math.pow(percentage, this.options.overlap_power);
-                // var length = Math.pow(node.depth, this.options.length_power);
-                // var a = percentage * length * (1/node.length) * (node.score.words?1:0) * node.score.words * this.options.word_weight;
-                // var b = percentage * length * (1/node.length) * (node.score.prefix?1:0) * node.score.prefix * this.options.prefix_weight;
-                // var c = percentage * length * (1/node.length) * (node.score.substring?1:0) * node.score.substring * this.options.substring_weight;
+                // percentage = Math.pow(percentage, this._options.overlap_power);
+                // var length = Math.pow(node.depth, this._options.length_power);
+                // var a = percentage * length * (1/node.length) * (node.score.words?1:0) * node.score.words * this._options.word_weight;
+                // var b = percentage * length * (1/node.length) * (node.score.prefix?1:0) * node.score.prefix * this._options.prefix_weight;
+                // var c = percentage * length * (1/node.length) * (node.score.substring?1:0) * node.score.substring * this._options.substring_weight;
 
                 // // var freq = Math.log(1 +
-                // //                     node.score.words * this.options.word_weight +
-                // //                     node.score.prefix * this.options.prefix_weight +
-                // //                     node.score.substring * this.options.substring_weight);
-                // var freq = (node.score.words * this.options.word_weight +
-                //             node.score.prefix * this.options.prefix_weight +
-                //             node.score.substring * this.options.substring_weight);
+                // //                     node.score.words * this._options.word_weight +
+                // //                     node.score.prefix * this._options.prefix_weight +
+                // //                     node.score.substring * this._options.substring_weight);
+                // var freq = (node.score.words * this._options.word_weight +
+                //             node.score.prefix * this._options.prefix_weight +
+                //             node.score.substring * this._options.substring_weight);
                 // // console.log("freq:", freq);
                 // freq = freq * percentage * length;
                 // var idf = Math.log(this._documents.length / node.count);
-                // var k = this.options.k;
-                // var b = this.options.b;
+                // var k = this._options.k;
+                // var b = this._options.b;
                 // var term_score = idf * ((freq * (k + 1)) / (freq + k*(1 - b + b * (this._document_length[id] / this._avg_document_length))));
                 // term_score = freq;
                 // score += term_score;
