@@ -14,7 +14,7 @@ var search;
 
 function insert_buttons(lege) {
     $("#lege").append(lege.map(function(leg) {
-        leg.node = $('<li role="presentation"><a href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></li>');
+        leg.node = $('<div class="grid-item"><a href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></div>');
         return leg.node;
     }));
 }
