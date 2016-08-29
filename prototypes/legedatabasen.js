@@ -10,7 +10,7 @@ var category_swiper;
 var start_time;
 var lege_map = {};
 var search;
-
+var iso;
 
 
 function insert_lege() {
@@ -18,6 +18,10 @@ function insert_lege() {
         leg.node = $('<div class="leg" score=0><a class="title" href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></div>');
         return leg.node;
     }));
+    // return lege.map(function(leg) {
+    //     leg.node = $('<div class="leg" score=0><a class="title" href="#'+leg.url+'">'+leg.name+' <span class="score">0</span></a></div>');
+    //     return leg.node;
+    // });
 }
 
 function sort_lege(rankings) {
@@ -114,8 +118,8 @@ function init() {
     $("#search-box").on("input", search_update);
     $("#clear-search").on("click", clear_search);
 
-    insert_lege();
-    $("#lege").isotope({
+    // insert_lege();
+    iso = $("#lege").isotope({
         itemSelector: ".leg",
         layoutMode: "fitRows",
         sortBy: ["score", "title"],

@@ -43,6 +43,7 @@ function SearchIndex(options) {
         method: options.method || "trie",
         delay: options.delay || 200
     };
+    // Downside of using || is that 0 is falsey and thus results in the default value
 
 
     //////// Configuration ////////
@@ -132,8 +133,13 @@ function SearchIndex(options) {
     // Create a new filter
     // While the search query will change the resulting ranking of the documents, filters will entirely remove documents not matching.
     // Filters are basically functions being run on every document, if it returns true it is kept else it is discarded from the results.
-    // Filters have: a name (string), a predicate function, and a preprocess function
-    //
+    // Filters have: a name (string), a predicate function, and a argument preprocess function
+    // The name is used to reference filters when updating them.
+    // The predicate function is a function that takes two arguments, a document and an argument.
+    // The predicate function will be run on each document and if it returns false'ish the document will be ignored/removed from the SearchIndex result.
+    // The argument is a value that can be suplied with the update_filter method, this is your way to specialize the filters
+    // The preprocess function, if given, is a function being run on the argument and will return the actual argument being suplied to the predicate function.
+    // Before update_filter is called, the argument will be undefined.
     this.create_filter = function(name, func, preprocess) {
         if (this._compiled) {throw Error("SearchIndex already compiled");}
         if (this._filters[name]) {throw Error("SearchIndex already has a filter named " + name);}
@@ -208,11 +214,24 @@ function SearchIndex(options) {
     //////// Use ////////
     // After compile is called
 
+    // Query the SearchIndex.
+    // This is the query for the SearchIndex that each document will be ranked against.
+    //
+    // Calling this will schedule a search, that will be run after the specified delay and call the specified callback.
+    // If the delay or callback is not specified the search result will return immediately.
     this.query = function(query) {
         if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
         this._query = query || "";
         return this._schedule_search();
     };
+
+    // Update the argument for filter
+    // Store the argument for the filter with the given name.
+    // This will be suplied as the second argument for the filters predicate function.
+    // The initial value, before update_filter is called, is undefined.
+    //
+    // Calling this will schedule a search, that will be run after the specified delay and call the specified callback.
+    // If the delay or callback is not specified the search result will return immediately.
 
     this.update_filter = function(name, arg) {
         if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
