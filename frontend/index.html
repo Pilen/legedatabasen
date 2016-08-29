@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <base href="/frontend/"/>
+        <meta charset="utf-8">
+        <title>Legedatabasen</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css">
+        <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick-theme.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" type="text/css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption:700" type="text/css">
+
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
+        <script src="bower_components/isotope/dist/isotope.pkgd.min.js"></script>
+        <script src="searchindex.js"></script>
+        <script src="legedatabasen.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div id="leg_back" class="fdficon btn btn-link" style="display:none;">
+                    &#xf41f;
+                    fisk
+                </div>
+                <div id="soeg_knap" class="fdficon btn btn-link">
+                    &#xf41b;
+                </div>
+                <div id="filter_knap" class="fdficon btn btn-link">
+                    &#xf41d;
+                </div>
+                <div id="leg_swipe" class="fdficon btn btn-link">
+                    &#xf41d;
+                </div>
+                <a id="title" class="navbar-brand nav-center" href="#" style="text-align:center;">Legedatabasen</a>
+                <!-- <div class="acol-xs-1 anavbar-left" style="padding:0px;"> -->
+                <!--     <div id="filter_knap" class="fdficon btn btn-link"> -->
+                <!--         &#xf41d; -->
+                <!--     </div> -->
+                <!--     <div id="leg-back" class="fdficon btn btn-link" style="display:none;"> -->
+                <!--         &#xf41f; -->
+                <!--     </div> -->
+                <!-- </div> -->
+                <!-- <div class="acol-xs-2 anavbar-left" style="padding:0px;"> -->
+                <!--     <div id="soeg_knap" class="fdficon btn btn-link"> -->
+                <!--         &#xf41b; -->
+                <!--     </div> -->
+                <!-- </div> -->
+                <!-- <\!-- <div class="col-xs-10" id="title" style="text-align:center;"> -\-> -->
+                <!-- <div class="col-xs-6" id="title" style="text-align:center;"> -->
+                <!--     <a class="navbar-brand" href="#" >Legedatabasen</a> -->
+                <!-- </div> -->
+                <!-- <div class="col-xs-10" id="filter" style="display:none;"> -->
+                <!--     Filter 1 - Filter 2 - Filter 3 - Filter 4 -->
+                <!-- </div> -->
+                <!-- <div class="col-xs-10" id="soeg" style="display:none;"> -->
+                <!--     <input type="text" class="search-query form-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" style="padding:0px 10px;"/> -->
+                <!-- </div> -->
+                <!-- <div id="title" class="col-xs-1" style="text-align:left; color:white !important; font-size:1.5em; font-weight: 700;"> -->
+                <!--     Legedatabasen -->
+                <!-- </div> -->
+                <!-- <div id="titleb" style="col-xs-7" class="navbar-brand"> -->
+                <!--     Legedatabasenb -->
+                <!-- </div> -->
+
+            </div>
+        </nav>
+        <div class="container-fluid" id="lege" style="background-color:white;padding:0px;">
+            <div class="container-fluid" style="background-color:white;padding:0px;">
+                <div class="slider-nav">
+                </div>
+            </div>
+            <div class="container-fluid" style="padding:0px;height:100vh;">
+                <div id="isotope" class="is-varying-sizes">
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" id="leg" style="background-color:white;padding:0px;display:none;">
+            <h1 id="leg-navn"></h1>
+            <p id="leg-teaser"></p>
+            <h3>Beskrivelse</h3>
+            <p id="leg-beskrivelse"></p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,360 @@
+@font-face {
+    font-family: fdficons;
+    src: url(../fonts/fdficons.woff);
+}
+body {
+    margin-top: 50px;
+    /*background-color: rgb(61, 94, 120);*/
+    font-family: 'PT Sans', sans-serif;
+}
+.navbar-fixed-top {
+    z-index:10;
+    background-color: rgb(105, 147, 183);
+    border-color: rgb(105, 147, 183);
+}
+.navbar-fixed-top.navbar-down {
+    z-index:9;
+    margin-top: 50px;
+    background-color: rgb(61, 94, 120);
+}
+h1 {
+    color: black;
+}
+.navbar .pull-right {
+    z-index: 20;
+    position: relative;
+}
+#soeg_knap, #filter_knap, #leg_back {
+    color:rgba(255,255,255,0.7);
+    font-size:25pt;
+    padding:0px 5px;
+    text-decoration: none;
+}
+#soeg_knap:hover, #filter_knap:hover, #soeg_knap.aktiv, #filter_knap.aktiv{
+    color:rgba(255,255,255,1);
+}
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+    color:white !important;
+    font-size:1.5em;
+    font-weight: 700;
+}
+
+#custom-search-input {
+    margin: 10px 0px;
+    padding: 0;
+}
+
+#custom-search-input .search-query {
+    padding-right: 3px;
+    padding-right: 4px \9;
+    padding-left: 3px;
+    padding-left: 4px \9;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#custom-search-input button {
+    border: 0;
+    background: none;
+    /** belows styles are working good */
+    padding: 2px 5px;
+    margin-top: 2px;
+    position: relative;
+    left: -28px;
+    /* IE7-8 doesn't have border-radius, so don't indent the padding */
+    margin-bottom: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color:#D9230F;
+}
+
+button {
+    z-index: 3;
+}
+.slider-nav > div {
+    height:130px;
+    background-color:white;
+}
+div:focus {
+    outline: none;
+}
+.slick-dots li button:before {
+    content: "\2022";
+    font-size: 10pt;
+}
+.slick-dots li {
+    margin: 0px 3px;
+}
+.div_ratio {
+    display: inline-block;
+    position: relative;
+    width:100%;
+}
+.dummy33 {
+    padding-top: 33.33333%;
+}
+.dummy25 {
+    padding-top: 25%;
+}
+.leg-boks {
+    padding:20px;
+    color:white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border:0px solid red;
+    background-color: rgb(105, 147, 183);
+    background-repeat:no-repeat;
+}
+.leg-title {
+    font-weight:700;
+    font-size:25pt;
+    //text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    color: white;
+}
+.outlined {
+    font-family: 'PT Sans Caption', 'PT Sans', sans-serif;
+    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    text-shadow: 1px 1px 0px #333, 1px -1px 0px #333, -1px 1px 0px #333, -1px -1px 0px #333;
+}
+.leg-info {
+    position:absolute;
+    left:0px;
+    bottom:0px;
+    width:100%;
+    background-color:rgba(250, 135, 0, 0.5);
+    padding:10px 20px;
+}
+@media (max-width: 600px) {
+    .leg-info {
+        padding:5px 15px;
+    }
+    .leg-boks {
+        padding:5px 15px;
+    }
+}
+#leg-beskrivelse {
+    font-size: 1em;
+    color:black;
+}
+.leg-info td {
+    padding: 0px 5px;
+}
+.fdficon {
+    font-family: fdficons;
+    font-weight: 400;
+}
+.fdf-timeglas:before {
+    content: "\f3ba";
+}
+.fdf-search:before {
+    content: "\f41b";
+}
+.fdf-personer:before {
+    content: "\f405";
+}
+.fdf-alder:before {
+    content: "\f397";
+}
+.slick-dots li.slick-active button:before {
+    color: rgb(250, 135, 0);
+}
+.slick-dots li button:before {
+    color: rgb(105, 147, 183);
+}
+.slick-dots {
+    bottom: -35px;
+}
+.category {
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-size: 158px 120px;
+    height:120px;
+    min-width:200px;
+    text-align:center;
+    line-height:145px;
+    font-size:16pt;
+    font-weight: 700;
+    cursor:pointer;
+}
+.category_navn {
+    font-weight:700;
+    font-size:20pt;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    color: white;
+    cursor:pointer;
+}
+.dropdown-btns {
+    color:rgba(255,255,255,0.7);
+    text-decoration:none;
+    font-weight:700;
+    font-size:12pt;
+    background-color:rgb(105, 147, 183);
+    border:0px;
+    border-radius:0px;
+    border-bottom:2px solid transparent;
+}
+.dropdown-btns:hover {
+    color:white;
+}
+.dropdown-btns.aktiv {
+    background-color:rgb(61, 94, 120);
+    color:white;
+    border-bottom:2px solid orange;
+}
+#tilbage_knap {
+    float:left;
+    z-index:200;
+    position:relative;
+    font-size:25pt;
+    text-decoration:none;
+    color:white;
+}
+
+/* ng-isotope */
+.element-item {
+    position: relative;
+    float: left;
+    padding: 5px;
+    /*background: #888;*/
+    color: #262524;
+}
+
+.leg {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 3px solid rgb(28, 87, 135);
+    box-shadow: 0px 0px 4px black;
+    width:100%;
+    height:100%;
+    position:relative;
+    background-size:100%;
+}
+.leg .orange {
+    -webkit-border-bottom-right-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -moz-border-radius-bottomright: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    position:absolute;
+    bottom:0px;
+    height:50px;
+    background-color:orange;
+    width:100%;
+    padding:0px 10px;
+    color: white;
+    font-weight: 700;
+}
+.leg .orange .fdficon {
+    color:rgb(28, 87, 135);
+}
+.orange td {
+    text-align: center;
+}
+.element-item > * {
+    margin: 0;
+    padding: 0;
+}
+
+.element-item .name {
+    position: absolute;
+    left: 10px;
+    top: 60px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.element-item .navn {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    font-weight: bold;
+    color: white;
+}
+
+.element-item .number {
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}
+
+.element-item .weight {
+    position: absolute;
+    left: 10px;
+    top: 76px;
+    font-size: 12px;
+}
+/*
+   .element-item.alkali          { background: #F00; background: hsl(   0, 100%, 50%); }
+   .element-item.alkaline-earth  { background: #F80; background: hsl(  36, 100%, 50%); }
+   .element-item.lanthanoid      { background: #FF0; background: hsl(  72, 100%, 50%); }
+   .element-item.actinoid        { background: #0F0; background: hsl( 108, 100%, 50%); }
+   .element-item.transition      { background: #0F8; background: hsl( 144, 100%, 50%); }
+   .element-item.post-transition { background: #0FF; background: hsl( 180, 100%, 50%); }
+   .element-item.metalloid       { background: #08F; background: hsl( 216, 100%, 50%); }
+   .element-item.diatomic        { background: #00F; background: hsl( 252, 100%, 50%); }
+   .element-item.halogen         { background: #F0F; background: hsl( 288, 100%, 50%); }
+   .element-item.noble-gas       { background: #F08; background: hsl( 324, 100%, 50%); }
+ */
+/* varying sizes */
+
+.element-item {
+    width: calc(100.00vw - (100.00vw - 100%));
+    height: calc(((100.00vw) / 3) + 50px);
+}
+.element-item .navn {
+    font-size:18pt;margin-top:10px;
+}
+
+@media (min-width: 768px) {
+    .element-item {
+        width: calc(50.00vw - (100.00vw - 100%)/2);
+        height: calc((50.00vw / 3) + 50px);
+    }
+    .element-item .navn {
+        font-size:20pt;
+    }
+    .is-varying-sizes .element-item.width2 { width: calc(100.00vw - (100.00vw - 100%) - 1px) }
+    .is-varying-sizes .element-item.height2 { height: calc(((50.00vw / 3) + 50px) * 2); }
+}
+
+@media (min-width: 992px) {
+    .element-item {
+        width: calc(33.333333vw - (100.00vw - 100%)/3);
+        height: calc(((33.333333vw) / 3) + 50px);
+    }
+    .element-item .navn {
+        font-size:22pt;
+    }
+    .is-varying-sizes .element-item.width2 { width: calc((33.33333vw - (100.00vw - 100%)/3)*2) }
+    .is-varying-sizes .element-item.height2 { height: calc(((33.33333vw / 3 ) + 50px) * 2); }
+}
+
+@media (min-width: 1200px) {
+    .element-item {
+        width: calc(25.00vw - (100.00vw - 100%)/4 - 1px);
+        height: calc(((25.00vw)/3) + 50px);
+    }
+    .element-item .navn {
+        font-size:24pt;
+    }
+    .is-varying-sizes .element-item.width2 { width: calc((25.00vw - (100.00vw - 100%)/4)*2 - 2px) }
+    .is-varying-sizes .element-item.height2 { height: calc(((25.00vw / 3 ) + 50px) * 2); }
+}
