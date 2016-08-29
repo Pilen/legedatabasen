@@ -106,6 +106,9 @@ function init() {
             .create_filter("category", function(leg, arg) {
                 // Only keep lege where the category is found in the tags
                 // return leg.tags.toLowerCase().indexOf(arg) != -1;
+                if (arg == "Top lege") {
+                    return true;
+                }
                 var categories = leg.game_categories.map(function(c){return c.name}).join(",");
                 return categories.indexOf(arg) != -1;
             }, function(arg) {return arg || "";})
