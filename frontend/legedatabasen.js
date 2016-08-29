@@ -60,7 +60,7 @@ function init() {
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
             category = nextSlide;
-            // history.replaceState({}, '', categories[category].url);
+            history.replaceState({}, '', categories[category].url);
             showCategory(categories[nextSlide]);
         }
         return false;
@@ -170,20 +170,22 @@ function init() {
 
     function updateDisplayState() {
         var url = window.location.pathname;
+        url = url .replace("/lege3", "")
+            .replace("/legedatabasen", "")
+            .replace("/frontend", "");
         url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
-        url = url.replace("lege3/", "");
-        var url_parts = url.split("/");
 
-        if (url_parts[1] == "leg") {
-            var leg = lege_map[url_parts[2]];
+
+        if (url.startsWith("leg/")) {
+            var leg = lege_map[url.substring(4)];
             showLeg(leg);
-        } else if (url_parts.length == 2 && url_parts[1]) {
+        } else if (url) {
             var cats = categories.filter(function(category) {
-                return category.url == url_parts[1];
+                return category.url == url;
             });
             console.log("cats: ", cats);
             showCategory(category[0]);
-        } else if (!url_parts[1]) {
+        } else if (!url) {
             showBase();
         } else {
             // Error
@@ -201,9 +203,9 @@ function init() {
         $("#leg").show();
 
         $("#leg_back").show();
-        $("#leg_navn").text(leg.name);
-        $("#leg_teaser").text(leg.teaser);
-        $("#leg_beskrivelse").text(leg.description);
+        $("#leg-navn").text(leg.name);
+        $("#leg-teaser").text(leg.teaser);
+        $("#leg-beskrivelse").text(leg.description);
     }
 
     function showCategory(category) {
