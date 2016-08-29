@@ -70,9 +70,10 @@ function init() {
         data = data.filter(function(d) {return d.name;}); // Currently
         lege = data.map(function(leg, key) {
             lege_map[leg.url] = leg;
+            var image = Math.floor(Math.random() * 7) + 1;
             leg.node = $(
                 '<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                    '<div class="leg" style="background-image:url(images/1.png);">'+
+                    '<div class="leg" style="background-image:url(images/' + image + '.png);">'+
                     '<p class="navn outlined">'+leg.name+'</p>'+
                     '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>'+
                     '<div class="orange">'+
