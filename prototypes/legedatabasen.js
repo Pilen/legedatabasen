@@ -118,7 +118,7 @@ function init() {
     $("#search-box").on("input", search_update);
     $("#clear-search").on("click", clear_search);
 
-    // insert_lege();
+    insert_lege();
     iso = $("#lege").isotope({
         itemSelector: ".leg",
         layoutMode: "fitRows",

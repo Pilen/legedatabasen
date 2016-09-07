@@ -17,72 +17,115 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
         <script src="bower_components/isotope/dist/isotope.pkgd.min.js"></script>
+        <script src="bower_components/marked/marked.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="searchindex.js"></script>
         <script src="legedatabasen.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div id="leg_back" class="fdficon btn btn-link" style="display:none;">
+            <div class="navbar-header">
+                <div class="navbar-brand">
+                    <a id="title" href="#">Legedatabasen</a>
+                    <!-- <div class="input-box"> -->
+                    <input id="search" type="text" class="search-query-y form-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
+                    <!-- </div> -->
+                </div>
+            </div>
+            <div class="icon-container">
+                <span id="leg_back" class="icon fdficon btn btn-link" style="display:none;">
                     &#xf41f;
-                </div>
-                <div id="soeg_knap" class="fdficon btn btn-link">
+                </span>
+                <span id="swipe_knap" class="icon glyphicon glyphicon-resize-horizontal btn btn-link" aria-hidden="true"></span>
+                <span id="filter_knap" class="icon fdficon btn btn-link">
+                    &#xf41d;
+                </span>
+                <span id="soeg_knap" class="icon fdficon btn btn-link">
                     &#xf41b;
-                </div>
-                <div id="filter_knap" class="fdficon btn btn-link">
-                    &#xf41d;
-                </div>
-                <div id="leg_swipe" class="fdficon btn btn-link">
-                    &#xf41d;
-                </div>
-                <a id="title" class="navbar-brand nav-center" href="#" style="text-align:center;">Legedatabasen</a>
-                <!-- <div class="acol-xs-1 anavbar-left" style="padding:0px;"> -->
-                <!--     <div id="filter_knap" class="fdficon btn btn-link"> -->
-                <!--         &#xf41d; -->
-                <!--     </div> -->
-                <!--     <div id="leg-back" class="fdficon btn btn-link" style="display:none;"> -->
-                <!--         &#xf41f; -->
-                <!--     </div> -->
-                <!-- </div> -->
-                <!-- <div class="acol-xs-2 anavbar-left" style="padding:0px;"> -->
-                <!--     <div id="soeg_knap" class="fdficon btn btn-link"> -->
-                <!--         &#xf41b; -->
-                <!--     </div> -->
-                <!-- </div> -->
-                <!-- <\!-- <div class="col-xs-10" id="title" style="text-align:center;"> -\-> -->
-                <!-- <div class="col-xs-6" id="title" style="text-align:center;"> -->
-                <!--     <a class="navbar-brand" href="#" >Legedatabasen</a> -->
-                <!-- </div> -->
-                <!-- <div class="col-xs-10" id="filter" style="display:none;"> -->
-                <!--     Filter 1 - Filter 2 - Filter 3 - Filter 4 -->
-                <!-- </div> -->
-                <!-- <div class="col-xs-10" id="soeg" style="display:none;"> -->
-                <!--     <input type="text" class="search-query form-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" style="padding:0px 10px;"/> -->
-                <!-- </div> -->
-                <!-- <div id="title" class="col-xs-1" style="text-align:left; color:white !important; font-size:1.5em; font-weight: 700;"> -->
-                <!--     Legedatabasen -->
-                <!-- </div> -->
-                <!-- <div id="titleb" style="col-xs-7" class="navbar-brand"> -->
-                <!--     Legedatabasenb -->
-                <!-- </div> -->
-
+                </span>
+                <span class="icon fdficon btn btn-link" style="position:fixed;font-size: 2.4em;color:black;opacity:0.00;left:102px;top:2px;z-index:-3;">
+                    &#xf41b;
+                </span>
             </div>
         </nav>
-        <div class="container-fluid" id="lege" style="background-color:white;padding:0px;">
-            <div class="container-fluid" style="background-color:white;padding:0px;">
-                <div class="slider-nav">
+        <div class="container-fluid" id="lege" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
+            <div class="slider-nav" style="display:none"></div>
+            <div id="filters" style="display:none;">
+                <div class="filter">
+                    <span class="fdficon" style="font-size:25pt;">&#xf360;</span>
+                    <div>
+                        <input type="radio" name="location" id="location-any" value="any"/ checked>
+                        <label for="location-any" class="btn btn-link"><span class="icon glyphicon glyphicon-plus-sign"></span></label>
+                    </div>
+                    <div>
+                        <input type="radio" name="location" id="location-inside" value="inside"/>
+                        <label for="location-inside" class="btn btn-link"><span class="icon glyphicon glyphicon-home"></span></label>
+                    </div>
+                    <div>
+                        <input type="radio" name="location" id="location-outside" value="outside"/>
+                        <label for="location-outside" class="btn btn-link"><span class="icon glyphicon glyphicon-tree-conifer"></span></label>
+                    </div>
+                    <div>
+                        <input type="radio" name="location" id="location-grass" value="grass"/>
+                        <label for="location-grass" class="btn btn-link">,,,,</label>
+                    </div>
+                </div>
+                <div class="filter">
+                    <span class="fdficon" style="font-size:25pt;">&#xf41e;</span>
+                    <input type="radio" name="age" id="age-any" value="any"/ checked>
+                    <label for="age-any" class="btn btn-link"><span class="icon glyphicon glyphicon-plus-sign"></span></label>
+                    <input type="radio" name="age" id="age-2" value="inside"/>
+                    <label for="age-2" class="btn btn-link">2+</label>
+                    <input type="radio" name="age" id="age-7" value="inside"/>
+                    <label for="age-7" class="btn btn-link">7+</label>
+                    <input type="radio" name="age" id="age-13" value="inside"/>
+                    <label for="age-13" class="btn btn-link">13+</label>
+                </div>
+                <div class="filter">
+                    <span class="fdficon" style="font-size:25pt;">&#xf3ba;</span>
+                    <input type="radio" name="duration" id="duration-any" value="any"/ checked>
+                    <label for="duration-any" class="btn btn-link"><span class="icon glyphicon glyphicon-plus-sign"></span></label>
+                    <input type="radio" name="duration" id="duration-5" value="inside"/>
+                    <label for="duration-5" class="btn btn-link">5 min</label>
+                    <input type="radio" name="duration" id="duration-20" value="inside"/>
+                    <label for="duration-20" class="btn btn-link">20 min</label>
+                    <input type="radio" name="duration" id="duration-60" value="inside"/>
+                    <label for="duration-60" class="btn btn-link">60 min</label>
+                </div>
+                <div class="filter">
+                    <span class="fdficon" style="font-size:25pt;">&#xf405;</span>
+                    <input type="radio" name="participants" id="participants-any" value="any"/ checked>
+                    <label for="participants-any" class="btn btn-link"><span class="icon glyphicon glyphicon-plus-sign"></span></label>
+                    <input type="radio" name="participants" id="participants-5" value="inside"/>
+                    <label for="participants-5" class="btn btn-link">5+</label>
+                    <input type="radio" name="participants" id="participants-10" value="inside"/>
+                    <label for="participants-10" class="btn btn-link">10+</label>
+                    <input type="radio" name="participants" id="participants-30" value="inside"/>
+                    <label for="participants-30" class="btn btn-link">30+</label>
                 </div>
             </div>
-            <div class="container-fluid" style="padding:0px;height:100vh;">
-                <div id="isotope" class="is-varying-sizes">
-                </div>
-            </div>
+            <div id="isotope" class="is-varying-sizes"></div>
         </div>
-        <div class="container-fluid" id="leg" style="background-color:white;padding:0px;display:none;">
+        <div class="container-fluid" id="leg" style="padding:0px;display:none;">
             <h1 id="leg-navn"></h1>
             <p id="leg-teaser"></p>
             <h3>Beskrivelse</h3>
             <p id="leg-beskrivelse"></p>
         </div>
+        <div class="modal container-fluid" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h1 id="modal-title">Title</h1>
+                </div>
+                <div class="modal-body"> </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>

@@ -72,24 +72,24 @@ function init() {
             lege_map[leg.url] = leg;
             var image = Math.floor(Math.random() * 7) + 1;
             leg.node = $(
-                '<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                    '<div class="leg" style="background-image:url(images/' + image + '.png);">'+
-                    '<p class="navn outlined">'+leg.name+'</p>'+
-                    '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>'+
-                    '<div class="orange">'+
-                    '<table style="width:100%;">'+
-                    '<tbody>'+
-                    '<tr>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">5</td>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">15<br>min</td>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">13+</td>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">Stor</td>'+
-                    '</tr>'+
-                    '</tbody>'+
-                    '</table>'+
-                    '</div>'+
-                    '</div>'+
-                    '</a>');
+                ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
+                 '<div class="leg" style="background-image:url(images/' + image + '.png);">'+
+                 '<p class="navn outlined">'+leg.name+'</p>'+
+                 '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>'+
+                 '<div class="orange">'+
+                 '<table style="width:100%;">'+
+                 '<tbody>'+
+                 '<tr>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">5</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">15<br>min</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">13+</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">Stor</td>'+
+                 '</tr>'+
+                 '</tbody>'+
+                 '</table>'+
+                 '</div>'+
+                 '</div>'+
+                 '</a>'));
             leg.node.appendTo('#isotope');
             return leg;
         });
@@ -109,7 +109,7 @@ function init() {
                 if (arg == "Top lege") {
                     return true;
                 }
-                var categories = leg.game_categories.map(function(c){return c.name}).join(",");
+                var categories = leg.game_categories.map(function(c){return c.name;}).join(",");
                 return categories.indexOf(arg) != -1;
             }, function(arg) {return arg || "";})
             .callback(sort_lege)
@@ -151,18 +151,37 @@ function init() {
         updateDisplayState();
     });
 
+    $("#swipe_knap").click(function() {
+        showCategory(categories[category]);
+    });
+    $("#filter_knap").click(function() {
+        showFilter();
+    });
+    $("#soeg_knap").click(function() {
+        showSearch();
+    });
+
     $(window).scroll(function() {
         var state = "lege";
         var position = $(this).scrollTop();
         if(state == "lege" && position >= 120) {
-            $(".navbar-brand").text(categories[category].name);
+            $("#title").text(categories[category].name);
         } else if(state == "leg" && position >= 50) {
-            $(".navbar-brand").text(leg.name);
+            $("#title").text(leg.name);
         } else {
-            $(".navbar-brand").text("Legedatabasen");
+            $("#title").text("Legedatabasen");
         }
     });
 
+    $(".modal").on("hidden.bs.modal", function() {
+        // window.location.hash = "";
+        if (been_at_front) {
+            window.history.back();
+        } else {
+            history.pushState({}, "", "/");
+        }
+
+    });
     $("#leg_back").click(function(){
         if (been_at_front) {
             window.history.back();
@@ -188,9 +207,9 @@ function init() {
                 return category.url == url;
             });
             console.log("cats: ", cats);
-            showCategory(category[0]);
+            showCategory(cats[0]);
         } else if (!url) {
-            showBase();
+            showCategory(categories[category]);
         } else {
             // Error
         }
@@ -204,32 +223,65 @@ function init() {
         $("#lege").hide();
         $("#filter_knap").hide();
         $("#soeg_knap").hide();
-        $("#leg").show();
+        $("#swipe_knap").hide();
 
-        $("#leg_back").show();
-        $("#leg-navn").text(leg.name);
-        $("#leg-teaser").text(leg.teaser);
-        $("#leg-beskrivelse").text(leg.description);
+        var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
+        d = description;
+        console.log(description);
+        // $("#leg").show();
+        // $("#leg_back").show();
+        // $("#leg-navn").text(leg.name);
+        // $("#leg-teaser").text(leg.teaser);
+        // $("#leg-beskrivelse").html(description);
+
+        $("#modal-title").text(leg.name);
+        $(".modal-body").html(description);
+        $(".modal").modal("show");
+
     }
 
     function showCategory(category) {
+        resetDisplay();
         search.update_filter("category", category.name);
+        $("#filters").slideUp(400, function() {
+            $(".slider-nav").slideDown(400);
+        });
+    }
 
+    function showSearch() {
+        var promise = resetDisplay();
+        _ = promise;
+        promise.done(function() {
+            $("#title").fadeOut(200, function() {
+                $("#search").val("").fadeIn(200);
+                $(".slider-nav").slideUp(400);
+                $("#filters").slideUp(400);
+            });
+        });
+    }
+    function showFilter() {
+        resetDisplay();
+        $(".slider-nav").slideUp(200, function() {
+            $("#filters").slideDown(400);
+        });
+    }
+
+    function resetDisplay() {
+        scrollToTop(400);
+        $(window).scrollTop(0);
+        $("#title").text("Legedatabasen");
+        var promise = $("#search:visible").slideUp(200, function() {
+            $("#title").fadeIn(200);
+        }).promise();;
+
+        $("#leg").hide();
         $("#lege").show();
         $("#filter_knap").show();
         $("#soeg_knap").show();
-        $("#leg").hide();
+        $("#swipe_knap").show();
         $("#leg_back").hide();
+        return promise;
     }
-
-    function showBase() {
-        $("#lege").show();
-        $("#filter_knap").show();
-        $("#soeg_knap").show();
-        $("#leg").hide();
-        $("#leg_back").hide();
-    }
-
     function sort_lege(rankings) {
         lege.map(function(leg){
             leg.node.attr("score", -1);
@@ -242,8 +294,43 @@ function init() {
         $("#isotope").isotope("updateSortData").isotope();
         return;
     }
-
 };
+
+function scrollToTop(duration) {
+    var to = 0;
+    var start = $(window).scrollTop();
+    var change = to - start;
+    var increment = 20;
+
+    function animateScroll(elapsedTime) {
+        elapsedTime += increment;
+        var position = easeInOutQuart(elapsedTime, start, change, duration);
+        $(window).scrollTop(position);
+        if (elapsedTime < duration) {
+            setTimeout(function() {animateScroll(elapsedTime);}, increment);
+        } else {
+            $(window).scrollTop(to);
+        }
+    };
+    animateScroll(0);
+
+    function ease(currentTime, start, change, duration) {
+        currentTime /= duration/2;
+        if (currentTime < 1) {
+            return change /2 * currentTime * currentTime + start;
+        } else {
+            currentTime -= 1;
+            return -change / 2 * (currentTime * (currentTime -2) -1) + start;
+        }
+    }
+
+    function easeInOutQuart (t, s, c, d) {
+        // t = currentTime, s = start, c = change, d = duration;
+        if ((t/=d/2) < 1) return c/2*t*t*t*t + s;
+        return -c/2 * ((t-=2)*t*t*t - 2) + s;
+    };
+}
+
 
 $(document).ready(init);
 
