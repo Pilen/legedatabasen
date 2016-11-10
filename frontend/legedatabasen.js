@@ -7,7 +7,7 @@ var categories = [
     {name: "Fangelege"},
     {name: "Boldlege"},
     {name: "Tonselege"},
-    {name: "Top lege"},
+    {name: "Alle lege"},
     {name: "Sanglege"},
     {name: "Hjernelege"},
     {name: "Bordlege"},
@@ -24,7 +24,7 @@ var search;
 
 function init() {
     categories.map(function(category, key) {
-        category.url = category.url || category.name.toLocaleLowerCase().replace(" ", "_");
+        category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
         var item = $('<div class="category outlined" id="'+key+'" ' +
                      'style="background-image: url(images/categories/'+category.image+');">' +
@@ -106,7 +106,7 @@ function init() {
             .create_filter("category", function(leg, arg) {
                 // Only keep lege where the category is found in the tags
                 // return leg.tags.toLowerCase().indexOf(arg) != -1;
-                if (arg == "Top lege") {
+                if (arg == "Alle lege") {
                     return true;
                 }
                 var categories = leg.game_categories.map(function(c){return c.name;}).join(",");
