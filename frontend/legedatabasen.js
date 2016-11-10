@@ -41,9 +41,11 @@ function init() {
         dots: true,
         centerMode: true,
         initialSlide: category,
+        focusOnSelect: true,
         variableWidth: true,
-        switeToSlide: true,
+        swipeToSlide: true,
         arrows: false,
+        // touchThreshold: 10,
         responsive: [{breakpoint: 1240,
                       settings: {slidesToShow: 5}},
                      {breakpoint: 900,
@@ -52,15 +54,14 @@ function init() {
                       settings: {slidesToShow: 1}}]
     });
 
-    // $('.slider-nav').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    $('.slider-nav').on('beforeChange', function(event, slick, currentSlide, nextSlide){
     // $('.slider-nav').on('swipe', function(event, slick, direction){
-    $('.slider-nav').on('afterChange', function(event, slick, currentSlide, nextSlide){
-        // $('.slider-nav').on('swipe', function(event, slick, currentSlide, nextSlide){
+    // $('.slider-nav').on('swipe', function(event, slick, currentSlide, nextSlide){
+    // $('.slider-nav').on('afterChange', function(event, slick, currentSlide, nextSlide){
         nextSlide = currentSlide;
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
             category = nextSlide;
-            history.replaceState({}, '', categories[category].url);
             showCategory(categories[nextSlide]);
         }
         return false;
@@ -190,7 +191,6 @@ function init() {
         }
     });
 
-
     function updateDisplayState() {
         var url = window.location.pathname;
         url = url .replace("/lege3", "")
@@ -206,6 +206,7 @@ function init() {
             var cats = categories.filter(function(category) {
                 return category.url == url;
             });
+            $(".slider-nav").slick('slickGoTo', kategori, true);
             console.log("cats: ", cats);
             showCategory(cats[0]);
         } else if (!url) {
@@ -228,30 +229,32 @@ function init() {
         var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
         d = description;
         console.log(description);
-        // $("#leg").show();
-        // $("#leg_back").show();
-        // $("#leg-navn").text(leg.name);
-        // $("#leg-teaser").text(leg.teaser);
-        // $("#leg-beskrivelse").html(description);
+        $("#leg").show();
+        $("#leg_back").show();
+        $("#leg-navn").text(leg.name);
+        $("#leg-teaser").text(leg.teaser);
+        $("#leg-beskrivelse").html(description);
 
         $("#modal-title").text(leg.name);
         $(".modal-body").html(description);
         $(".modal").modal("show");
-
     }
 
     function showCategory(category) {
-        resetDisplay();
-        search.update_filter("category", category.name);
-        $("#filters").slideUp(400, function() {
-            $(".slider-nav").slideDown(400);
+        // rename_url(category.url);
+        console.log("\n\nshow cat");
+        resetDisplay().done(function(){
+            console.log("reset");
+            search.update_filter("category", category.name);
+            $("#filters").slideUp(400, function() {
+                $(".slider-nav").slideDown(400);
+            });
         });
     }
 
     function showSearch() {
-        var promise = resetDisplay();
-        _ = promise;
-        promise.done(function() {
+        rename_url("");
+        resetDisplay().done(function() {
             $("#title").fadeOut(200, function() {
                 $("#search").val("").fadeIn(200);
                 $(".slider-nav").slideUp(400);
@@ -260,17 +263,20 @@ function init() {
         });
     }
     function showFilter() {
-        resetDisplay();
-        $(".slider-nav").slideUp(200, function() {
-            $("#filters").slideDown(400);
+        rename_url("");
+        resetDisplay().done(function() {
+            $(".slider-nav").slideUp(200, function() {
+                $("#filters").slideDown(400);
+            });
         });
     }
 
     function resetDisplay() {
-        scrollToTop(400);
+        var start_time = +new Date();
+        var promise1 = scrollToTop(400);
         $(window).scrollTop(0);
         $("#title").text("Legedatabasen");
-        var promise = $("#search:visible").slideUp(200, function() {
+        var promise2 = $("#search:visible").slideUp(200, function() {
             $("#title").fadeIn(200);
         }).promise();;
 
@@ -280,9 +286,12 @@ function init() {
         $("#soeg_knap").show();
         $("#swipe_knap").show();
         $("#leg_back").hide();
-        return promise;
+        console.log("reset time: " + ((+new Date()) - start_time));
+        return $.when(promise1, promise2);
     }
+
     function sort_lege(rankings) {
+        console.log("sorting");
         lege.map(function(leg){
             leg.node.attr("score", -1);
             // leg.node.find(".score").text(-1);
@@ -291,16 +300,25 @@ function init() {
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
+        console.log("isotope");
         $("#isotope").isotope("updateSortData").isotope();
+        console.log("sorted");
         return;
     }
 };
+$(document).ready(init);
 
 function scrollToTop(duration) {
     var to = 0;
     var start = $(window).scrollTop();
     var change = to - start;
     var increment = 20;
+    var deferred = $.Deferred();
+
+    if (start == to) {
+        deferred.resolve();
+        return deferred.promise();
+    }
 
     function animateScroll(elapsedTime) {
         elapsedTime += increment;
@@ -310,6 +328,7 @@ function scrollToTop(duration) {
             setTimeout(function() {animateScroll(elapsedTime);}, increment);
         } else {
             $(window).scrollTop(to);
+            deferred.resolve();
         }
     };
     animateScroll(0);
@@ -329,12 +348,36 @@ function scrollToTop(duration) {
         if ((t/=d/2) < 1) return c/2*t*t*t*t + s;
         return -c/2 * ((t-=2)*t*t*t - 2) + s;
     };
+    return deferred.promise();
 }
 
 
-$(document).ready(init);
 
 
 function find_cat(leg) {
     return leg.game_categories.map(function(c) {return c.name;}).join(", ");
+}
+
+function undefined_or() {
+    for (var i = 0; i < arguments.length; i++) {
+        var argument = arguments[i];
+        if (typeof argument !== "undefined") {
+            return argument;
+        }
+    }
+    return undefined;
+}
+
+var previous_url = "";
+function rename_url(url) {
+    if (url != previous_url) {
+        previous_url = url;
+        setTimeout(function() {
+            console.log(""+url);
+            var start_time = +new Date();
+            history.replaceState({}, "", url);
+            var end_time = +new Date();
+            console.log("" + (end_time - start_time));
+        }, 100);
+    }
 }
