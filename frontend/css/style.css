@@ -11,6 +11,18 @@ h1 {
     color: black;
 }
 
+.skjold {
+    /* background-color: rgb(105, 147, 183); */
+    opacity: 0.7;
+    height:50px;
+    z-index: 10000;
+}
+.skjold:hover {
+    content: url("/frontend/images/fdf_skjold1.png");
+    opacity: 1;
+    z-index: 10000;
+}
+
 .modal {
     z-index: 450;
 }

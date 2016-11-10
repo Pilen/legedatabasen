@@ -23,6 +23,7 @@
         <script src="legedatabasen.js"></script>
     </head>
     <body>
+        <!-- <img class="skjold" src="images/fdf_skjold2.png" style="background-color:rgb(105, 147, 183);"/> <\!-- test -\-> -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header">
                 <div class="navbar-brand">
@@ -47,6 +48,7 @@
                     &#xf41b;
                 </span>
             </div>
+            <img class="skjold" src="images/fdf_skjold2.png" style="float:right"></img> <!-- Flickers because z-index stuff -->
         </nav>
         <div class="container-fluid" id="lege" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
             <div class="slider-nav" style="display:none"></div>
@@ -128,4 +130,6 @@
         </div>
 
     </body>
+
+    <img src="images/fdf_skjold1.png" style="height:50px;visibility:hidden"/> <!-- preload image, is there a better way of doing this? -->
 </html>
