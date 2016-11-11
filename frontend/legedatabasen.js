@@ -155,44 +155,21 @@ function init() {
         route();
     });
 
-    $("#swipe_knap").click(function() {
-        showCategory(categories[category]);
-    });
-    $("#filter_knap").click(function() {
-        showFilter();
-    });
-    $("#soeg_knap").click(function() {
-        showSearch();
-    });
-
-    $(window).scroll(function() {
-        var state = "lege";
-        var position = $(this).scrollTop();
-        if(state == "lege" && position >= 120) {
-            $("#title").text(categories[category].name);
-        } else if(state == "leg" && position >= 50) {
-            $("#title").text(leg.name);
-        } else {
-            $("#title").text("Legedatabasen");
-        }
-    });
-
-    $(".modal").on("hidden.bs.modal", function() {
-        // The modal could also be closed by pressing back
-        // window.location.hash = "";
+    $(".leg_back").on("click", function(){
         if (been_at_front) {
             window.history.back();
         } else {
             history.pushState({}, "", "/");
         }
-
-    });
-    $("#leg_back").click(function(){
-        // Same as clicking on the close button
-        $(".modal .btn").click();
     });
 
     function route() {
+        // Close modal if shown
+        if ($(".modal").is(":visible")) {
+            $(".modal").modal("hide");
+            return;
+        }
+
         var url = window.location.pathname;
         url = url .replace("/lege3", "")
             .replace("/legedatabasen", "")
@@ -226,13 +203,35 @@ function init() {
         return;
     }
 
+    $("#swipe_knap").click(function() {
+        showCategory(categories[category]);
+    });
+    $("#filter_knap").click(function() {
+        showFilter();
+    });
+    $("#soeg_knap").click(function() {
+        showSearch();
+    });
+
+    $(window).scroll(function() {
+        var state = "lege";
+        var position = $(this).scrollTop();
+        if(state == "lege" && position >= 120) {
+            $("#title").text(categories[category].name);
+        } else if(state == "leg" && position >= 50) {
+            $("#title").text(leg.name);
+        } else {
+            $("#title").text("Legedatabasen");
+        }
+    });
+
     function showLeg(leg) {
         _=leg;
         /*
-        $("#lege").hide();
-        $("#filter_knap").hide();
-        $("#soeg_knap").hide();
-        $("#swipe_knap").hide();
+          $("#lege").hide();
+          $("#filter_knap").hide();
+          $("#soeg_knap").hide();
+          $("#swipe_knap").hide();
         */
 
         var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
@@ -241,14 +240,14 @@ function init() {
         // $("#leg-navn").text(leg.name);
         // $("#leg-teaser").text(leg.teaser);
         // $("#leg-beskrivelse").html(description);
-        //$("#leg_back").show();
+        //$(".navbar .leg_back").show();
 
         $("#modal-leg").find("#modal-title").html(leg.name);
         $("#modal-leg").find(".modal-body").find(".leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg").find(".modal-body").find(".leg-description").html(leg.description);
         /*
-        $("#modal-title").text(leg.name);
-        $(".modal-body").html(description);
+          $("#modal-title").text(leg.name);
+          $(".modal-body").html(description);
         */
         $("#modal-leg").modal("show");
     }
@@ -298,7 +297,7 @@ function init() {
         $("#filter_knap").show();
         $("#soeg_knap").show();
         $("#swipe_knap").show();
-        $("#leg_back").hide();
+        $(".navbar .leg_back").hide();
         console.log("reset time: " + ((+new Date()) - start_time));
         return $.when(promise1, promise2);
     }
