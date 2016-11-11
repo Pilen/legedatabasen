@@ -1,4 +1,3 @@
-console.log("START");
 var $=$;
 
 var categories = [
@@ -74,7 +73,6 @@ function init() {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
             lege_map[leg.url] = leg;
-            console.log(leg);
             var image = Math.floor(Math.random() * 7) + 1;
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
@@ -213,7 +211,6 @@ function init() {
                 return category.url == url;
             });
             $(".slider-nav").slick('slickGoTo', kategori, true);
-            console.log("cats: ", cats);
             showCategory(cats[0]);
             return;
         }
@@ -223,7 +220,6 @@ function init() {
             return;
         }
         // Error
-        console.log("404");
         return;
     }
 
@@ -256,9 +252,7 @@ function init() {
 
     function showCategory(category) {
         // rename_url(category.url);
-        console.log("\n\nshow cat");
         resetDisplay().done(function(){
-            console.log("reset");
             search.update_filter("category", category.name);
             $("#filters").slideUp(400, function() {
                 $(".slider-nav").slideDown(400);
@@ -300,12 +294,10 @@ function init() {
         $("#soeg_knap").show();
         $("#swipe_knap").show();
         $("#leg_back").hide();
-        console.log("reset time: " + ((+new Date()) - start_time));
         return $.when(promise1, promise2);
     }
 
     function sort_lege(rankings) {
-        console.log("sorting");
         lege.map(function(leg){
             leg.node.attr("score", -1);
             // leg.node.find(".score").text(-1);
@@ -314,9 +306,7 @@ function init() {
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
-        console.log("isotope");
         $("#isotope").isotope("updateSortData").isotope();
-        console.log("sorted");
         return;
     }
 };
@@ -387,11 +377,9 @@ function rename_url(url) {
     if (url != previous_url) {
         previous_url = url;
         setTimeout(function() {
-            console.log(""+url);
             var start_time = +new Date();
             history.replaceState({}, "", url);
             var end_time = +new Date();
-            console.log("" + (end_time - start_time));
         }, 100);
     }
 }
