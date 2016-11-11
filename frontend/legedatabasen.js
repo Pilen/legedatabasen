@@ -188,11 +188,8 @@ function init() {
 
     });
     $("#leg_back").click(function(){
-        if (been_at_front) {
-            window.history.back();
-        } else {
-            history.pushState({}, "", "/");
-        }
+        // Same as clicking on the close button
+        $(".modal .btn").click();
     });
 
     function route() {
