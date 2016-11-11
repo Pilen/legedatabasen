@@ -74,6 +74,7 @@ function init() {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
             lege_map[leg.url] = leg;
+            console.log(leg);
             var image = Math.floor(Math.random() * 7) + 1;
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
@@ -84,9 +85,9 @@ function init() {
                  '<table style="width:100%;">'+
                  '<tbody>'+
                  '<tr>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">5</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">15<br>min</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">13+</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.min_participants + '</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.max_time + '<br>min</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.min_age + '+</td>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">Stor</td>'+
                  '</tr>'+
                  '</tbody>'+
