@@ -237,11 +237,11 @@ function init() {
         var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
         d = description;
         console.log(description);
-        $("#leg").show();
+        // $("#leg").show();
+        // $("#leg-navn").text(leg.name);
+        // $("#leg-teaser").text(leg.teaser);
+        // $("#leg-beskrivelse").html(description);
         $("#leg_back").show();
-        $("#leg-navn").text(leg.name);
-        $("#leg-teaser").text(leg.teaser);
-        $("#leg-beskrivelse").html(description);
 
         $("#modal-title").text(leg.name);
         $(".modal-body").html(description);
