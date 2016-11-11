@@ -24,7 +24,7 @@ h1 {
 }
 
 .modal {
-    z-index: 450;
+    z-index: 20450;
 }
 .modal-backdrop {
     z-index: 440;

@@ -227,25 +227,30 @@ function init() {
     }
 
     function showLeg(leg) {
-        console.log(leg);
         _=leg;
+        /*
         $("#lege").hide();
         $("#filter_knap").hide();
         $("#soeg_knap").hide();
         $("#swipe_knap").hide();
+        */
 
         var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
         d = description;
-        console.log(description);
         // $("#leg").show();
         // $("#leg-navn").text(leg.name);
         // $("#leg-teaser").text(leg.teaser);
         // $("#leg-beskrivelse").html(description);
-        $("#leg_back").show();
+        //$("#leg_back").show();
 
+        $("#modal-leg").find("#modal-title").html(leg.name);
+        $("#modal-leg").find(".modal-body").find(".leg-teaser").html('<strong>' + leg.teaser + '</strong>');
+        $("#modal-leg").find(".modal-body").find(".leg-description").html(leg.description);
+        /*
         $("#modal-title").text(leg.name);
         $(".modal-body").html(description);
-        $(".modal").modal("show");
+        */
+        $("#modal-leg").modal("show");
     }
 
     function showCategory(category) {
