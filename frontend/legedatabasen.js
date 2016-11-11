@@ -26,11 +26,11 @@ function init() {
     categories.map(function(category, key) {
         category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
-        var item = $('<div class="category outlined" id="'+key+'" ' +
+        var node = $('<div class="category outlined" id="'+key+'" ' +
                      'style="background-image: url(images/categories/'+category.image+');">' +
                      category.name +
                      '</div>');
-        item.appendTo('.slider-nav');
+        node.appendTo('.slider-nav');
     });
 
     $('.slider-nav').slick({
