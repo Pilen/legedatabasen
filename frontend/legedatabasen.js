@@ -23,6 +23,7 @@ var been_at_front = false;
 var search;
 
 function init() {
+    // Create categories
     categories.map(function(category, key) {
         category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
@@ -33,6 +34,7 @@ function init() {
         node.appendTo('.slider-nav');
     });
 
+    // Create category swiper
     $('.slider-nav').slick({
         slide: 'div',
         infinite: true,
@@ -67,8 +69,9 @@ function init() {
         return false;
     });
 
+    // Load lege
     $.getJSON("data.json", function (data) {
-        data = data.filter(function(d) {return d.name;}); // Currently
+        data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
             lege_map[leg.url] = leg;
             var image = Math.floor(Math.random() * 7) + 1;
@@ -175,6 +178,7 @@ function init() {
     });
 
     $(".modal").on("hidden.bs.modal", function() {
+        // The modal could also be closed by pressing back
         // window.location.hash = "";
         if (been_at_front) {
             window.history.back();
@@ -199,23 +203,30 @@ function init() {
         url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
 
 
+        // Show leg
         if (url.startsWith("leg/")) {
             var leg = lege_map[url.substring(4)];
             showLeg(leg);
-        } else if (url) {
+            return;
+        }
+        // Show category
+        if (url) {
             var cats = categories.filter(function(category) {
                 return category.url == url;
             });
             $(".slider-nav").slick('slickGoTo', kategori, true);
             console.log("cats: ", cats);
             showCategory(cats[0]);
-        } else if (!url) {
-            showCategory(categories[category]);
-        } else {
-            // Error
+            return;
         }
-        return "Not done";
-
+        // Show front (with previous category)
+        if (!url) {
+            showCategory(categories[category]);
+            return;
+        }
+        // Error
+        console.log("404");
+        return;
     }
 
     function showLeg(leg) {
