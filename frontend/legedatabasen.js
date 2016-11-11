@@ -140,16 +140,16 @@ function init() {
         $('a').click(function(event){
             event.preventDefault();
             history.pushState({}, '', $(this).attr("href"));
-            updateDisplayState();
+            route();
             been_at_front = true;
             return false;
         });
 
         $(window).on('popstate', function() {
-            updateDisplayState();
+            route();
         });
 
-        updateDisplayState();
+        route();
     });
 
     $("#swipe_knap").click(function() {
@@ -191,7 +191,7 @@ function init() {
         }
     });
 
-    function updateDisplayState() {
+    function route() {
         var url = window.location.pathname;
         url = url .replace("/lege3", "")
             .replace("/legedatabasen", "")
