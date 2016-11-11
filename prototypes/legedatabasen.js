@@ -101,7 +101,7 @@ function init() {
     category_swiper = new Swiper(".swiper-container", {
         loop: true,
         centeredSlides: true,
-        slidesPerView: "3",
+        slidesPerView: "5",
         // loopedSlides: 2,
         prevButton: ".swiper-button-prev",
         nextButton: ".swiper-button-next",
