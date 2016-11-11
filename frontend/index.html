@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <base href="/legedatabasen/frontend/"/>
         <meta charset="utf-8">
         <title>Legedatabasen</title>
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css">
-        <link rel="stylesheet" href="bower_components/slick-carousel/slick/slick-theme.css">
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick.css">
+        <link rel="stylesheet" href="/bower_components/slick-carousel/slick/slick-theme.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,700" type="text/css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans+Caption:700" type="text/css">
 
-        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
 
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
-        <script src="bower_components/isotope/dist/isotope.pkgd.min.js"></script>
-        <script src="bower_components/marked/marked.min.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="searchindex.js"></script>
-        <script src="legedatabasen.js"></script>
+        <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="/bower_components/slick-carousel/slick/slick.min.js"></script>
+        <script src="/bower_components/isotope/dist/isotope.pkgd.min.js"></script>
+        <script src="/bower_components/marked/marked.min.js"></script>
+        <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/searchindex.js"></script>
+        <script src="/legedatabasen.js"></script>
     </head>
     <body>
         <!-- <img class="skjold" src="images/fdf_skjold2.png" style="background-color:rgb(105, 147, 183);"/> <\!-- test -\-> -->
@@ -48,7 +47,7 @@
                     &#xf41b;
                 </span>
             </div>
-            <img class="skjold" src="images/fdf_skjold2.png" style="float:right"></img> <!-- Flickers because z-index stuff -->
+            <img class="skjold" src="/images/fdf_skjold2.png" style="float:right"></img> <!-- Flickers because z-index stuff -->
         </nav>
         <div class="container-fluid" id="lege" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
             <div class="slider-nav" style="display:none"></div>
@@ -131,5 +130,16 @@
 
     </body>
 
-    <img src="images/fdf_skjold1.png" style="height:50px;visibility:hidden"/> <!-- preload image, is there a better way of doing this? -->
+    <img src="/images/fdf_skjold1.png" style="height:50px;visibility:hidden"/> <!-- preload image, is there a better way of doing this? -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-87282627-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </html>
