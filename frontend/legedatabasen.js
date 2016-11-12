@@ -244,9 +244,9 @@ function init() {
         // $("#leg-beskrivelse").html(description);
         //$(".navbar .leg_back").show();
 
-        $("#modal-leg").find("#modal-title").html(leg.name);
-        $("#modal-leg").find(".modal-body").find(".leg-teaser").html('<strong>' + leg.teaser + '</strong>');
-        $("#modal-leg").find(".modal-body").find(".leg-description").html(leg.description);
+        $("#modal-leg #modal-title").html(leg.name);
+        $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
+        $("#modal-leg .modal-body .leg-description").html(description);
         /*
           $("#modal-title").text(leg.name);
           $(".modal-body").html(description);
