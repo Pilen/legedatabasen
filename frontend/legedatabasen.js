@@ -222,7 +222,7 @@ function init() {
         } else if(state == "leg" && position >= 50) {
             $("#title").text(leg.name);
         } else {
-            $("#title").text("Legedatabasen");
+            $("#title").text("");
         }
     });
 
@@ -286,6 +286,7 @@ function init() {
         var start_time = +new Date();
         var promise1 = scrollToTop(400);
         $(window).scrollTop(0);
+        $("#title").text("");
         var promise2 = $("#search:visible").slideUp(200, function() {
             $("#title").fadeIn(200);
         }).promise();;
