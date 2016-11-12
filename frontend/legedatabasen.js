@@ -83,7 +83,7 @@ function init() {
                  '<div class="leg" style="background-image:url(images/lege/' + image + '.png);">'+
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>'+
-                 '<div class="orange">'+
+                 '<div class="infobar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+
                  '<tr>'+

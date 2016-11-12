@@ -352,7 +352,7 @@ div:focus {
     position:relative;
     background-size:100%;
 }
-.leg .orange {
+.leg .infobar {
     -webkit-border-bottom-right-radius: 2px;
     -webkit-border-bottom-left-radius: 2px;
     -moz-border-radius-bottomright: 2px;
@@ -362,16 +362,16 @@ div:focus {
     position:absolute;
     bottom:0px;
     height:50px;
-    background-color:orange;
+    background-color: rgba(255, 165, 0, 0.65);
     width:100%;
     padding:0px 10px;
     color: white;
     font-weight: 700;
 }
-.leg .orange .fdficon {
+.leg .infobar .fdficon {
     color:rgb(28, 87, 135);
 }
-.orange td {
+.infobar td {
     text-align: center;
 }
 .element-item > * {
