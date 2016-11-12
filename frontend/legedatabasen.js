@@ -73,6 +73,10 @@ function init() {
     $.getJSON("data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
+            leg.area = "plæne";
+            leg.age = age_group(leg.min_age);
+            leg.duration = duration_group(leg.min_time);
+            leg.participants = participants_group(leg.min_participants);
             lege_urls[leg.url] = leg;
             var image = Math.floor(Math.random() * 7) + 1;
             leg.node = $(
@@ -84,10 +88,10 @@ function init() {
                  '<table style="width:100%;">'+
                  '<tbody>'+
                  '<tr>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">5</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">15<br>min</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">13+</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">Stor</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
                  '</tr>'+
                  '</tbody>'+
                  '</table>'+
@@ -392,4 +396,37 @@ function rename_url(url) {
             console.log("" + (end_time - start_time));
         }, 100);
     }
+}
+
+
+function age_group(age) {
+    if (age < 2)
+        console.log("ERROR");
+    if (age < 7)
+        return "2";
+    if (age < 13)
+        return "7";
+    return "13";
+}
+
+function duration_group(duration) {
+    if (duration < 5)
+        console.log("ERROR");
+    if (duration < 10)
+        return "5";
+    if (duration < 30)
+        return "20";
+    if (duration < 45)
+        console.log("ERROR");
+    return "60";
+}
+
+function participants_group(participants) {
+    if (participants < 9)
+        return "5";
+    if (participants < 20)
+        return "10"
+    if (participants < 30)
+        console.log("ERROR");
+    return "30+";
 }
