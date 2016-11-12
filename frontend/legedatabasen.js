@@ -17,7 +17,7 @@ var categories = [
 
 var category = 5;  // Current category
 var lege;          // List of all lege
-var lege_map = {}; // url -> lege
+var lege_urls = {}; // url -> lege
 var state;
 var been_at_front = false;
 var search;
@@ -73,7 +73,7 @@ function init() {
     $.getJSON("data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
-            lege_map[leg.url] = leg;
+            lege_urls[leg.url] = leg;
             var image = Math.floor(Math.random() * 7) + 1;
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
@@ -179,7 +179,7 @@ function init() {
 
         // Show leg
         if (url.startsWith("leg/")) {
-            var leg = lege_map[url.substring(4)];
+            var leg = lege_urls[url.substring(4)];
             showLeg(leg);
             return;
         }
