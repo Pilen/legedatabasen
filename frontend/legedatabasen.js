@@ -72,6 +72,7 @@ function init() {
     $.getJSON("data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
+            if (Math.random() < 0.40) leg.youtube = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ"];
             leg.area = "plæne";
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
@@ -82,7 +83,7 @@ function init() {
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg" style="background-image:url(images/lege/' + image + '.png);">'+
                  '<p class="navn outlined">'+leg.name+'</p>'+
-                 '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>'+
+                 (leg.youtube.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+
