@@ -170,6 +170,10 @@ function init() {
         }
     });
 
+    $('#modal-leg').on('hide.bs.modal', function (e) {
+        history.pushState({}, "", "/");
+    })
+
     function route() {
         // Close modal if shown
         if ($(".modal").is(":visible")) {
