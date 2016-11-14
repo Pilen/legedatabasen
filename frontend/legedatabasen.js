@@ -30,11 +30,11 @@ function init() {
                      'style="background-image: url(images/categories/'+category.image+');">' +
                      category.name +
                      '</div>');
-        node.appendTo('.slider-nav');
+        node.appendTo('#slider');
     });
 
     // Create category swiper
-    $('.slider-nav').slick({
+    $('#slider').slick({
         slide: 'div',
         infinite: true,
         slidesToShow: 7,
@@ -55,10 +55,10 @@ function init() {
                       settings: {slidesToShow: 1}}]
     });
 
-    $('.slider-nav').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-    // $('.slider-nav').on('swipe', function(event, slick, direction){
-    // $('.slider-nav').on('swipe', function(event, slick, currentSlide, nextSlide){
-    // $('.slider-nav').on('afterChange', function(event, slick, currentSlide, nextSlide){
+    $('#slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    // $('#slider').on('swipe', function(event, slick, direction){
+    // $('#slider').on('swipe', function(event, slick, currentSlide, nextSlide){
+    // $('#slider').on('afterChange', function(event, slick, currentSlide, nextSlide){
         nextSlide = currentSlide;
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
@@ -72,18 +72,21 @@ function init() {
     $.getJSON("data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
-            if (Math.random() < 0.40) leg.youtube = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ"];
             leg.area = "plæne";
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
             leg.participants = participants_group(leg.min_participants);
             lege_urls[leg.url] = leg;
-            var image = Math.floor(Math.random() * 7) + 1;
+            if (leg.images.length > 0) {
+                var image = leg.images[0] + '?w=360';
+            } else {
+                var image = '/images/lege/' + Math.floor(Math.random() * 7 + 1) + '.png';
+            }
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                 '<div class="leg" style="background-image:url(images/lege/' + image + '.png);">'+
+                 '<div class="leg" style="background-image:url(' + image +');">'+
                  '<p class="navn outlined">'+leg.name+'</p>'+
-                 (leg.youtube.length > 0 ? '<img class="youtube" src="/images/youtube.svg" style="float:right"></img>' : '')+
+                 (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+
@@ -192,7 +195,7 @@ function init() {
             var cats = categories.filter(function(category) {
                 return category.url == url;
             });
-            $(".slider-nav").slick('slickGoTo', kategori, true);
+            $("#slider").slick('slickGoTo', kategori, true);
             showCategory(cats[0]);
             return;
         }
@@ -245,6 +248,10 @@ function init() {
         //$(".navbar .leg_back").show();
 
         $("#modal-leg #modal-title").html(leg.name);
+	if (leg.images.length > 0) {
+		$("#modal-leg #leg-presentation-image").remove();
+		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=700" class="img-responsive" id="leg-presentation-image" />');
+	}
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg .modal-body .leg-description").html(description);
         /*
@@ -259,7 +266,7 @@ function init() {
         resetDisplay().done(function(){
             search.update_filter("category", category.name);
             $("#filters").slideUp(400, function() {
-                $(".slider-nav").slideDown(400);
+                $("#slider").slideDown(400);
             });
         });
     }
@@ -269,7 +276,7 @@ function init() {
         resetDisplay().done(function() {
             $("#title").fadeOut(200, function() {
                 $("#search").val("").fadeIn(200);
-                $(".slider-nav").slideUp(400);
+                $("#slider").slideUp(400);
                 $("#filters").slideUp(400);
             });
         });
@@ -277,7 +284,7 @@ function init() {
     function showFilter() {
         rename_url("");
         resetDisplay().done(function() {
-            $(".slider-nav").slideUp(200, function() {
+            $("#slider").slideUp(200, function() {
                 $("#filters").slideDown(400);
             });
         });
