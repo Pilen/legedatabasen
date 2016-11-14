@@ -40,7 +40,7 @@ h1 {
 .navbar-fixed-top {
     background-color: #4E779E;
     border-color: #4E779E;
-	opacity: 0.8;
+	opacity: 0.9;
 }
 .navbar-fixed-top.navbar-down {
     margin-top: 50px;
@@ -242,7 +242,7 @@ div:focus {
 }
 .outlined {
     -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-    text-shadow: 1px 1px 0px #333, 1px -1px 0px #333, -1px 1px 0px #333, -1px -1px 0px #333;
+    text-shadow: 1px 1px 0px  #233b52;, 1px -1px 0px  #233b52;, -1px 1px 0px  #233b52;, -1px -1px 0px  #233b52;;
 }
 .leg-info {
     position:absolute;
