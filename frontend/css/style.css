@@ -201,9 +201,9 @@ input[type="text"]
     left: -28px;
     /* IE7-8 doesn't have border-radius, so don't indent the padding */
     margin-bottom: 0;
-    -webkit-border-radius: 1px;
-    -moz-border-radius: 1px;
-    border-radius: 1px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     color:#D9230F;
 }
 
@@ -389,7 +389,7 @@ div:focus {
     font-weight: 300;
 }
 .leg .infobar .fdficon {
-    color:rgb(28, 87, 135);
+    color:#233b52;
 }
 .infobar td {
     text-align: center;
