@@ -234,13 +234,12 @@ div:focus {
     background-repeat:no-repeat;
 }
 .leg-title {
-    font-weight:700;
+    font-weight:300;
     font-size:25pt;
     //text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
     color: white;
 }
 .outlined {
-    font-family: 'PT Sans Caption', 'PT Sans', sans-serif;
     -webkit-text-fill-color: white; /* Will override color (regardless of order) */
     text-shadow: 1px 1px 0px #333, 1px -1px 0px #333, -1px 1px 0px #333, -1px -1px 0px #333;
 }
