@@ -38,8 +38,8 @@ h1 {
 }
 
 .navbar-fixed-top {
-    background-color: #233b52;
-    border-color: #233b52;
+    background-color: #4E779E;
+    border-color: #4E779E;
 	opacity: 0.8;
 }
 .navbar-fixed-top.navbar-down {
@@ -79,7 +79,7 @@ h1 {
     color:white !important;
     /* font-size:1.5em; */
     font-size:1.2em;
-    font-weight: 700;
+    font-weight: 300;
     text-decoration: none;
 }
 .navbar-brand .input-box {
@@ -301,11 +301,11 @@ div:focus {
     text-align:center;
     line-height:145px;
     font-size:16pt;
-    font-weight: 700;
+    font-weight: 300;
     cursor:pointer;
 }
 .category_navn {
-    font-weight:700;
+    font-weight:300;
     font-size:20pt;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
     color: white;
@@ -314,7 +314,7 @@ div:focus {
 .dropdown-btns {
     color:rgba(255,255,255,0.7);
     text-decoration:none;
-    font-weight:700;
+    font-weight:300;
     font-size:12pt;
     background-color:rgb(105, 147, 183);
     border:0px;
@@ -372,7 +372,7 @@ div:focus {
     width:100%;
     padding:0px 10px;
     color: white;
-    font-weight: 700;
+    font-weight: 300;
 }
 .leg .infobar .fdficon {
     color:rgb(28, 87, 135);
