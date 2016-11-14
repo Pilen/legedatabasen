@@ -24,9 +24,11 @@ body {
 h1 {
     color: black;
 }
-r2 {
-    font-family: RobotoItalic;
+input[type="text"]
+{
+     font-family: RobotoItalic;
 }
+
 .skjold {
     /* background-color: rgb(105, 147, 183); */
     opacity: 0.7;
