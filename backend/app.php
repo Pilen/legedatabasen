@@ -1,6 +1,5 @@
 #!/usr/bin/env php
 <?php
-// application.php
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -34,7 +33,6 @@ $application
 		$locale = 'da-DK';
 
 		$client = new \Contentful\Delivery\Client($token, $space);
-		/** @var \Contentful\Delivery\Space $space */
 		$query = new \Contentful\Delivery\Query();
 		$query->setInclude(10);
 		$query->setLimit(1000);
@@ -42,21 +40,131 @@ $application
 
 		$entries = $client->getEntries($query);
 
-		$field = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) {
-			$methodName = 'get' . ucfirst($fieldName);
-			$value = $entry->$methodName();
-			if (is_string($value)) {
-				return trim($value);
-			}
-			if (is_int($value)) {
-				return $value;
-			}
-			if (is_array($value)) {
-				foreach ($value as $relatedItem) {
-					#var_dump($relatedItem->getContentType());
+		$fieldMapping = [
+			'tags' => [
+				'properties' => [
+					'name' => 'name'
+				]
+			],
+			'gameCategory' => [
+				'properties' => [
+					'category' => 'name'
+				]
+			],
+			'images' => [
+				'properties' => [
+					'image' => 'image'
+				]
+			],
+			'image' => [
+				'properties' => [
+					'file' => 'file'
+				]
+			],
+			'file' => [
+				'properties' => [
+					'file' => 'url'
+				]
+			]
+		];
+
+		$field = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) use ($fieldMapping, &$field, $locale) {
+			try {
+				$contentTypeField = $entry->getContentType()->getField($fieldName);
+
+
+				if ($contentTypeField !== NULL) {
+					$type = $contentTypeField->getType();
+				} else {
+					$type = NULL;
 				}
-				return;
+
+
+				$methodName = 'get' . ucfirst($fieldName);
+				/** @var \Contentful\Delivery\ContentTypeField $value */
+				$value = $entry->$methodName($locale);
+				switch ($type) {
+					case 'Text':
+						return trim($value);
+						break;
+
+					case 'Integer':
+						return (int) trim($value);
+						break;
+
+					case 'Array':
+						$arrayValues = [];
+						if (count($value) < 1) {
+							return NULL;
+						}
+
+						/** @var \Contentful\Delivery\DynamicEntry $childItem */
+						foreach ($value as $childItem) {
+							$childContentName = $childItem->getContentType()->getId();
+
+							if (array_key_exists($childContentName, $fieldMapping)) {
+								$properties = $fieldMapping[$childContentName]['properties'];
+								$childValues['id'] = $field('id', $childItem);
+								foreach ($properties as $propertyKey => $returnKey) {
+									$childFieldValue = $field($propertyKey, $childItem);
+
+									$childValues[$returnKey] = $childFieldValue;
+								}
+								$arrayValues[] = $childValues;
+							}
+						}
+						return $arrayValues;
+						break;
+
+					case 'Link':
+						return 'Link object';
+						break;
+
+					default:
+						return (string) $value;
+				}
+			} catch (\Exception $exception) {
+				return NULL;
 			}
+
+		};
+
+		$images = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) use ($fieldMapping, $locale) {
+			$methodName = 'get' . ucfirst($fieldName);
+
+			$assets = $entry->$methodName();
+
+			if (count($assets) === 0) {
+				return [];
+			}
+
+			$images = [];
+			/** @var \Contentful\Delivery\DynamicEntry $asset */
+			foreach ($assets as $asset) {
+				try {
+					$images[] = $asset->getImage()->getFile()->getUrl();
+				} catch (\Exception $exception) {
+
+				}
+			}
+			return $images;
+		};
+
+		$youtube = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) use ($fieldMapping, $locale) {
+			$methodName = 'get' . ucfirst($fieldName);
+
+			$assets = $entry->$methodName();
+
+			$videos = [];
+			/** @var \Contentful\Delivery\DynamicEntry $asset */
+			foreach ($assets as $asset) {
+				try {
+					$videos[] = $asset->getYoutubeId();
+				} catch (\Exception $exception) {
+
+				}
+			}
+			return $videos;
 		};
 
 		$slugify = function($string) {
@@ -86,25 +194,30 @@ $application
 
 		/** @var \Contentful\Delivery\DynamicEntry $entry */
 		foreach ($entries as $entry) {
-			#var_dump($entry->jsonSerialize()->fields);
-			$data[] = [
-				'name' => $field('name', $entry),
-				'teaser' => $field('teaser', $entry),
-				'description' => $field('description', $entry),
-				'min_participants' => $field('participantsMin', $entry),
-				'max_participants' => $field('participantsMax', $entry),
-				'min_age' => $field('ageMin', $entry),
-				'max_age' => $field('ageMax', $entry),
-				'min_time' => $field('durationMin', $entry),
-				'max_time' => $field('durationMax', $entry),
-				'inside' =>  (boolean) $field('indoor', $entry) ? TRUE : FALSE,
-				'outdoor' => (boolean) $field('outdoor', $entry) ? TRUE : FALSE,
-				'youtube' => $field('videos', $entry),
-				'tags' => $field('tags', $entry),
-				'url' => $slugify($field('name', $entry))
-			];
-		}
+			try {
 
+				$data[] = [
+					'id' => $field('id', $entry),
+					'name' => $field('name', $entry),
+					'teaser' => $field('teaser', $entry),
+					'description' => $field('description', $entry),
+					'min_participants' => $field('participantsMin', $entry),
+					'max_participants' => $field('participantsMax', $entry),
+					'min_age' => $field('ageMin', $entry),
+					'max_age' => $field('ageMax', $entry),
+					'min_time' => $field('durationMin', $entry),
+					'max_time' => $field('durationMax', $entry),
+					'inside' =>  (boolean) $field('indoor', $entry) ? TRUE : FALSE,
+					'outdoor' => (boolean) $field('outdoor', $entry) ? TRUE : FALSE,
+					'videos' => $youtube('videos', $entry),
+					'tags' => $field('tags', $entry),
+					'game_categories' => $field('gameCategory', $entry),
+					'url' => $slugify($field('name', $entry)),
+					'images' => $images('images', $entry)
+				];
+			} catch (\Exception $exception) {
+			}
+		}
 		$output->writeln(json_encode($data));
 	});
 $application->run();
