@@ -43,7 +43,9 @@ input[type="text"]
 
 .modal {
     z-index: 20450;
-	border-style: solid;
+	-webkit-border-style: 3px;
+    -moz-border-style: 3px;
+    border-style: 3px; 
     border-width: 3px;
 	border-color: #233b52;
 
