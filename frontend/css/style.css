@@ -455,7 +455,7 @@ div:focus {
 
 .element-item {
     width: calc(100.00vw - (100.00vw - 100%));
-    height: calc(((100.00vw) / 3) + 50px);
+    height: calc(((100.00vw) / 4) + 50px);
 }
 .element-item .navn {
     font-size:18pt;margin-top:10px;
