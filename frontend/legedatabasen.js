@@ -170,10 +170,6 @@ function init() {
         }
     });
 
-    $('#modal-leg').on('hide.bs.modal', function (e) {
-        history.pushState({}, "", "/");
-    })
-
     function route() {
         // Close modal if shown
         if ($(".modal").is(":visible")) {
@@ -242,7 +238,19 @@ function init() {
           $("#soeg_knap").hide();
           $("#swipe_knap").hide();
         */
-
+		var overview =
+			     '<div class="infobar">'+ 
+				 '<table style="width:100%;">'+
+                 '<tbody>'+
+                 '<tr>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
+                 '</tr>'+
+                 '</tbody>'+
+                 '</table>'+
+				 '</div>'
         var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
         d = description;
         // $("#leg").show();
@@ -254,9 +262,9 @@ function init() {
         $("#modal-leg #modal-title").html(leg.name);
 	if (leg.images.length > 0) {
 		$("#modal-leg #leg-presentation-image").remove();
-		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=800" class="img-responsive" id="leg-presentation-image" />');
-	}
-        $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
+		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=700" class="img-responsive" id="leg-presentation-image" />');
+	}    
+		$("#modal-leg .modal-overview .leg-overview").html(overview);
         $("#modal-leg .modal-body .leg-description").html(description);
         /*
           $("#modal-title").text(leg.name);
