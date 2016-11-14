@@ -72,16 +72,19 @@ function init() {
     $.getJSON("data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
-            if (Math.random() < 0.40) leg.videos = ["https://www.youtube.com/watch?v=dQw4w9WgXcQ"];
             leg.area = "plæne";
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
             leg.participants = participants_group(leg.min_participants);
             lege_urls[leg.url] = leg;
-            var image = Math.floor(Math.random() * 7) + 1;
+            if (leg.images.length > 0) {
+                var image = leg.images[0] + '?w=360';
+            } else {
+                var image = '/images/lege/' + Math.floor(Math.random() * 7 + 1) + '.png';
+            }
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                 '<div class="leg" style="background-image:url(images/lege/' + image + '.png);">'+
+                 '<div class="leg" style="background-image:url(' + image +');">'+
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
@@ -245,6 +248,10 @@ function init() {
         //$(".navbar .leg_back").show();
 
         $("#modal-leg #modal-title").html(leg.name);
+	if (leg.images.length > 0) {
+		$("#modal-leg #leg-presentation-image").remove();
+		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=700" class="img-responsive" id="leg-presentation-image" />');
+	}
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg .modal-body .leg-description").html(description);
         /*
