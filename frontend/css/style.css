@@ -1,3 +1,23 @@
+
+.fdf-farver {
+    // FDF-Blå
+    color: #5e8ab4, rgb(94, 138, 180)
+    /* webdesign: */
+    color: #456889, rgb(69, 104, 137)
+    color: #233b52, rgb(35, 59, 82)
+    color: #e4e9eb, rgb(228, 233, 235)
+    color: #1d1d1b, rgb(29, 29, 27)
+    color: #b3bfc4, rgb(179, 191, 196)
+    color: #ecece8, rgb(236, 236, 232)
+    color: #e15310, rgb(225, 83, 16)
+    color: #79868b, rgb(121, 134, 139)
+    color: #f9af1a, rgb(249, 175, 26)
+}
+
+
+
+
+
 @font-face {
     font-family: fdficons;
     src: url(../fonts/fdficons.woff);
