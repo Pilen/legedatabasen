@@ -1,6 +1,8 @@
 @font-face {
     font-family: fdficons;
     src: url(../fonts/fdficons.woff);
+}
+@font-face {
 	font-family: Lilita;
 	src: url(../fonts/LilitaOne-Regular.ttf);
 }
