@@ -382,15 +382,6 @@ div:focus {
     background-size:100%;
 }
 
-#color-overlay {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background-color: black;
-   opacity: 0.2;
-
 .leg .infobar {
     -webkit-border-bottom-right-radius: 2px;
     -webkit-border-bottom-left-radius: 2px;
