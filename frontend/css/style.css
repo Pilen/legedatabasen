@@ -6,6 +6,10 @@
 	font-family: Lilita;
 	src: url(../fonts/LilitaOne-Regular.ttf);
 }
+@font-face {
+	font-family: Roboto;
+	src: url(../fonts/Roboto-Medium.ttf);
+}
 
 body {
     margin-top: 50px;
@@ -260,7 +264,8 @@ div:focus {
         padding:5px 15px;
     }
 }
-#leg-beskrivelse {
+.leg-description {
+	font-family: Roboto;
     font-size: 1em;
     color:black;
 }
