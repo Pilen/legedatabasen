@@ -246,7 +246,7 @@ div:focus {
 }
 .outlined {
     -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-    text-shadow: 1px 1px 0px  #233b52;, 1px -1px 0px  #233b52;, -1px 1px 0px  #233b52;, -1px -1px 0px  #233b52;;
+    text-shadow: 1px 1px 0px  #233b52, 1px -1px 0px  #233b52, -1px 1px 0px  #233b52, -1px -1px 0px  #233b52;
 }
 .leg-info {
     position:absolute;
