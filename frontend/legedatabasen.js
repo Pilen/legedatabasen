@@ -20,6 +20,7 @@ var lege_urls = {}; // url -> lege
 var state;
 var been_at_front = false;
 var search;
+var category_swiper;
 
 function init() {
     // Create categories
@@ -31,9 +32,36 @@ function init() {
                      category.name +
                      '</div>');
         node.appendTo('#slider');
+
+        var node = $('<div class="swiper-slide category outlined" id="'+key+'" ' +
+                     'style="background-image: url(images/categories/'+category.image+');">' +
+                     category.name +
+                     '</div>');
+        node.appendTo(".swiper-wrapper");
     });
 
     // Create category swiper
+    category_swiper = new Swiper(".swiper-container", {
+        loop: true,
+        centeredSlides: true,
+        // slidesPerView: 7,
+        slidesPerView: "auto",
+        // prevButton: ".swiper-button-prev",
+        // nextButton: ".swiper-button-next",
+        pagination: ".swiper-pagination",
+        paginationClickable: true,
+        grabCursor: true,
+        keyboardControl: true,
+        initialSlide: category
+    });
+    category_swiper.on("slideChangeEnd", function(swiper) {
+        var selected = swiper.realIndex;
+        if (selected != category) {
+            console.log(categories[selected]);
+            showCategory(categories[selected]);
+        }
+    });
+
     $('#slider').slick({
         slide: 'div',
         infinite: true,
@@ -63,6 +91,7 @@ function init() {
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
             category = nextSlide;
+            console.log(categories[nextSlide]);
             showCategory(categories[nextSlide]);
         }
         return false;
@@ -117,6 +146,7 @@ function init() {
             .create_filter("category", function(leg, arg) {
                 // Only keep lege where the category is found in the tags
                 // return leg.tags.toLowerCase().indexOf(arg) != -1;
+                console.log(leg, arg);
                 if (arg == "Alle lege") {
                     return true;
                 }
