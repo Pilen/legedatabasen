@@ -30,11 +30,11 @@ function init() {
                      'style="background-image: url(images/categories/'+category.image+');">' +
                      category.name +
                      '</div>');
-        node.appendTo('.slider-nav');
+        node.appendTo('#slider');
     });
 
     // Create category swiper
-    $('.slider-nav').slick({
+    $('#slider').slick({
         slide: 'div',
         infinite: true,
         slidesToShow: 7,
@@ -55,10 +55,10 @@ function init() {
                       settings: {slidesToShow: 1}}]
     });
 
-    $('.slider-nav').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-    // $('.slider-nav').on('swipe', function(event, slick, direction){
-    // $('.slider-nav').on('swipe', function(event, slick, currentSlide, nextSlide){
-    // $('.slider-nav').on('afterChange', function(event, slick, currentSlide, nextSlide){
+    $('#slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
+    // $('#slider').on('swipe', function(event, slick, direction){
+    // $('#slider').on('swipe', function(event, slick, currentSlide, nextSlide){
+    // $('#slider').on('afterChange', function(event, slick, currentSlide, nextSlide){
         nextSlide = currentSlide;
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
@@ -192,7 +192,7 @@ function init() {
             var cats = categories.filter(function(category) {
                 return category.url == url;
             });
-            $(".slider-nav").slick('slickGoTo', kategori, true);
+            $("#slider").slick('slickGoTo', kategori, true);
             showCategory(cats[0]);
             return;
         }
@@ -259,7 +259,7 @@ function init() {
         resetDisplay().done(function(){
             search.update_filter("category", category.name);
             $("#filters").slideUp(400, function() {
-                $(".slider-nav").slideDown(400);
+                $("#slider").slideDown(400);
             });
         });
     }
@@ -269,7 +269,7 @@ function init() {
         resetDisplay().done(function() {
             $("#title").fadeOut(200, function() {
                 $("#search").val("").fadeIn(200);
-                $(".slider-nav").slideUp(400);
+                $("#slider").slideUp(400);
                 $("#filters").slideUp(400);
             });
         });
@@ -277,7 +277,7 @@ function init() {
     function showFilter() {
         rename_url("");
         resetDisplay().done(function() {
-            $(".slider-nav").slideUp(200, function() {
+            $("#slider").slideUp(200, function() {
                 $("#filters").slideDown(400);
             });
         });

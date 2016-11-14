@@ -190,7 +190,7 @@ h1 {
 button {
     z-index: 3;
 }
-.slider-nav > div {
+#slider > div {
     height:130px;
     background-color:white;
 }
