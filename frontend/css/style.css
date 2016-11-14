@@ -218,6 +218,7 @@ div:focus {
 .leg-boks {
     padding:20px;
     color:white;
+	opacity:0.6;
     position: absolute;
     top: 0;
     bottom: 0;
