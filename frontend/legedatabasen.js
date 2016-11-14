@@ -56,9 +56,9 @@ function init() {
     });
 
     $('#slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-    // $('#slider').on('swipe', function(event, slick, direction){
-    // $('#slider').on('swipe', function(event, slick, currentSlide, nextSlide){
-    // $('#slider').on('afterChange', function(event, slick, currentSlide, nextSlide){
+        // $('#slider').on('swipe', function(event, slick, direction){
+        // $('#slider').on('swipe', function(event, slick, currentSlide, nextSlide){
+        // $('#slider').on('afterChange', function(event, slick, currentSlide, nextSlide){
         nextSlide = currentSlide;
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
@@ -252,10 +252,10 @@ function init() {
         //$(".navbar .leg_back").show();
 
         $("#modal-leg #modal-title").html(leg.name);
-	if (leg.images.length > 0) {
-		$("#modal-leg #leg-presentation-image").remove();
-		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=800" class="img-responsive" id="leg-presentation-image" />');
-	}
+        if (leg.images.length > 0) {
+            $("#modal-leg #leg-presentation-image").remove();
+            $("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=800" class="img-responsive" id="leg-presentation-image" />');
+        }
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg .modal-body .leg-description").html(description);
         /*

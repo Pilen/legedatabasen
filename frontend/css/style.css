@@ -68,7 +68,7 @@ width: 100%;
 .navbar-fixed-top.navbar-down {
     margin-top: 50px;
     background-color: #233b52;
-	
+
 }
 .navbar .pull-right {
     position: relative;
@@ -220,7 +220,7 @@ width: 100%;
 button {
     z-index: 3;
 }
-.slider-nav > div {
+#slider > div {
     height:130px;
     background-color:white;
 }
