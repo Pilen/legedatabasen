@@ -22,7 +22,7 @@ body {
     font-family: 'Lilita', sans-serif;
 }
 h1 {
-    color: black;
+    color: white;
 }
 input[type="text"]
 {
@@ -49,6 +49,7 @@ input[type="text"]
 
 #modal-title {
 background-color: #233b52;
+width: 100%;
 }
 
 
