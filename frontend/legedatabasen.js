@@ -254,7 +254,7 @@ function init() {
         $("#modal-leg #modal-title").html(leg.name);
 	if (leg.images.length > 0) {
 		$("#modal-leg #leg-presentation-image").remove();
-		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=700" class="img-responsive" id="leg-presentation-image" />');
+		$("#modal-leg #modal-title").before('<img src="' + leg.images[0] + '?w=900" class="img-responsive" id="leg-presentation-image" />');
 	}
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg .modal-body .leg-description").html(description);
