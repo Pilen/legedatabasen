@@ -45,8 +45,13 @@ input[type="text"]
     z-index: 20450;
 	border: 3px;
 	border-color: #233b52;
-
 }
+
+#modal-title {
+background-color: #233b52;
+}
+
+
 .modal-backdrop {
     z-index: 440;
     opacity: 1.0;
