@@ -38,13 +38,14 @@ h1 {
 }
 
 .navbar-fixed-top {
-    background-color: rgb(105, 147, 183);
-    border-color: rgb(105, 147, 183);
+    background-color: #233b52;
+    border-color: #233b52;
+	opacity: 0.8;
 }
 .navbar-fixed-top.navbar-down {
     margin-top: 50px;
     background-color: #233b52;
-	opacity: 0.8;
+	
 }
 .navbar .pull-right {
     position: relative;
@@ -398,7 +399,7 @@ div:focus {
     position: absolute;
     left: 10px;
     top: 0px;
-    font-weight: bold;
+    font-weight: normal;
     color: white;
 }
 
