@@ -186,6 +186,10 @@ function init() {
         // Show leg
         if (url.startsWith("leg/")) {
             var leg = lege_urls[url.substring(4)];
+            if (!leg) {
+                show404();
+                return;
+            }
             showLeg(leg);
             return;
         }
