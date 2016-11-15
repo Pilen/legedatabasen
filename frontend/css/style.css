@@ -73,6 +73,13 @@ width: 100%;
 
 }
 
+.modal-body {
+  padding: 0;
+}
+
+.modal-body .leg-description {
+    padding: 15px;
+}
 
 .modal-backdrop {
     z-index: 440;
@@ -562,4 +569,31 @@ div:focus {
     }
     .is-varying-sizes .element-item.width2 { width: calc((25.00vw - (100.00vw - 100%)/4)*2 - 2px) }
     .is-varying-sizes .element-item.height2 { height: calc(((25.00vw / 3 ) + 50px) * 2); }
+}
+
+figure {
+	position: relative;
+}
+
+figure img {
+	width: 100%!important;
+}
+
+figure figcaption {
+    background: rgba(35,59,82,0.8);
+    color: #FFF;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 0px;
+    right: 0;
+    font-size: 2em;
+}
+
+figure figcaption h3 {
+    padding: 10px;
+}
+
+figure#leg-presentation-image figcaption .infobar {
+    background-color: rgba(249, 175, 26, 0.90);
 }
