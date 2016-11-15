@@ -3,3 +3,4 @@ data.json
 vendor
 composer.lock
 frontend/bower_components/
+frontend/data.json
