@@ -247,7 +247,7 @@ function init() {
 
     function show404() {
         $("#modal-leg .modal-body .leg-teaser").html("");
-        $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p>");
+        $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
         $("#modal-leg").modal("show");
     }
 
