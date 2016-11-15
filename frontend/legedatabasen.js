@@ -57,7 +57,6 @@ function init() {
     category_swiper.on("slideChangeEnd", function(swiper) {
         var selected = swiper.realIndex;
         if (selected != category) {
-            console.log(categories[selected]);
             showCategory(categories[selected]);
         }
     });
@@ -91,7 +90,6 @@ function init() {
         // var nextSlide = slick.currentSlide;
         if(category != nextSlide){
             category = nextSlide;
-            console.log(categories[nextSlide]);
             showCategory(categories[nextSlide]);
         }
         return false;
@@ -146,7 +144,6 @@ function init() {
             .create_filter("category", function(leg, arg) {
                 // Only keep lege where the category is found in the tags
                 // return leg.tags.toLowerCase().indexOf(arg) != -1;
-                console.log(leg, arg);
                 if (arg == "Alle lege") {
                     return true;
                 }
@@ -432,7 +429,7 @@ function rename_url(url) {
 
 function age_group(age) {
     if (age < 2)
-        console.log("ERROR");
+    {}
     if (age < 7)
         return "2";
     if (age < 13)
@@ -442,13 +439,13 @@ function age_group(age) {
 
 function duration_group(duration) {
     if (duration < 5)
-        console.log("ERROR");
+    {}
     if (duration < 10)
         return "5";
     if (duration < 30)
         return "20";
     if (duration < 45)
-        console.log("ERROR");
+    {}
     return "60";
 }
 
@@ -458,6 +455,6 @@ function participants_group(participants) {
     if (participants < 20)
         return "10"
     if (participants < 30)
-        console.log("ERROR");
+    {}
     return "30+";
 }
