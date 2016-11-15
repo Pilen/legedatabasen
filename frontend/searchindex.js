@@ -232,13 +232,22 @@ function SearchIndex(options) {
     //
     // Calling this will schedule a search, that will be run after the specified delay and call the specified callback.
     // If the delay or callback is not specified the search result will return immediately.
-
     this.update_filter = function(name, arg) {
         if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
         var filter = this._filters[name];
         if (!filter) {throw Error("SearchIndex does not have a filter named " + name);}
         filter.arg = filter.preprocess(arg);
         return this._schedule_search();
+    };
+
+    // Clear the search index.
+    // Like searching for nothing/everything
+    this.clear = function() {
+        var filters = Object.keys(this._filters).map(function(name){
+            var filter = this._filters[name];
+            filter.arg = filter.preprocess(undefined);
+        }, this);
+        return this.query("");
     };
 
     // Perform the actual seach.
