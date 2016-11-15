@@ -299,6 +299,7 @@ function init() {
         resetDisplay().done(function() {
             $("#title").fadeOut(200, function() {
                 $("#search").val("").fadeIn(200);
+                $("#search").focus();
                 $(".swiper-container").slideUp(400);
                 $("#filters").slideUp(400);
             });
