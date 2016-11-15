@@ -251,27 +251,30 @@ function init() {
 
         console.log(leg);
         if (leg.images.length > 0) {
-            $("#modal-leg #leg-presentation-image").remove();
-            $("#modal-leg .modal-body .leg-description").before(
-                '<figure id="leg-presentation-image">' +
-                    '<img src="' + leg.images[0] + '?w=800&h=400&fit=fill" class="img-responsive" id="leg-presentation-image" />' +
-                    '<figcaption>' +
-                    '<h3>' + leg.name + '</h3>' +
-                    '<div class="infobar">'+
-                    '<table style="width:100%;">'+
-                    '<tbody>'+
-                    '<tr>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
-                    '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
-                    '</tr>'+
-                    '</tbody>'+
-                    '</table>'+
-                    '</div>'+
-                    '</figcaption>' +
-                    '</figure>');
+            var image = leg.images[0] + "?w=800&h=400&fit=fill";
+        } else {
+            var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
         }
+        $("#modal-leg #leg-presentation-image").remove();
+        $("#modal-leg .modal-body .leg-description").before(
+            '<figure id="leg-presentation-image">' +
+                '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />' +
+                '<figcaption>' +
+                '<h3>' + leg.name + '</h3>' +
+                '<div class="infobar">'+
+                '<table style="width:100%;">'+
+                '<tbody>'+
+                '<tr>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
+                '</tr>'+
+                '</tbody>'+
+                '</table>'+
+                '</div>'+
+                '</figcaption>' +
+                '</figure>');
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg .modal-body .leg-description").html(description);
         /*
