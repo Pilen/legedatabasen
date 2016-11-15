@@ -194,6 +194,10 @@ function init() {
             var cats = categories.filter(function(category) {
                 return category.url == url;
             });
+            if (cats.length != 1) {
+                show404();
+                return;
+            }
             var cat = cats[0];
             if (category != cat.index) {
                 $(".swiper-container")[0].swiper.slideTo(cat.index);
@@ -206,7 +210,9 @@ function init() {
             showCategory(categories[category]);
             return;
         }
+
         // Error
+        show404();
         return;
     }
 
@@ -231,6 +237,12 @@ function init() {
             $("#title").text("");
         }
     });
+
+    function show404() {
+        $("#modal-leg .modal-body .leg-teaser").html("");
+        $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p>");
+        $("#modal-leg").modal("show");
+    }
 
     function showLeg(leg) {
         _=leg;
