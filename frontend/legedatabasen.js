@@ -69,8 +69,9 @@ function init() {
             if (leg.images.length > 0) {
                 var image = leg.images[0] + '?w=360';
             } else {
-                var image = '/images/lege/' + Math.floor(Math.random() * 7 + 1) + '.png';
+                var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
             }
+
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg" style="background-image:url(' + image +');">'+
@@ -250,7 +251,7 @@ console.log(leg);
 		'<figure id="leg-presentation-image">' +
 		'<img src="' + leg.images[0] + '?w=800&h=400&fit=fill" class="img-responsive" id="leg-presentation-image" />' +
 		'<figcaption>' +
-		'<h3>' + leg.name + '</h3>' + 
+		'<h3>' + leg.name + '</h3>' +
 		'<div class="infobar">'+
 		'<table style="width:100%;">'+
 		'<tbody>'+
