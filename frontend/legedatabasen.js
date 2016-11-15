@@ -115,7 +115,12 @@ function init() {
             }, function(arg) {return arg || "";})
             .callback(sort_lege)
             .compile();
-
+        $("#search").on("input", search_update);
+        function search_update(event) {
+            var search_text = $("#search")[0].value;
+            search_text = search_text.toLowerCase();
+            search.query(search_text);
+        }
 
         // $('#isotope').isotope({
         //     itemSelector: '.element-item',
@@ -307,6 +312,7 @@ console.log(leg);
 
     function resetDisplay() {
         var start_time = +new Date();
+        search.clear();
         var promise1 = scrollToTop(400);
         $(window).scrollTop(0);
         $("#title").text("");
