@@ -63,6 +63,112 @@ input[type="text"]
     z-index: 10000;
 }
 
+.anchor {
+    position: relative;
+}
+.navigation {
+    position: fixed;
+    height: 50px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    padding: 0px;
+    background-color: #233b52;
+    z-index: 10000000000000000;
+}
+.navigation .left {
+    float: left;
+    height: 50px;
+    /* background-color: rgba(23, 200, 183, 0.3); */
+
+}
+.navigation .icons {
+    float: right;
+    height: 50px;
+    /* background-color: rgba(23, 200, 183, 0.3); */
+}
+.search-span {
+    overflow: hidden;
+    height: 50px;
+    /* background-color: rgb(255, 0, 0); */
+}
+
+.balloon-icon {
+    position: relative;
+    height: 100%;
+    padding: 4px;
+}
+.balloon-icon:hover {
+    -webkit-animation: wiggle 0.5s infinite;
+}
+@-webkit-keyframes wiggle {
+    0% {-webkit-transform:rotate(10deg);}
+    50% {-webkit-transform:rotate(-10deg);}
+    100% {-webkit-transform:rotate(10deg);}
+}
+.menu-icon {
+    height: 100%;
+    padding: 10px;
+    opacity: 0.7;
+}
+.menu-icon:hover {
+    opacity: 1;
+}
+.skjold-icon{
+    height: 100%;
+    padding: 4px;
+    opacity: 0.7;
+}
+.skjold-icon:hover {
+    content: url("/images/fdf_skjold_farve_no_padding.png");
+    opacity: 1;
+}
+#mysearch {
+    display: block;
+    width: 100%;
+    position: relative;
+    top: 10px;
+    height: 30px;
+    // display: none; /* start hidden */
+    /* padding:0px 10px; */
+    /* position: absolute; */
+    /* position: relative; */
+    /* top: -40%; */
+    /* left: 50%; */
+    /* transform: translate(0, -50%); */
+    /* width: 50%; */
+    /* margin-left:auto; */
+    /* margin-right:auto; */
+    /* top:50%; */
+    /* visibility: hidden; */
+}
+#search-icon {
+    position: absolute;
+    z-index: 2;
+    /* float: right; */
+    /* height: 20px; */
+    padding: 0px;
+    border: 0px;
+    left: -38px;
+    top: 0px;
+    /* color: rgb(35, 59, 82); */
+    font-size: 25pt;
+    color: rgb(255, 255, 255);
+    opacity: 0.7;
+}
+#search-icon.active {
+    color: rgb(69, 104, 137);
+    opacity: 1;
+    left: -28px;
+    top: 6px;
+    font-size: 20pt;
+}
+.form-control {
+    /* width: auto; */
+}
+
+
+
 .modal {
     z-index: 20450;
 	border: 3px;

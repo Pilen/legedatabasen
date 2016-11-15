@@ -20,31 +20,20 @@
         <script src="/legedatabasen.js"></script>
     </head>
     <body>
-        <!-- <img class="skjold" src="images/fdf_skjold2.png" style="background-color:rgb(105, 147, 183);"/> <\!-- test -\-> -->
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="navbar-header">
-                <div class="navbar-brand">
-                    <div id="title"></div>
-
-                    <input id="search" type="text" class="search-query-y form-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
-                </div>
+        <nav class="navigation">
+            <div class="left">
+                <a href="/">
+                    <img class="balloon-icon" src="/images/balloon.png"></img>
+                </a>
             </div>
-            <div class="icon-container">
-                <span id="leg_back" class="icon fdficon btn btn-link" style="display:none;">
-                    &#xf41f;
-                </span>
-                <span id="swipe_knap" class="icon glyphicon glyphicon-resize-horizontal btn btn-link" aria-hidden="true"></span>
-                <span id="filter_knap" class="icon fdficon btn btn-link">
-                    &#xf41d;
-                </span>
-                <span id="soeg_knap" class="icon fdficon btn btn-link">
-                    &#xf41b;
-                </span>
-                <span class="icon fdficon btn btn-link" style="position:fixed;font-size: 2.4em;color:black;opacity:0.00;left:102px;top:2px;z-index:-3;">
-                    &#xf41b;
-                </span>
+            <div class="icons">
+                <div class="anchor"><span id="search-icon" class="icon fdficon active"> &#xf41b; </span></div>
+                <img class="menu-icon" src="/images/menu.png"></img>
+                <a href="http://www.fdf.dk"><img class="skjold-icon" src="/images/fdf_skjold_hvid_no_padding.png"></img></a>
             </div>
-            <a href="http://www.fdf.dk"><img class="skjold" src="/images/fdf_skjold_hvid_no_padding.png"></img></a> <!-- Flickers because z-index stuff -->
+            <div class="search-span"> <!-- Actually shown between left and icons -->
+                <input id="mysearch" type="text" class="myform-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
+            </div>
         </nav>
         <div class="container-fluid" id="lege" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
             <div id="slider" style="display:none"></div>
@@ -127,19 +116,18 @@
                 </div>
             </div>
         </div>
-
     </body>
 
-    <img src="/images/fdf_skjold1.png" style="height:50px;visibility:hidden"/> <!-- preload image, is there a better way of doing this? -->
+    <img src="/images/fdf_skjold_farve_no_padding.png" style="height:50px;visibility:hidden"/> <!-- preload image, is there a better way of doing this? -->
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-87282627-1', 'auto');
-  ga('send', 'pageview');
+        ga('create', 'UA-87282627-1', 'auto');
+        ga('send', 'pageview');
 
-</script>
+    </script>
 </html>
