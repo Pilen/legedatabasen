@@ -96,7 +96,7 @@ input[type="text"]
 .balloon-icon {
     position: relative;
     height: 100%;
-    padding: 4px;
+    padding: 5px;
 }
 .balloon-icon:hover {
     -webkit-animation: wiggle 0.5s infinite;
@@ -108,7 +108,8 @@ input[type="text"]
 }
 .menu-icon {
     height: 100%;
-    padding: 10px;
+    /* padding: 10px; */
+    padding: 14px;
     opacity: 0.7;
 }
 .menu-icon:hover {
@@ -116,14 +117,46 @@ input[type="text"]
 }
 .skjold-icon{
     height: 100%;
-    padding: 4px;
+    padding: 8px;
+    /* padding: 10px; */
     opacity: 0.7;
 }
 .skjold-icon:hover {
     content: url("/images/fdf_skjold_farve_no_padding.png");
     opacity: 1;
 }
-#mysearch {
+#search-icon {
+    position: absolute;
+    z-index: 2;
+    padding: 0px;
+    border: 0px;
+    /* left: -38px; */
+    left: -30px;
+    /* top: 0px; */
+    top: 5px;
+    font-size: 22pt;
+    color: rgb(255, 255, 255);
+    opacity: 0.7;
+}
+#search-icon:hover {
+    opacity: 1;
+}
+#search-done-icon {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    padding: 0px;
+    border: 0px;
+    left: -28px;
+    top: 6px;
+    font-size: 20pt;
+    color: rgb(69, 104, 137);
+    opacity: 1;
+}
+#search-done-icon:hover {
+    opacity: 0.7;
+}
+#search {
     display: block;
     width: 100%;
     position: relative;
@@ -140,29 +173,9 @@ input[type="text"]
     /* margin-left:auto; */
     /* margin-right:auto; */
     /* top:50%; */
-    /* visibility: hidden; */
+    display: none;
 }
-#search-icon {
-    position: absolute;
-    z-index: 2;
-    /* float: right; */
-    /* height: 20px; */
-    padding: 0px;
-    border: 0px;
-    left: -38px;
-    top: 0px;
-    /* color: rgb(35, 59, 82); */
-    font-size: 25pt;
-    color: rgb(255, 255, 255);
-    opacity: 0.7;
-}
-#search-icon.active {
-    color: rgb(69, 104, 137);
-    opacity: 1;
-    left: -28px;
-    top: 6px;
-    font-size: 20pt;
-}
+
 .form-control {
     /* width: auto; */
 }
@@ -247,7 +260,7 @@ width: 100%;
     top: 0px;
     width: 100%;
 }
-#search {
+#search-o {
     display: none; /* start hidden */
     /* padding:0px 10px; */
     /* position: absolute; */

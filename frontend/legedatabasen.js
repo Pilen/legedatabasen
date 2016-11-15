@@ -222,8 +222,11 @@ function init() {
     $("#filter_knap").click(function() {
         showFilter();
     });
-    $("#soeg_knap").click(function() {
+    $("#search-icon").click(function() {
         showSearch();
+    });
+    $("#search-done-icon").click(function() {
+        showCategory(categories[category]);
     });
 
     $(window).scroll(function() {
@@ -309,12 +312,18 @@ function init() {
     function showSearch() {
         rename_url("");
         resetDisplay().done(function() {
-            $("#title").fadeOut(200, function() {
-                $("#search").val("").fadeIn(200);
+            console.log("kalkun");
+        // $("#title").fadeOut(200, function() {
+        $("#search-icon").fadeOut(200, function() {
+            $("#search-done-icon").fadeIn(200);
+        });
+                $("#search").val("").fadeIn(200*2, function() {
+                    // $("#search-icon").addClass("active");
+                });
                 $("#search").focus();
                 $(".swiper-container").slideUp(400);
                 $("#filters").slideUp(400);
-            });
+            // });
         });
     }
     function showFilter() {
@@ -330,11 +339,14 @@ function init() {
         var start_time = +new Date();
         search.clear();
         var promise1 = scrollToTop(400);
-        $(window).scrollTop(0);
-        $("#title").text("");
+        promise1 = null; //We dont want to wait for scrollToTop anyway
+        // $("#title").text("");
         var promise2 = $("#search:visible").slideUp(200, function() {
             $("#title").fadeIn(200);
-        }).promise();;
+        }).promise();
+        var promise3 = $("#search-done-icon").slideUp(200, function() {
+            $("#search-icon").fadeIn(200);
+        }).promise();
 
         $("#leg").hide();
         $("#lege").show();
@@ -342,7 +354,7 @@ function init() {
         $("#soeg_knap").show();
         $("#swipe_knap").show();
         $(".navbar .leg_back").hide();
-        return $.when(promise1, promise2);
+        return $.when(promise1, promise2, promise3);
     }
 
     function sort_lege(rankings) {

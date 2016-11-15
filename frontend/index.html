@@ -27,14 +27,18 @@
                 </a>
             </div>
             <div class="icons">
-                <div class="anchor"><span id="search-icon" class="icon fdficon active"> &#xf41b; </span></div>
+                <div class="anchor">
+                    <span id="search-icon" class="icon fdficon btn"> &#xf41b;</span>
+                    <span id="search-done-icon" class="icon fdficon btn"> &#xf41b;</span>
+                </div>
                 <img class="menu-icon" src="/images/menu.png"></img>
                 <a href="http://www.fdf.dk"><img class="skjold-icon" src="/images/fdf_skjold_hvid_no_padding.png"></img></a>
             </div>
             <div class="search-span"> <!-- Actually shown between left and icons -->
-                <input id="mysearch" type="text" class="myform-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
+                <input id="search" type="text" class="myform-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
             </div>
         </nav>
+        <div id="title"></div>
         <div class="container-fluid" id="lege" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
             <div id="slider" style="display:none"></div>
             <div class="swiper-container">
