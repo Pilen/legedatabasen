@@ -52,11 +52,13 @@ input[type="text"]
 .skjold {
     /* background-color: rgb(105, 147, 183); */
     opacity: 0.7;
-    height:50px;
+    height: 50px;
     z-index: 10000;
+    float: right;
+    padding: 5px;
 }
 .skjold:hover {
-    content: <a href="http://www.fdf.dk">src="/frontend/images/fdf_skjold1.png"</a>;
+    /* content: url("/frontend/images/fdf_skjold1.png"); */
     opacity: 1;
     z-index: 10000;
 }
@@ -447,7 +449,7 @@ div:focus {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     box-shadow: none;
-	
+
     width:100%;
     height:100%;
     position:relative;
@@ -470,7 +472,7 @@ div:focus {
     padding:0px 10px;
     color: white;
     font-weight: 300;
-	
+
 }
 .leg .infobar .fdficon {
     color:#233b52;
