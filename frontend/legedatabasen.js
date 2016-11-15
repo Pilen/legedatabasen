@@ -57,42 +57,9 @@ function init() {
     category_swiper.on("slideChangeEnd", function(swiper) {
         var selected = swiper.realIndex;
         if (selected != category) {
+            category = selected;
             showCategory(categories[selected]);
         }
-    });
-
-    $('#slider').slick({
-        slide: 'div',
-        infinite: true,
-        slidesToShow: 7,
-        slidesToScroll: 1,
-        dots: true,
-        centerMode: true,
-        initialSlide: category,
-        focusOnSelect: true,
-        variableWidth: true,
-        swipeToSlide: true,
-        arrows: false,
-        // touchThreshold: 10,
-        responsive: [{breakpoint: 1240,
-                      settings: {slidesToShow: 5}},
-                     {breakpoint: 900,
-                      settings: {slidesToShow: 3}},
-                     {breakpoint: 600,
-                      settings: {slidesToShow: 1}}]
-    });
-
-    $('#slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
-        // $('#slider').on('swipe', function(event, slick, direction){
-        // $('#slider').on('swipe', function(event, slick, currentSlide, nextSlide){
-        // $('#slider').on('afterChange', function(event, slick, currentSlide, nextSlide){
-        nextSlide = currentSlide;
-        // var nextSlide = slick.currentSlide;
-        if(category != nextSlide){
-            category = nextSlide;
-            showCategory(categories[nextSlide]);
-        }
-        return false;
     });
 
     // Load lege
