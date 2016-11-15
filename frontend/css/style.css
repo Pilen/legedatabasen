@@ -56,7 +56,7 @@ input[type="text"]
     z-index: 10000;
 }
 .skjold:hover {
-    content: url("/frontend/images/fdf_skjold1.png");
+    content: <a href="http://www.fdf.dk">src="/images/fdf_skjold1.png""</a>;
     opacity: 1;
     z-index: 10000;
 }
