@@ -25,14 +25,9 @@ var category_swiper;
 function init() {
     // Create categories
     categories.map(function(category, key) {
+        category.index = key;
         category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
-        var node = $('<div class="category outlined" id="'+key+'" ' +
-                     'style="background-image: url(images/categories/'+category.image+');">' +
-                     category.name +
-                     '</div>');
-        node.appendTo('#slider');
-
         var node = $('<div class="swiper-slide category outlined" id="'+key+'" ' +
                      'style="background-image: url(images/categories/'+category.image+');">' +
                      category.name +
@@ -193,8 +188,11 @@ function init() {
             var cats = categories.filter(function(category) {
                 return category.url == url;
             });
-            $("#slider").slick('slickGoTo', kategori, true);
-            showCategory(cats[0]);
+            var cat = cats[0];
+            if (category != cat.index) {
+                $(".swiper-container")[0].swiper.slideTo(cat.index);
+            }
+            showCategory(cat);
             return;
         }
         // Show front (with previous category)
@@ -264,7 +262,7 @@ function init() {
         resetDisplay().done(function(){
             search.update_filter("category", category.name);
             $("#filters").slideUp(400, function() {
-                $("#slider").slideDown(400);
+                $(".swiper-container").slideDown(400);
             });
         });
     }
@@ -274,7 +272,7 @@ function init() {
         resetDisplay().done(function() {
             $("#title").fadeOut(200, function() {
                 $("#search").val("").fadeIn(200);
-                $("#slider").slideUp(400);
+                $(".swiper-container").slideUp(400);
                 $("#filters").slideUp(400);
             });
         });
@@ -282,7 +280,7 @@ function init() {
     function showFilter() {
         rename_url("");
         resetDisplay().done(function() {
-            $("#slider").slideUp(200, function() {
+            $(".swiper-container").slideUp(200, function() {
                 $("#filters").slideDown(400);
             });
         });
