@@ -29,7 +29,7 @@ function init() {
         category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
         var node = $('<div class="swiper-slide category outlined" id="'+key+'" ' +
-                     'style="background-image: url(images/categories/'+category.image+');">' +
+                     'style="background-image: url(/images/categories/'+category.image+');">' +
                      category.name +
                      '</div>');
         node.appendTo(".swiper-wrapper");
@@ -58,7 +58,7 @@ function init() {
     });
 
     // Load lege
-    $.getJSON("data.json", function (data) {
+    $.getJSON("/data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
             leg.area = "plæne";
