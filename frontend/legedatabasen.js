@@ -74,7 +74,7 @@ function init() {
 
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                 '<div class="leg" style="background-color:red; background-image:url(' + image +');">'+
+                 '<div class="leg" style="background-color:#79868b; background-image:url(' + image +');">'+
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
