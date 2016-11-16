@@ -591,7 +591,9 @@ div:focus {
     background-size:100%;
 	opacity:1.0;
 }
-
+.leg.default {
+    background-color:#e4e9eb;
+}
 .leg .infobar {
     -webkit-border-bottom-right-radius: 2px;
     -webkit-border-bottom-left-radius: 2px;
