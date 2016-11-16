@@ -40,6 +40,11 @@ body {
     margin-top: 50px;
     /* background-color: rgb(61, 94, 120); */
     font-family: 'Lilita', sans-serif;
+    /* overflow: auto; */
+}
+body.modal-open {
+    /* overflow: hidden; */
+    /* position: fixed; */
 }
 h1 {
     color: white;
@@ -186,6 +191,7 @@ input[type="text"]
     z-index: 20450;
 	border: 3px;
 	border-color: #233b52;
+    top: 25px;
 }
 
 #modal-title {
@@ -201,7 +207,17 @@ width: 100%;
 .modal-body .leg-description {
     padding: 15px;
 }
+#modal-close-top {
+    position: absolute;
+    color: rgb(255, 255, 255);
+    /* background-color: rgb(100, 150, 100); */
+    z-index: 100;
+    border: 0px;
+    padding: 2px;
+    line-height: 1;
+    font-size: 22pt;
 
+}
 .modal-backdrop {
     z-index: 440;
     opacity: 1.0;

@@ -157,13 +157,14 @@ function init() {
         route();
     });
 
-    $(".leg_back").on("click", function(){
+    function closeLeg() {
         if (been_at_front) {
             window.history.back();
         } else {
             history.pushState({}, "", "/");
         }
-    });
+    }
+    $(".leg_back").on("click", closeLeg);
 
     $('#modal-leg').on('hide.bs.modal', function (e) {
         history.pushState({}, "", "/");
