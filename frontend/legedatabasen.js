@@ -21,6 +21,7 @@ var state;
 var been_at_front = false;
 var search;
 var category_swiper;
+var total_time;
 
 function init() {
     // Create categories
@@ -50,11 +51,13 @@ function init() {
         initialSlide: category
     });
     category_swiper.on("slideChangeEnd", function(swiper) {
+        total_time = +new Date();
+        console.log("swipe");
         var selected = swiper.realIndex;
-        $("#panic").text(categories[selected].name);
+        $("#debug").text(categories[selected].name);
         if (selected != category) {
             category = selected;
-            showCategory(categories[selected]);
+            showCategory(categories[selected], true /* No reset */);
         }
     });
 
@@ -272,7 +275,6 @@ function init() {
         // $("#leg-beskrivelse").html(description);
         //$(".navbar .leg_back").show();
 
-        console.log(leg);
         if (leg.images.length > 0) {
             var image = leg.images[0] + "?w=800&h=400&fit=fill";
         } else {
@@ -307,20 +309,23 @@ function init() {
         $("#modal-leg").modal("show");
     }
 
-    function showCategory(category) {
+    function showCategory(category, noReset) {
         // rename_url(category.url);
-        resetDisplay().done(function(){
+        if (noReset) {
             search.update_filter("category", category.name);
-            $("#filters").slideUp(400, function() {
-                $(".swiper-container").slideDown(400);
-            });
+        } else {
+            resetDisplay().done(function(){
+                search.update_filter("category", category.name);
+                $("#filters").slideUp(400, function() {
+                    $(".swiper-container").slideDown(400);
+                });
         });
+        }
     }
 
     function showSearch() {
         rename_url("");
         resetDisplay().done(function() {
-            console.log("kalkun");
         // $("#title").fadeOut(200, function() {
         $("#search-icon").fadeOut(200, function() {
             $("#search-done-icon").fadeIn(200);
@@ -374,7 +379,14 @@ function init() {
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
+        $("#debug").text("sorting");
+        var start_time = +new Date();
         $("#isotope").isotope("updateSortData").isotope();
+        var end_time = +new Date();
+        $("#debug").text("isotope: "+(end_time - start_time) +" total: " + (end_time - total_time));
+        console.log("isotope: ", end_time - start_time);
+        console.log("total: ", end_time - total_time);
+
         return;
     }
 };
