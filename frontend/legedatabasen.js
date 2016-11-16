@@ -51,6 +51,7 @@ function init() {
     });
     category_swiper.on("slideChangeEnd", function(swiper) {
         var selected = swiper.realIndex;
+        $("#panic").text(categories[selected].name);
         if (selected != category) {
             category = selected;
             showCategory(categories[selected]);
