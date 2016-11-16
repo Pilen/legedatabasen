@@ -233,13 +233,13 @@ width: 100%;
 }
 
 .navbar-fixed-top {
-    background-color: #233b52;
-    border-color: #233b52;
+    background-color: #456889;
+    border-color: #456889;
 	opacity: 0.9;
 }
 .navbar-fixed-top.navbar-down {
     margin-top: 50px;
-    background-color: #233b52;
+    background-color: #456889;
 
 }
 .navbar .pull-right {
@@ -482,7 +482,7 @@ div:focus {
 }
 .outlined {
     -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-    text-shadow: 1px 1px 0px  #233b52, 1px -1px 0px  #233b52, -1px 1px 0px  #233b52, -1px -1px 0px  #233b52;
+    text-shadow: 1px 1px 0px  #233b52, 1px -1px 0px  #456889, -1px 1px 0px  #456889, -1px -1px 0px  #456889;
 }
 .leg-info {
     position:absolute;
@@ -620,7 +620,7 @@ div:focus {
 
 }
 .leg .infobar .fdficon {
-    color:#233b52;
+    color:#456889;
 }
 .infobar td {
     text-align: center;
