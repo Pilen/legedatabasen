@@ -69,12 +69,12 @@ function init() {
             if (leg.images.length > 0) {
                 var image = leg.images[0] + '?w=360';
             } else {
-                var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
+                var image = "/images/lege/" + leg.game_categories[0].name + "-default.png" + 'style="background-color:#BAC1C8;"';
             }
 
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                 '<div class="leg" style="background-color:#BAC1C8; background-image:url(' + image +');">'+
+                 '<div class="leg" style="background-image:url(' + image +');">'+
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
