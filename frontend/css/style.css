@@ -71,6 +71,14 @@ input[type="text"]
 .anchor {
     position: relative;
 }
+.scrollbar-keeper {
+    position: absolute;
+    height: calc(100% + 1px);
+    top: 0px;
+    background-color: rgb(255,0,0);
+    width: 10px;
+    visibility: hidden;
+}
 .navigation {
     position: fixed;
     height: 50px;
