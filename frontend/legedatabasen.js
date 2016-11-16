@@ -273,7 +273,7 @@ function init() {
         if (leg.images.length > 0) {
             var image = leg.images[0] + "?w=800&h=400&fit=fill";
         } else {
-            var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
+            var image = "/images/lege/" + leg.game_categories[0].name + "-default.png" style="background-color:#79868b;";
         }
         $("#modal-leg #leg-presentation-image").remove();
         $("#modal-leg .modal-body .leg-description").before(
