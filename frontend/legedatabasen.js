@@ -306,6 +306,16 @@ function init() {
           $(".modal-body").html(description);
         */
         $("#modal-leg").modal("show");
+        ga('send',
+            {
+                hitType: 'event',
+                eventCategory: 'Leg',
+                eventAction: 'show',
+                eventLabel: 'Vis leg',
+                eventValue: leg.name
+            }
+        );
+
     }
 
     function showCategory(category, noReset) {
