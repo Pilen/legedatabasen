@@ -99,7 +99,7 @@ function init() {
                  '</div>'+
                  '</div>'+
                  '</a>'));
-            leg.node.appendTo('#isotope');
+            leg.node.appendTo('#lege');
             return leg;
         });
 
@@ -130,26 +130,6 @@ function init() {
             magic(search_text);
             search.query(search_text);
         }
-
-        // $('#isotope').isotope({
-        //     itemSelector: '.element-item',
-        //     layoutMode: 'masonry'
-        // });
-        $("#isotope").isotope({
-            itemSelector: '.element-item',
-            layoutMode: 'masonry',
-            // itemSelector: ".leg",
-            // layoutMode: "fitRows",
-            sortBy: ["score", "title"],
-            sortAscending: {score: false,
-                            title: true},
-            getSortData: {score:"[score]",
-                          title: "[title]"},
-            filter: function() {
-                var score = parseInt($(this).attr("score"));
-                return score >= 0;
-            }
-        });
 
         $('a').click(function(event){
             event.preventDefault();
@@ -264,7 +244,7 @@ function init() {
     function showLeg(leg) {
         _=leg;
         /*
-          $("#lege").hide();
+          $("#container").hide();
           $("#filter_knap").hide();
           $("#soeg_knap").hide();
           $("#swipe_knap").hide();
@@ -375,7 +355,7 @@ function init() {
         }).promise();
 
         $("#leg").hide();
-        $("#lege").show();
+        $("#container").show();
         $("#filter_knap").show();
         $("#soeg_knap").show();
         $("#swipe_knap").show();
@@ -384,17 +364,39 @@ function init() {
     }
 
     function sort_lege(rankings) {
+        _r=rankings;
         lege.map(function(leg){
+            leg.score = -1;
             leg.node.attr("score", -1);
             // leg.node.find(".score").text(-1);
         });
         rankings.map(function(ranked) {
+            // ranked.document.score = ranked.score;
+            ranked.document.score = 0;
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
         $("#profiler").text("sorting");
         var start_time = +new Date();
-        $("#isotope").isotope("updateSortData").isotope();
+
+        // $("#lege").fadeOut(200);
+        $("#lege").empty();
+        var shown = lege.filter(function(leg) {return leg.score >= 0;});
+        shown.sort(function(a, b) {
+            if (a.score == b.score) {
+                return a.name.localeCompare(b.name);
+            }
+            return a.score - b.score;
+        });
+        _s = shown;
+        var nodes = shown.map(function(leg) {
+            return leg.node;
+        }, this);
+        $("#lege").append(nodes);
+
+        // $("#lege").fadeIn(200);
+
+        // $("#lege").isotope("updateSortData").isotope();
         var end_time = +new Date();
         $("#profiler").text("isotope: "+(end_time - start_time) +" total: " + (end_time - total_time));
 
