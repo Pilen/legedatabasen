@@ -749,12 +749,13 @@ figure img {
 
 figure figcaption {
     background: rgba(35,59,82,0.8);
-    color: #456889;
+    color: #FFF;
     bottom: 0;
     left: 0;
     padding: 0px;
     right: 0;
     font-size: 1em;
+    
 }
 
 figure figcaption h3 {
