@@ -530,6 +530,7 @@ div:focus {
 .fdficon {
     font-family: fdficons;
     font-weight: 400;
+	padding: 0px 10px;
 }
 .fdf-timeglas:before {
     content: "\f3ba";
