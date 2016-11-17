@@ -86,10 +86,10 @@ function init() {
                  '<table style="width:60%;">'+
                  '<tbody>'+
                  '<tr>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+                 '<td style="width:15%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
+                 '<td style="width:15%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+                 '<td style="width:15%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                 '<td style="width:15%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
                  '</tr>'+
                  '</tbody>'+
                  '</table>'+
@@ -286,13 +286,13 @@ function init() {
                 '<figcaption>' +
                 '<h3>' + leg.name + '</h3>' +
                 '<div class="infobar">'+
-                '<table style="width:100%;">'+
+                '<table style="width:60%;">'+
                 '<tbody>'+
                 '<tr>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+                '<td style="width:15%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
+                '<td style="width:15%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+                '<td style="width:15%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                '<td style="width:15%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
                 '</tr>'+
                 '</tbody>'+
                 '</table>'+
