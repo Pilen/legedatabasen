@@ -148,7 +148,10 @@ $application
 					'fit' => 'fill'
 				],
 				'detail' => [
-					'w' => 360
+					'w' => 720,
+					'h' => 405,
+					'fit' => 'fill',
+					'f' => 'faces'
 				]
 			];
 			$methodName = 'get' . ucfirst($fieldName);
