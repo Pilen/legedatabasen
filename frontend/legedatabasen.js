@@ -87,8 +87,8 @@ function init() {
                  '<tbody>'+
                  '<tr>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:20%">' + leg.duration + '<br>min</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
                  '</tr>'+
                  '</tbody>'+
