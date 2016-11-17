@@ -67,7 +67,9 @@ function init() {
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
             leg.participants = participants_group(leg.min_participants);
+            leg.game_categories = leg.game_categories.filter(function(c) {return c.name.toLocaleLowerCase().indexOf("alle lege") == -1;});
             lege_urls[leg.url] = leg;
+
             if (leg.images.length > 0) {
                 var image = '/images/entries/' + leg.images[0]['list'];
                 var classes = "";
