@@ -53,6 +53,7 @@ function init() {
     category_swiper.on("slideChangeEnd", function(swiper) {
         total_time = +new Date();
         var selected = swiper.realIndex;
+        $("#profiler").text(categories[selected].name);
         if (selected != category) {
             category = selected;
             showCategory(categories[selected], true /* No reset */);
@@ -126,6 +127,7 @@ function init() {
         function search_update(event) {
             var search_text = $("#search")[0].value;
             search_text = search_text.toLowerCase();
+            magic(search_text);
             search.query(search_text);
         }
 
@@ -390,9 +392,11 @@ function init() {
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
+        $("#profiler").text("sorting");
         var start_time = +new Date();
         $("#isotope").isotope("updateSortData").isotope();
         var end_time = +new Date();
+        $("#profiler").text("isotope: "+(end_time - start_time) +" total: " + (end_time - total_time));
 
         return;
     }
@@ -502,4 +506,16 @@ function participants_group(participants) {
     if (participants < 30)
     {}
     return "30+";
+}
+
+
+function magic(text) {
+    if (text.search(/^profile[r]?[ :]+on/) != -1) {
+        console.log("profiler enabled");
+        $("#profiler").show();
+    }
+    if (text.search(/^profile[r]?[ :]+off/) != -1) {
+        console.log("profiler disabled");
+        $("#profiler").hide();
+    }
 }
