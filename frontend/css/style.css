@@ -232,7 +232,8 @@ width: 100%;
 }
 
 .modal-content {
-  border: 5px solid #233b52!important;
+  border: 2px solid #456889;!important;
+  border-radius: 8px !important;
   }
 
 
