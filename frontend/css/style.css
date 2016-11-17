@@ -705,7 +705,7 @@ padding:0px 10px;
     height: calc(((100.00vw) / 3.5) + 50px);
 }
 .element-item .navn {
-    font-size:18pt;margin-top:10px;
+    font-size:16pt;margin-top:10px;
 }
 
 @media (min-width: 768px) {
@@ -714,7 +714,7 @@ padding:0px 10px;
         height: calc((50.00vw / 3) + 50px);
     }
     .element-item .navn {
-        font-size:20pt;
+        font-size:16pt;
     }
     .is-varying-sizes .element-item.width2 { width: calc(100.00vw - (100.00vw - 100%) - 1px) }
     .is-varying-sizes .element-item.height2 { height: calc(((50.00vw / 3) + 50px) * 2); }
@@ -726,7 +726,7 @@ padding:0px 10px;
         height: calc(((33.333333vw) / 3) + 50px);
     }
     .element-item .navn {
-        font-size:22pt;
+        font-size:16pt;
     }
     .is-varying-sizes .element-item.width2 { width: calc((33.33333vw - (100.00vw - 100%)/3)*2) }
     .is-varying-sizes .element-item.height2 { height: calc(((33.33333vw / 3 ) + 50px) * 2); }
