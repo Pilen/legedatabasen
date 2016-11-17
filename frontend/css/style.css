@@ -197,8 +197,7 @@ input[type="text"]
 
 .modal {
     z-index: 20450;
-	border: 3px;
-	border-color: #233b52;
+	
     top: 25px;
 }
 
@@ -210,6 +209,8 @@ width: 100%;
 
 .modal-body {
   padding: 0;
+	border: 3px;
+	border-color: #233b52;
 }
 
 .modal-body .leg-description {
