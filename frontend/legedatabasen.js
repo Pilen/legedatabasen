@@ -71,7 +71,7 @@ function init() {
             leg.participants = participants_group(leg.min_participants);
             lege_urls[leg.url] = leg;
             if (leg.images.length > 0) {
-                var image = leg.images[0] + '?w=360';
+                var image = '/images/entries/' + leg.images[0]['list'];
                 var classes = "";
             } else {
                 var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
@@ -276,7 +276,7 @@ function init() {
         //$(".navbar .leg_back").show();
 
         if (leg.images.length > 0) {
-            var image = leg.images[0] + "?w=800&h=400&fit=fill";
+            var image = '/images/entries/' + leg.images[0]['detail'];
         } else {
             var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
         }
