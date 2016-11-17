@@ -216,6 +216,11 @@ width: 100%;
 .modal-body .leg-description {
     padding: 15px;
 }
+
+.modal-body .leg-description h1 {
+    color: black;
+}
+
 #modal-close-top {
     position: absolute;
     color: rgb(255, 255, 255);
