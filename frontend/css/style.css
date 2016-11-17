@@ -721,10 +721,12 @@ div:focus {
 
 figure {
 	position: relative;
+	
 }
 
 figure img {
 	width: 100%!important;
+	border-radius: 3px     3px      0           0;
 }
 
 figure figcaption {
