@@ -52,9 +52,7 @@ function init() {
     });
     category_swiper.on("slideChangeEnd", function(swiper) {
         total_time = +new Date();
-        console.log("swipe");
         var selected = swiper.realIndex;
-        $("#debug").text(categories[selected].name);
         if (selected != category) {
             category = selected;
             showCategory(categories[selected], true /* No reset */);
@@ -379,13 +377,9 @@ function init() {
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
-        $("#debug").text("sorting");
         var start_time = +new Date();
         $("#isotope").isotope("updateSortData").isotope();
         var end_time = +new Date();
-        $("#debug").text("isotope: "+(end_time - start_time) +" total: " + (end_time - total_time));
-        console.log("isotope: ", end_time - start_time);
-        console.log("total: ", end_time - total_time);
 
         return;
     }
