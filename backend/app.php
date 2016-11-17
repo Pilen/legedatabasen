@@ -57,6 +57,11 @@ $application
 					'category' => 'name'
 				]
 			],
+			'gameArea' => [
+				'properties' => [
+					'area' => 'area'
+				]
+			],
 			'images' => [
 				'properties' => [
 					'image' => 'image'
@@ -85,10 +90,10 @@ $application
 					$type = NULL;
 				}
 
-
 				$methodName = 'get' . ucfirst($fieldName);
 				/** @var \Contentful\Delivery\ContentTypeField $value */
 				$value = $entry->$methodName($locale);
+
 				switch ($type) {
 					case 'Text':
 						return trim($value);
@@ -224,7 +229,6 @@ $application
 		/** @var \Contentful\Delivery\DynamicEntry $entry */
 		foreach ($entries as $entry) {
 			try {
-
 				$data[] = [
 					'id' => $field('id', $entry),
 					'name' => $field('name', $entry),
@@ -238,6 +242,7 @@ $application
 					'max_time' => $field('durationMax', $entry),
 					'inside' =>  (boolean) $field('indoor', $entry) ? TRUE : FALSE,
 					'outdoor' => (boolean) $field('outdoor', $entry) ? TRUE : FALSE,
+					'area' => $field('gameArea', $entry),
 					'videos' => $youtube('videos', $entry),
 					'tags' => $field('tags', $entry),
 					'game_categories' => $field('gameCategory', $entry),
