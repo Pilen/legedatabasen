@@ -530,7 +530,7 @@ div:focus {
 .fdficon {
     font-family: fdficons;
     font-weight: 400;
-	padding: 0px 10px;
+	padding: 0px 5px 0px 0px;
 }
 .fdf-timeglas:before {
     content: "\f3ba";
@@ -642,6 +642,7 @@ div:focus {
 padding:0px 10px;	
 }
 
+
 .fdficon{
 	color: #456889;
 	}
@@ -704,7 +705,7 @@ padding:0px 10px;
     height: calc(((100.00vw) / 3.5) + 50px);
 }
 .element-item .navn {
-    font-size:18pt;margin-top:10px;
+    font-size:16pt;margin-top:10px;
 }
 
 @media (min-width: 768px) {
@@ -713,10 +714,13 @@ padding:0px 10px;
         height: calc((50.00vw / 3) + 50px);
     }
     .element-item .navn {
-        font-size:20pt;
+        font-size:16pt;
     }
     .is-varying-sizes .element-item.width2 { width: calc(100.00vw - (100.00vw - 100%) - 1px) }
     .is-varying-sizes .element-item.height2 { height: calc(((50.00vw / 3) + 50px) * 2); }
+	.modal-lg {
+    width: 80%;
+}
 }
 
 @media (min-width: 992px) {
@@ -725,10 +729,13 @@ padding:0px 10px;
         height: calc(((33.333333vw) / 3) + 50px);
     }
     .element-item .navn {
-        font-size:22pt;
+        font-size:20pt;
     }
     .is-varying-sizes .element-item.width2 { width: calc((33.33333vw - (100.00vw - 100%)/3)*2) }
     .is-varying-sizes .element-item.height2 { height: calc(((33.33333vw / 3 ) + 50px) * 2); }
+    .modal-lg {
+    width: 60%;
+}
 }
 
 @media (min-width: 1200px) {
@@ -737,10 +744,13 @@ padding:0px 10px;
         height: calc(((25.00vw)/3) + 50px);
     }
     .element-item .navn {
-        font-size:24pt;
+        font-size:22pt;
     }
     .is-varying-sizes .element-item.width2 { width: calc((25.00vw - (100.00vw - 100%)/4)*2 - 2px) }
     .is-varying-sizes .element-item.height2 { height: calc(((25.00vw / 3 ) + 50px) * 2); }
+	   .modal-lg {
+    width: 40%;
+}
 }
 
 figure {
@@ -785,3 +795,4 @@ img.leg-box-image {
    filter: saturate(60%);
   
   }
+
