@@ -519,7 +519,7 @@ div:focus {
 }
 .leg-info td {
     padding: 0px 5px;
-	font-size: 2em;
+	
 }
 .fdficon {
     font-family: fdficons;
@@ -637,6 +637,7 @@ div:focus {
 }
 .infobar td {
     text-align: center;
+	font-size: 2em;
 }
 .element-item > * {
     margin: 0;
