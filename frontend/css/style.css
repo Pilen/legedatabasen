@@ -196,6 +196,7 @@ input[type="text"]
 
 
 .modal {
+    -webkit-overflow-scrolling: auto
     z-index: 20450;
 	
     top: 25px;
