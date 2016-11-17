@@ -95,7 +95,7 @@ $application
 					case 'Array':
 						$arrayValues = [];
 						if (count($value) < 1) {
-							return NULL;
+							return [];
 						}
 
 						/** @var \Contentful\Delivery\DynamicEntry $childItem */
