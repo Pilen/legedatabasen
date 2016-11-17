@@ -774,6 +774,6 @@ img.leg-box-image {
     height: 100%;
     opacity: 1.0;
     border-radius: 4px;
-     -webkit-filter: saturate(20);
-     filter: saturate(20);
+     -webkit-filter: saturate(20%);
+     filter: saturate(20%);
 }
