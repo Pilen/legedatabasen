@@ -797,7 +797,7 @@ img.leg-box-image {
   }
 
 .wrapper {
-  background-image: url(../assets/bridge.jpg);
+  background-image: url(/frontend/images/header.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100%;
