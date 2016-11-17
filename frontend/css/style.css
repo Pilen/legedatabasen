@@ -232,9 +232,8 @@ width: 100%;
 }
 
 .modal-content {
-  border: 10px !important;
-  border-color: #233b52!important;
-}
+  border: 5px solid #233b52!important;
+  }
 
 
 .navbar-fixed-top {
