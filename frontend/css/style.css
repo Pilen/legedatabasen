@@ -216,7 +216,8 @@ width: 100%;
     padding: 15px;
 }
 #modal-close-top {
-    position: absolute;
+    position: relative;
+    text-align: right;
     color: rgb(255, 255, 255);
     /* background-color: rgb(100, 150, 100); */
     z-index: 100;
