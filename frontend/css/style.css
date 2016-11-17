@@ -209,7 +209,7 @@ width: 100%;
 
 .modal-body {
   padding: 0;
-	border: 3px;
+	border: 3px; !important;
 	border-color: #233b52;
 }
 
