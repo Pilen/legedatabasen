@@ -289,7 +289,7 @@ function init() {
                 '<table style="width:100%;">'+
                 '<tbody>'+
                 '<tr>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:15%; font.size: 0.5em">' + leg.participants + '</td>'+
                 '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
                 '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
                 '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
