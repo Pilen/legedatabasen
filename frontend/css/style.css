@@ -726,7 +726,7 @@ figure {
 
 figure img {
 	width: 100%!important;
-	border-radius: 3px     3px      0           0;
+	border-radius: 4px     4px      0           0;
 }
 
 figure figcaption {
