@@ -525,6 +525,7 @@ div:focus {
 .leg-info td {
     padding: 0px 5px;
 	
+	
 }
 .fdficon {
     font-family: fdficons;
@@ -635,13 +636,17 @@ div:focus {
     padding:0px 10px;
     color: white;
     font-weight: 300;
+}
+.infobar {
+padding:0px 10px;	
+}
 
-}
-.leg .infobar .fdficon {
-    color:#456889;
-}
+.fdficon{
+	color: #456889;
+	}
+
 .infobar td {
-    text-align: center;
+    text-align: left;
 	
 }
 .element-item > * {
@@ -754,11 +759,12 @@ figure figcaption {
     left: 0;
     padding: 0px;
     right: 0;
-    font-size: 2em;
+    font-size: 1em;
+    
 }
 
 figure figcaption h3 {
-    padding: 20px;
+    padding: 10px;
     margin-top: 0;
     margin-bottom: 0;
 }
