@@ -524,7 +524,7 @@ div:focus {
 }
 .leg-info td {
     padding: 0px 5px;
-	text-align: left;
+	
 	
 }
 .fdficon {
@@ -644,7 +644,7 @@ div:focus {
 	}
 
 .infobar td {
-    text-align: center;
+    text-align: left;
 	
 }
 .element-item > * {
