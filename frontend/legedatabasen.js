@@ -63,7 +63,7 @@ function init() {
     $.getJSON("/data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
-            leg.area = "plæne";
+            leg.game_area = leg.area.length > 0 ? leg.area[0].area : "INGEN STEDER!";
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
             leg.participants = participants_group(leg.min_participants);
@@ -89,7 +89,7 @@ function init() {
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
                  '</tr>'+
                  '</tbody>'+
                  '</table>'+
@@ -292,7 +292,7 @@ function init() {
                 '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
                 '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
                 '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
                 '</tr>'+
                 '</tbody>'+
                 '</table>'+
