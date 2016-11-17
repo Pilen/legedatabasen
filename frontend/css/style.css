@@ -209,9 +209,7 @@ width: 100%;
 
 .modal-body {
   padding: 0;
-	border: 10px !important;
-	border-color: #233b52;
-}
+	}
 
 .modal-body .leg-description {
     padding: 15px;
@@ -232,6 +230,12 @@ width: 100%;
     opacity: 1.0;
     background-color: white;
 }
+
+.modal-content {
+  border: 10px !important;
+  border-color: #233b52!important;
+}
+
 
 .navbar-fixed-top {
     background-color: #456889;
