@@ -738,7 +738,7 @@ padding:0px 10px;
         height: calc(((25.00vw)/3) + 50px);
     }
     .element-item .navn {
-        font-size:24pt;
+        font-size:16pt;
     }
     .is-varying-sizes .element-item.width2 { width: calc((25.00vw - (100.00vw - 100%)/4)*2 - 2px) }
     .is-varying-sizes .element-item.height2 { height: calc(((25.00vw / 3 ) + 50px) * 2); }
