@@ -633,13 +633,11 @@ div:focus {
     background-color: rgba(249, 175, 26, 0.90);
     width:100%;
     padding:0px 10px;
-    color: white;
+    color: #456889;
     font-weight: 300;
 
 }
-.leg .infobar {
-    color:#456889;
-}
+
 .infobar td {
     text-align: center;
 	
