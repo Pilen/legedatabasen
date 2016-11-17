@@ -27,9 +27,15 @@ $application
 		InputArgument::REQUIRED,
 		'Contentful content type id'
 	)
+	->addArgument(
+		'image-folder',
+		InputArgument::REQUIRED,
+		'Folder for images'
+	)
 	->setCode(function(InputInterface $input, OutputInterface $output) {
 		$token = $input->getArgument('token');
 		$space = $input->getArgument('space');
+		$imageFolder = realpath($input->getArgument('image-folder'));
 		$locale = 'da-DK';
 
 		$client = new \Contentful\Delivery\Client($token, $space);
@@ -49,6 +55,11 @@ $application
 			'gameCategory' => [
 				'properties' => [
 					'category' => 'name'
+				]
+			],
+			'gameArea' => [
+				'properties' => [
+					'area' => 'area'
 				]
 			],
 			'images' => [
@@ -79,10 +90,10 @@ $application
 					$type = NULL;
 				}
 
-
 				$methodName = 'get' . ucfirst($fieldName);
 				/** @var \Contentful\Delivery\ContentTypeField $value */
 				$value = $entry->$methodName($locale);
+
 				switch ($type) {
 					case 'Text':
 						return trim($value);
@@ -95,7 +106,7 @@ $application
 					case 'Array':
 						$arrayValues = [];
 						if (count($value) < 1) {
-							return NULL;
+							return [];
 						}
 
 						/** @var \Contentful\Delivery\DynamicEntry $childItem */
@@ -129,7 +140,17 @@ $application
 
 		};
 
-		$images = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) use ($fieldMapping, $locale) {
+		$images = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) use ($fieldMapping, $locale, $imageFolder) {
+			$imageFormats = [
+				'list' => [
+					'w' => 800,
+					'h' => 400,
+					'fit' => 'fill'
+				],
+				'detail' => [
+					'w' => 360
+				]
+			];
 			$methodName = 'get' . ucfirst($fieldName);
 
 			$assets = $entry->$methodName();
@@ -142,7 +163,20 @@ $application
 			/** @var \Contentful\Delivery\DynamicEntry $asset */
 			foreach ($assets as $asset) {
 				try {
-					$images[] = $asset->getImage()->getFile()->getUrl();
+					$client = new \GuzzleHttp\Client();
+					$fileName = $asset->getImage()->getFile()->getFileName();
+					$fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+					$formats = [];
+					foreach ($imageFormats as $formatName => $imageFormat) {
+						$url = $asset->getImage()->getFile()->getUrl() . '?' . \GuzzleHttp\Psr7\build_query($imageFormat);
+						$persistedFileName = md5($url) . '.' . $fileExtension;
+						$persistedFilePath = $imageFolder . DIRECTORY_SEPARATOR . $persistedFileName;
+						if (!file_exists($persistedFilePath)) {
+							$client->request('GET', $url, ['sink' =>  $persistedFilePath]);
+						}
+						$formats[$formatName] = $persistedFileName;
+					}
+					$images[] = $formats;
 				} catch (\Exception $exception) {
 
 				}
@@ -195,7 +229,6 @@ $application
 		/** @var \Contentful\Delivery\DynamicEntry $entry */
 		foreach ($entries as $entry) {
 			try {
-
 				$data[] = [
 					'id' => $field('id', $entry),
 					'name' => $field('name', $entry),
@@ -209,6 +242,7 @@ $application
 					'max_time' => $field('durationMax', $entry),
 					'inside' =>  (boolean) $field('indoor', $entry) ? TRUE : FALSE,
 					'outdoor' => (boolean) $field('outdoor', $entry) ? TRUE : FALSE,
+					'area' => $field('gameArea', $entry),
 					'videos' => $youtube('videos', $entry),
 					'tags' => $field('tags', $entry),
 					'game_categories' => $field('gameCategory', $entry),

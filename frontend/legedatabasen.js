@@ -52,9 +52,7 @@ function init() {
     });
     category_swiper.on("slideChangeEnd", function(swiper) {
         total_time = +new Date();
-        console.log("swipe");
         var selected = swiper.realIndex;
-        $("#debug").text(categories[selected].name);
         if (selected != category) {
             category = selected;
             showCategory(categories[selected], true /* No reset */);
@@ -71,7 +69,7 @@ function init() {
             leg.participants = participants_group(leg.min_participants);
             lege_urls[leg.url] = leg;
             if (leg.images.length > 0) {
-                var image = leg.images[0] + '?w=360';
+                var image = '/images/entries/' + leg.images[0]['list'];
                 var classes = "";
             } else {
                 var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
@@ -80,7 +78,8 @@ function init() {
 
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
-                 '<div class="leg '+ classes +'" style="background-image:url(' + image +');">'+
+                 '<div class="leg '+ classes +'">'+
+                 '<img src="' + image + '" class="leg-box-image">' +
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
@@ -88,7 +87,7 @@ function init() {
                  '<tbody>'+
                  '<tr>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
-                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
+                 '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
                  '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
                  '</tr>'+
@@ -276,7 +275,7 @@ function init() {
         //$(".navbar .leg_back").show();
 
         if (leg.images.length > 0) {
-            var image = leg.images[0] + "?w=800&h=400&fit=fill";
+            var image = '/images/entries/' + leg.images[0]['detail'];
         } else {
             var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
         }
@@ -290,10 +289,10 @@ function init() {
                 '<table style="width:100%;">'+
                 '<tbody>'+
                 '<tr>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:15%">' + leg.participants + '</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + '<br>min</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
-                '<td style="width:10%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:15%; font.size: 0.5em">' + leg.participants + '</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:15%">' + leg.age + '+</td>'+
+                '<td style="width:10%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.area + '</td>'+
                 '</tr>'+
                 '</tbody>'+
                 '</table>'+
@@ -307,6 +306,16 @@ function init() {
           $(".modal-body").html(description);
         */
         $("#modal-leg").modal("show");
+        ga('send',
+            {
+                hitType: 'event',
+                eventCategory: 'Leg',
+                eventAction: 'show',
+                eventLabel: 'Vis leg',
+                eventValue: leg.name
+            }
+        );
+
     }
 
     function showCategory(category, noReset) {
@@ -379,13 +388,9 @@ function init() {
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
-        $("#debug").text("sorting");
         var start_time = +new Date();
         $("#isotope").isotope("updateSortData").isotope();
         var end_time = +new Date();
-        $("#debug").text("isotope: "+(end_time - start_time) +" total: " + (end_time - total_time));
-        console.log("isotope: ", end_time - start_time);
-        console.log("total: ", end_time - total_time);
 
         return;
     }
