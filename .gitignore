@@ -4,3 +4,4 @@ vendor
 composer.lock
 frontend/bower_components/
 frontend/data.json
+frontend/images/entries/
