@@ -775,4 +775,5 @@ img.leg-box-image {
     opacity: 1.0;
     border-radius: 4px;
    filter: saturate(70%);
+   filter: brightness(120%);
 }
