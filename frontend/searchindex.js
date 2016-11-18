@@ -260,11 +260,7 @@ function SearchIndex(options) {
         if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
         work = 0;
 
-        // Stop timer
-        if (this._timer) {
-            window.clearTimeout(this._timer);
-        }
-        this._timer = null;
+        this.abort();
 
         // Do filtering
         var filters = Object.keys(this._filters).map(function(name){
@@ -304,6 +300,15 @@ function SearchIndex(options) {
             this._options.callback(result);
         }
         return result;
+    };
+
+    // Abort the current search (timer)
+    this.abort = function() {
+        // Stop timer
+        if (this._timer) {
+            window.clearTimeout(this._timer);
+        }
+        this._timer = null;
     };
 
     //////// Internal ////////
