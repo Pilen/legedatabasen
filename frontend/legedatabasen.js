@@ -134,14 +134,6 @@ function init() {
             search.query(search_text);
         }
 
-        $('a').click(function(event){
-            event.preventDefault();
-            history.pushState({}, '', $(this).attr("href"));
-            route();
-            been_at_front = true;
-            return false;
-        });
-
         $(window).on('popstate', function() {
             route();
         });
@@ -398,6 +390,14 @@ function init() {
         }, this);
         $("#lege").append(nodes);
 
+
+        $('#lege a').click(function(event){
+            event.preventDefault();
+            history.pushState({}, '', $(this).attr("href"));
+            route();
+            been_at_front = true;
+            return false;
+        });
         // $("#lege").fadeIn(200);
 
         // $("#lege").isotope("updateSortData").isotope();
