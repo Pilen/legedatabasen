@@ -401,7 +401,7 @@ function init() {
 
         // $("#lege").isotope("updateSortData").isotope();
         var end_time = +new Date();
-        $("#profiler").text("isotope: "+(end_time - start_time) +" total: " + (end_time - total_time));
+        $("#profiler").text("lege: "+(end_time - start_time) +" total: " + (end_time - total_time));
 
         return;
     }
