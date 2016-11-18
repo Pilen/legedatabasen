@@ -793,6 +793,7 @@ img.leg-box-image {
     opacity: 1.0;
     border-radius: 4px;
    filter: saturate(60%);
-  
+    object-fit: cover;
+    object-position: 0 0;
   }
 
