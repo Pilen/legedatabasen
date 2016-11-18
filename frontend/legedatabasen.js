@@ -384,7 +384,7 @@ function init() {
 
         // $("#lege").fadeOut(200);
         $("#lege").empty();
-        var shown = lege.filter(function(leg) {return leg.score >= 0;});
+        var shown = lege.filter(function(leg) {return leg.score >= 1;});
         shown.sort(function(a, b) {
             if (a.score == b.score) {
                 return a.name.localeCompare(b.name);
