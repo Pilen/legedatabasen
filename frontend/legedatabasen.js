@@ -50,6 +50,9 @@ function init() {
         keyboardControl: true,
         initialSlide: category
     });
+    category_swiper.on("touchStart", function(swiper) {
+        search.abort();
+    });
     category_swiper.on("slideChangeEnd", function(swiper) {
         total_time = +new Date();
         var selected = swiper.realIndex;
