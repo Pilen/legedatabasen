@@ -138,7 +138,6 @@ function init() {
             route();
         });
 
-        $("#lege").show();
         route();
     });
 
@@ -398,6 +397,9 @@ function init() {
             been_at_front = true;
             return false;
         });
+        $("#lege").show();
+
+
         // $("#lege").fadeIn(200);
 
         // $("#lege").isotope("updateSortData").isotope();
