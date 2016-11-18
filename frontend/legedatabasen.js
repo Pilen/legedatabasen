@@ -227,18 +227,23 @@ function init() {
         showCategory(categories[category]);
     });
 
-    $(window).resize(function() {
-        menu_offset = $(".navigation-filler").offset().top;
-    }).resize();
-    $(window).scroll(function() {
-        var state = "lege";
+    function stickyMenu() {
         var position = $(this).scrollTop();
         if (position >= menu_offset) {
             $(".navigation").css("position", "fixed");
         } else {
             $(".navigation").css("position", "static");
-
         }
+    }
+    $(window).resize(function() {
+        menu_offset = $(".navigation-filler").offset().top;
+        stickyMenu();
+    }).resize();
+    $(window).scroll(function() {
+        var state = "lege";
+        stickyMenu();
+        return;
+        var position = $(this).scrollTop();
 
         if(state == "lege" && position >= 120) {
             $("#title").text(categories[category].name);
