@@ -105,7 +105,7 @@ function init() {
 
         search = new SearchIndex()
             .method("plain")
-            .delay(200)
+            .delay(1000)
             .add_field("description")
             .add_field("name", 10)
         // .add_field("tags", 9)
