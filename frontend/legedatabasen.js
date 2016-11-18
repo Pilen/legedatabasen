@@ -50,9 +50,9 @@ function init() {
         keyboardControl: true,
         initialSlide: category
     });
-    category_swiper.on("touchStart", function(swiper) {
-        search.abort();
-    });
+    // category_swiper.on("touchStart", function(swiper) {
+    //     search.abort();
+    // });
     category_swiper.on("slideChangeEnd", function(swiper) {
         total_time = +new Date();
         var selected = swiper.realIndex;
@@ -108,7 +108,7 @@ function init() {
 
         search = new SearchIndex()
             .method("plain")
-            .delay(1000)
+            .delay(500)
             .add_field("description")
             .add_field("name", 10)
         // .add_field("tags", 9)
