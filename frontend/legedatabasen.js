@@ -141,6 +141,14 @@ function init() {
         route();
     });
 
+    $('#lege').on("click", "a", function(event){
+        event.preventDefault();
+        history.pushState({}, '', $(this).attr("href"));
+        route();
+        been_at_front = true;
+        return false;
+    });
+
     function closeLeg() {
         if (been_at_front) {
             window.history.back();
@@ -388,14 +396,6 @@ function init() {
         }, this);
         $("#lege").append(nodes);
 
-
-        $('#lege a').click(function(event){
-            event.preventDefault();
-            history.pushState({}, '', $(this).attr("href"));
-            route();
-            been_at_front = true;
-            return false;
-        });
         $("#lege").show();
 
 
