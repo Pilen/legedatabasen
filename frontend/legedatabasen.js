@@ -366,8 +366,7 @@ function init() {
             // leg.node.find(".score").text(-1);
         });
         rankings.map(function(ranked) {
-            // ranked.document.score = ranked.score;
-            ranked.document.score = 0;
+            ranked.document.score = ranked.score;
             ranked.document.node.attr("score", ranked.score);
             // ranked.document.node.find(".score").text(ranked.score);
         });
@@ -381,7 +380,7 @@ function init() {
             if (a.score == b.score) {
                 return a.name.localeCompare(b.name);
             }
-            return a.score - b.score;
+            return b.score - a.score;
         });
         _s = shown;
         var nodes = shown.map(function(leg) {
