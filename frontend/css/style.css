@@ -37,7 +37,7 @@
 }
 
 body {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
     /* background-color: rgb(61, 94, 120); */
     font-family: 'Lilita', sans-serif;
     /* overflow: auto; */
@@ -246,7 +246,8 @@ width: 100%;
   }
 
 
-.navbar-fixed-top {
+.navbar {
+    border-radius: 0;
     background-color: #456889;
     border-color: #456889;
 	opacity: 0.9;
@@ -279,10 +280,9 @@ width: 100%;
 
 .navbar-brand {
     position: absolute;
-    width: 100%;
     left: 0;
     margin: auto;
-    text-align: center;
+    padding: 0;
 }
 #title {
     color:white !important;

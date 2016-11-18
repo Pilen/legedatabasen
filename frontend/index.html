@@ -22,6 +22,37 @@
     <body>
   
         <div class="scrollbar-keeper"></div>
+        <div class="navbar-image visible-lg-block">
+            <img src="https://raw.githubusercontent.com/Pilen/legedatabasen/626bdb40ed478dbfbea4ebb6b5a3a9d8cd6d3445/frontend/images/topfoto.png" class="img-responsive"/>
+        </div>
+        <div class="navbar">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img class="balloon-icon" src="/images/balloon.png" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <div class="search-span">
+                                <input id="search" type="text" class="myform-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#"><span id="search-icon" class="icon fdficon btn"> &#xf41b;</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><span id="search-done-icon" class="icon fdficon btn"> &#xf41b;</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--
         <nav class="navigation">
             <div class="left">
                 <a href="/">
@@ -36,10 +67,11 @@
                 <img class="menu-icon" src="/images/menu.png"></img>
                 <a href="http://www.fdf.dk"><img class="skjold-icon" src="/images/fdf_skjold_hvid_no_padding.png"></img></a>
             </div>
-            <div class="search-span"> <!-- Actually shown between left and icons -->
+            <div class="search-span">
                 <input id="search" type="text" class="myform-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
             </div>
         </nav>
+        -->
         <div id="title"></div>
         <div id="profiler" style="display:none"></div>
         <div class="container-fluid" id="container" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->

@@ -24,6 +24,7 @@ var category_swiper;
 var total_time;
 
 function init() {
+
     // Create categories
     categories.map(function(category, key) {
         category.index = key;
@@ -409,6 +410,20 @@ function init() {
     }
 };
 $(document).ready(init);
+
+$(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+
+    if ($(".navbar-image").is(":visible")) {
+        if (scroll >= 295) {
+            $(".navbar").addClass("navbar-fixed-top");
+        } else {
+            $(".navbar").removeClass("navbar-fixed-top");
+        }
+    }
+
+}); //missing );
+
 
 function scrollToTop(duration) {
     var to = 0;
