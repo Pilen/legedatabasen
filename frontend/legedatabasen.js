@@ -146,6 +146,7 @@ function init() {
             route();
         });
 
+        $("#lege").show();
         route();
     });
 

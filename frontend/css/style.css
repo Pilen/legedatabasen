@@ -193,13 +193,15 @@ input[type="text"]
     /* width: auto; */
 }
 
-
+#lege {
+    display: none;
+}
 
 .modal {
     -webkit-overflow-scrolling: auto !important;
-	    
+
     z-index: 20450;
-	
+
     top: 50px;
 }
 
