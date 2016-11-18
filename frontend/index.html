@@ -6,7 +6,7 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <link rel="shortcut icon" type="image/png" href="/images/icon.png" />
         <link rel="apple-touch-icon" href="/images/touch-icon-iphone.png">
-    
+
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="/bower_components/swiper/dist/css/swiper.min.css">
 
@@ -20,8 +20,14 @@
         <script src="/legedatabasen.js"></script>
     </head>
     <body>
-  
+
         <div class="scrollbar-keeper"></div>
+        <div id="top-wrapper">
+            <div id="top-image">
+                <img src="/images/top-image.png"/>
+            </div>
+        </div>
+        <div class="navigation-filler">
         <nav class="navigation">
             <div class="left">
                 <a href="/">
@@ -40,7 +46,8 @@
                 <input id="search" type="text" class="myform-control" ng-model="nameFilter" placeholder="Leder du efter noget bestemt?" />
             </div>
         </nav>
-        <div id="title"></div>
+        </div>
+        <div id="title" style="display:none"></div>
         <div id="profiler" style="display:none"></div>
         <div class="container-fluid" id="container" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
             <div id="slider" style="display:none"></div>

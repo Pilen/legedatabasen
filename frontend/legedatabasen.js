@@ -22,6 +22,7 @@ var been_at_front = false;
 var search;
 var category_swiper;
 var total_time;
+var menu_offset;
 
 function init() {
     // Create categories
@@ -226,9 +227,19 @@ function init() {
         showCategory(categories[category]);
     });
 
+    $(window).resize(function() {
+        menu_offset = $(".navigation-filler").offset().top;
+    }).resize();
     $(window).scroll(function() {
         var state = "lege";
         var position = $(this).scrollTop();
+        if (position >= menu_offset) {
+            $(".navigation").css("position", "fixed");
+        } else {
+            $(".navigation").css("position", "static");
+
+        }
+
         if(state == "lege" && position >= 120) {
             $("#title").text(categories[category].name);
         } else if(state == "leg" && position >= 50) {
