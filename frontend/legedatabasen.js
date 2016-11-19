@@ -88,7 +88,7 @@ function init() {
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg '+ classes +'">'+
-                 '<img src="' + image + '" class="leg-box-image">' +
+                 '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
@@ -136,6 +136,8 @@ function init() {
             magic(search_text);
             search.query(search_text);
         }
+
+        $('.lazy').lazy();
 
         $(window).on('popstate', function() {
             route();
@@ -289,7 +291,7 @@ function init() {
         $("#modal-leg #leg-presentation-image").remove();
         $("#modal-leg .modal-body .leg-description").before(
             '<figure id="leg-presentation-image">' +
-                '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />' +
+                '<img data-src="' + image + '" class="img-responsive lazy" id="leg-presentation-image" />' +
                 '<figcaption>' +
                 '<h3>' + leg.name + '</h3>' +
                 '<div class="infobar">'+
