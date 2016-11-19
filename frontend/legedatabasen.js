@@ -271,6 +271,8 @@ function init() {
 
         var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
         d = description;
+        var preparation = marked(leg.preparation.replace(/^#([^\s])/mg, "# $1"));
+        var note = marked(leg.note.replace(/^#([^\s])/mg, "# $1"));
         // $("#leg").show();
         // $("#leg-navn").text(leg.name);
         // $("#leg-teaser").text(leg.teaser);
@@ -304,6 +306,12 @@ function init() {
                 '</figure>');
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
         $("#modal-leg .modal-body .leg-description").html(description);
+        if (preparation) {
+            $("#modal-leg .modal-body .leg-description").append('<strong>Forberedelse</strong>' + preparation);
+        }
+        if (note) {
+            $("#modal-leg .modal-body .leg-description").append('<strong>Noter</strong>' + note);
+        }
         /*
           $("#modal-title").text(leg.name);
           $(".modal-body").html(description);

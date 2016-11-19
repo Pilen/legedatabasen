@@ -237,6 +237,8 @@ $application
 					'name' => $field('name', $entry),
 					'teaser' => $field('teaser', $entry),
 					'description' => $field('description', $entry),
+					'preparation' => $field('preparation', $entry),
+					'note' => $field('note', $entry),
 					'min_participants' => $field('participantsMin', $entry),
 					'max_participants' => $field('participantsMax', $entry),
 					'min_age' => $field('ageMin', $entry),
