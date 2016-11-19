@@ -728,19 +728,6 @@ padding:0px 10px;
 .element-item .navn {
     font-size:16pt;margin-top:10px;
 }
-
-@media (min-width: 665px) {
-    .element-item {
-        width: calc(50.00vw - (100.00vw - 100%)/2);
-        height: calc((50.00vw / 3.5) + 50px);
-    }
-    .element-item .navn {
-        font-size:16pt;
-    }
-    .is-varying-sizes .element-item.width2 { width: calc(100.00vw - (100.00vw - 100%) - 1px) }
-    .is-varying-sizes .element-item.height2 { height: calc(((50.00vw / 3) + 50px) * 2); }
-	.modal-lg {
-}
 	
 @media (min-width: 768px) {
     .element-item {
