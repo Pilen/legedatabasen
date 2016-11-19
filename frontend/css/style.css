@@ -79,7 +79,7 @@ input[type="text"]
     width: 10px;
     visibility: hidden;
 }
-@media (max-width: 500px) {
+@media (max-width: 800px) {
     #header {
         display: none;
     }
