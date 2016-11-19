@@ -305,12 +305,12 @@ function init() {
                 '</figcaption>' +
                 '</figure>');
         $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
-        $("#modal-leg .modal-body .leg-description").html(description);
+        $("#modal-leg .modal-body .leg-description").html('<h3>Beskrivelse:</h3>' + description);
         if (preparation) {
-            $("#modal-leg .modal-body .leg-description").append('<strong>Forberedelse</strong>' + preparation);
+            $("#modal-leg .modal-body .leg-description").append('<h3>Forberedelse</h3>' + preparation);
         }
         if (note) {
-            $("#modal-leg .modal-body .leg-description").append('<strong>Noter</strong>' + note);
+            $("#modal-leg .modal-body .leg-description").append('<h3>Noter:</h3>' + note);
         }
         /*
           $("#modal-title").text(leg.name);
