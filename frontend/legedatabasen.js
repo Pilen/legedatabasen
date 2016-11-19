@@ -25,6 +25,8 @@ var total_time;
 var menu_offset;
 
 function init() {
+
+
     // Create categories
     categories.map(function(category, key) {
         category.index = key;
@@ -317,15 +319,8 @@ function init() {
           $(".modal-body").html(description);
         */
         $("#modal-leg").modal("show");
-        ga('send',
-            {
-                hitType: 'event',
-                eventCategory: 'Leg',
-                eventAction: 'show',
-                eventLabel: 'Vis leg',
-                eventValue: leg.name
-            }
-        );
+        ga('send', 'pageview', '/leg/' + leg.url);
+
 
     }
 
