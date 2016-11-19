@@ -83,6 +83,12 @@ input[type="text"]
     #top-image img {
         display: none;
     }
+    .ribbon-wrapper {
+        display: none;
+    }
+    .greeting {
+        display: none;
+    }
 }
 #top-image img {
     width: 100%;
@@ -851,7 +857,7 @@ img.leg-box-image {
 
 }
 .ribbon-wrapper {
-    position: absolute;
+    /*position: absolute;*/
     /* left: -5px; top: -5px; */
     left: 0px; top: 0px;
     z-index: 1;
