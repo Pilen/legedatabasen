@@ -80,13 +80,7 @@ input[type="text"]
     visibility: hidden;
 }
 @media (max-width: 500px) {
-    #top-image img {
-        display: none;
-    }
-    .ribbon-wrapper {
-        display: none;
-    }
-    .greeting {
+    #header {
         display: none;
     }
 }
