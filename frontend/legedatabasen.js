@@ -70,7 +70,7 @@ function init() {
     $.getJSON("/data.json", function (data) {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         lege = data.map(function(leg, key) {
-            leg.game_area = leg.area.length > 0 ? leg.area[0].area : "INGEN STEDER!";
+            leg.game_area = leg.area.length > 0 ? leg.area[0].area.toLocaleLowerCase() : "INGEN STEDER!";
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
             leg.participants = participants_group(leg.min_participants);
@@ -127,8 +127,21 @@ function init() {
                 var categories = leg.game_categories.map(function(c){return c.name;}).join(",");
                 return categories.indexOf(arg) != -1;
             }, function(arg) {return arg || "";})
+            .create_filter("participants", function(leg, arg) {
+                return !arg || leg.participants == arg;
+            }, function(arg) {return arg || "";})
+            .create_filter("duration", function(leg, arg) {
+                return !arg || leg.duration == arg;
+            }, function(arg) {return arg || "";})
+            .create_filter("age", function(leg, arg) {
+                return !arg || leg.age == arg;
+            }, function(arg) {return arg || "";})
+            .create_filter("location", function(leg, arg) {
+                return !arg || leg.game_area == arg;
+            }, function(arg) {return arg || "";})
             .callback(sort_lege)
             .compile();
+
         $("#search").on("input", search_update);
         function search_update(event) {
             var search_text = $("#search")[0].value;
@@ -170,6 +183,9 @@ function init() {
     $("#swipe_knap").click(function() {
         showCategory(categories[category]);
     });
+    $(".menu-icon").click(function() {
+        showSubmenu();
+    });
     $("#filter_knap").click(function() {
         showFilter();
     });
@@ -205,6 +221,25 @@ function init() {
         } else {
             $("#title").text("");
         }
+    });
+
+    // $('.filter input[type=radio], .filter input[type=radio]+label').click(function() {
+    $('.filter input[type=radio]').click(function() {
+        console.log("input click");
+        var radio = $(this);
+        _ = radio;
+        if (radio.data('waschecked') == true) {
+            radio.prop('checked', false);
+            radio.data('waschecked', false);
+            search.update_filter(radio[0].name, undefined);
+        } else {
+            radio.data('waschecked', true);
+            search.update_filter(radio[0].name, radio[0].value);
+        }
+        // remove was checked from other radios
+        radio.siblings('input[name="rad"]').data('waschecked', false);
+
+
     });
 
     contactify();
@@ -365,6 +400,21 @@ function showSearch() {
         // });
     });
 }
+function showSubmenu() {
+    if ($("#submenu").is(":visible")) {
+        console.log("cat instead");
+        return showCategory(category);
+    }
+    rename_url("");
+    resetDisplay().done(function() {
+        $(".swiper-container").slideUp(200, function() {
+            $(".menu-icon").addClass("open");
+            $("#submenu").slideDown(400, function() {
+            });
+        });
+    });
+}
+
 function showFilter() {
     rename_url("");
     resetDisplay().done(function() {
@@ -386,6 +436,9 @@ function resetDisplay() {
     var promise3 = $("#search-done-icon").slideUp(200, function() {
         $("#search-icon").fadeIn(200);
     }).promise();
+    var promise4 = $("#submenu:visible").slideUp(200);
+
+    $(".menu-icon").removeClass("open");
 
     $("#leg").hide();
     $("#container").show();
@@ -393,7 +446,7 @@ function resetDisplay() {
     $("#soeg_knap").show();
     $("#swipe_knap").show();
     $(".navbar .leg_back").hide();
-    return $.when(promise1, promise2, promise3);
+    return $.when(promise1, promise2, promise3, promise4);
 }
 
 function sort_lege(rankings) {
@@ -514,7 +567,6 @@ function contact() {
     if (!window.open(c, "")) {
         window[a][b] = c;
     }
-    console.log(a, b, c);
 }
 
 
@@ -575,7 +627,7 @@ function participants_group(participants) {
         return "10"
     if (participants < 30)
     {}
-    return "30+";
+    return "30";
 }
 
 
