@@ -333,7 +333,7 @@ function init() {
         } else {
             resetDisplay().done(function(){
                 search.update_filter("category", category.name);
-                $("#filters").slideUp(400, function() {
+                $("#filters2").slideUp(400, function() {
                     $(".swiper-container").slideDown(400);
                 });
         });
@@ -352,7 +352,7 @@ function init() {
                 });
                 $("#search").focus();
                 $(".swiper-container").slideUp(400);
-                $("#filters").slideUp(400);
+                $("#filters2").slideUp(400);
             // });
         });
     }
@@ -360,7 +360,7 @@ function init() {
         rename_url("");
         resetDisplay().done(function() {
             $(".swiper-container").slideUp(200, function() {
-                $("#filters").slideDown(400);
+                $("#filters2").slideDown(400);
             });
         });
     }
