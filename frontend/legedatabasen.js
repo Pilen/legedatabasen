@@ -191,6 +191,10 @@ function init() {
             showLeg(leg);
             return;
         }
+        if (url.startsWith("kontakt")) {
+            skriv_til_os();
+            return;
+        }
         // Show category
         if (url) {
             var cats = categories.filter(function(category) {
@@ -257,6 +261,8 @@ function init() {
             $("#title").text("");
         }
     });
+
+    contactify();
 };
 $(document).ready(init);
 
@@ -323,6 +329,7 @@ function showLeg(leg) {
       $("#modal-title").text(leg.name);
       $(".modal-body").html(description);
     */
+    contactify();
     $("#modal-leg").modal("show");
     ga('send', 'pageview', '/leg/' + leg.url);
 
@@ -475,6 +482,41 @@ function scrollToTop(duration) {
     return deferred.promise();
 }
 
+function contactify() {
+    var link = $("a[href^='/kontakt']") .click(function(event) {
+        event.preventDefault();
+        contact();
+        return false;
+    });
+}
+function contact() {
+    var n = 0;
+    var adds = [108, 3, -12, -2, 19, -11, 6, -1,  -6, 10, -13, 1, 7, -12, 8, 3, 8, -5, -53, 50, -7, 2, -39, 38, -2, 2, -56, 54, 7];
+
+    var r = "";
+    var i = 0;
+    for (; i < 8; i++) {
+        n += adds[i];
+        r += String.fromCharCode(n);
+    }
+    var a = r;
+    r = "";
+    for (; i < 8+4; i++) {
+        n += adds[i];
+        r += String.fromCharCode(n);
+    }
+    var b = r;
+    r = "";
+    for (; i < 8+4+(4+2+1+3+1+3+1+2); i++) {
+        n += adds[i];
+        r += String.fromCharCode(n);
+    }
+    var c = r;
+    if (!window.open(c, "")) {
+        window[a][b] = c;
+    }
+    console.log(a, b, c);
+}
 
 
 
