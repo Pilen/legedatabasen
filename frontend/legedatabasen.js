@@ -257,179 +257,180 @@ function init() {
             $("#title").text("");
         }
     });
+};
+$(document).ready(init);
 
-    function show404() {
-        $("#modal-leg .modal-body .leg-teaser").html("");
-        $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
-        $("#modal-leg").modal("show");
+
+function show404() {
+    $("#modal-leg .modal-body .leg-teaser").html("");
+    $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
+    $("#modal-leg").modal("show");
+}
+
+function showLeg(leg) {
+    _=leg;
+    /*
+      $("#container").hide();
+      $("#filter_knap").hide();
+      $("#soeg_knap").hide();
+      $("#swipe_knap").hide();
+    */
+
+    var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
+    d = description;
+    var preparation = marked(leg.preparation.replace(/^#([^\s])/mg, "# $1"));
+    var note = marked(leg.note.replace(/^#([^\s])/mg, "# $1"));
+    // $("#leg").show();
+    // $("#leg-navn").text(leg.name);
+    // $("#leg-teaser").text(leg.teaser);
+    // $("#leg-beskrivelse").html(description);
+    //$(".navbar .leg_back").show();
+
+    if (leg.images.length > 0) {
+        var image = '/images/entries/' + leg.images[0]['detail'];
+    } else {
+        var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
     }
-
-    function showLeg(leg) {
-        _=leg;
-        /*
-          $("#container").hide();
-          $("#filter_knap").hide();
-          $("#soeg_knap").hide();
-          $("#swipe_knap").hide();
-        */
-
-        var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
-        d = description;
-        var preparation = marked(leg.preparation.replace(/^#([^\s])/mg, "# $1"));
-        var note = marked(leg.note.replace(/^#([^\s])/mg, "# $1"));
-        // $("#leg").show();
-        // $("#leg-navn").text(leg.name);
-        // $("#leg-teaser").text(leg.teaser);
-        // $("#leg-beskrivelse").html(description);
-        //$(".navbar .leg_back").show();
-
-        if (leg.images.length > 0) {
-            var image = '/images/entries/' + leg.images[0]['detail'];
-        } else {
-            var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
-        }
-        $("#modal-leg #leg-presentation-image").remove();
-        $("#modal-leg .modal-body .leg-description").before(
-            '<figure id="leg-presentation-image">' +
-                '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />' +
-                '<figcaption>' +
-                '<h3>' + leg.name + '</h3>' +
-                '<div class="infobar">'+
-                '<table style="width:100%;">'+
-                '<tbody>'+
-                '<tr>'+
-                '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-                '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-                '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-                '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
-                '</tr>'+
-                '</tbody>'+
-                '</table>'+
-                '</div>'+
-                '</figcaption>' +
-                '</figure>');
-        $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
-        $("#modal-leg .modal-body .leg-description").html('<h3>Beskrivelse:</h3>' + description);
-        if (preparation) {
-            $("#modal-leg .modal-body .leg-description").append('<h3>Forberedelse</h3>' + preparation);
-        }
-        if (note) {
-            $("#modal-leg .modal-body .leg-description").append('<h3>Noter:</h3>' + note);
-        }
-        /*
-          $("#modal-title").text(leg.name);
-          $(".modal-body").html(description);
-        */
-        $("#modal-leg").modal("show");
-        ga('send', 'pageview', '/leg/' + leg.url);
-
-
+    $("#modal-leg #leg-presentation-image").remove();
+    $("#modal-leg .modal-body .leg-description").before(
+        '<figure id="leg-presentation-image">' +
+            '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />' +
+            '<figcaption>' +
+            '<h3>' + leg.name + '</h3>' +
+            '<div class="infobar">'+
+            '<table style="width:100%;">'+
+            '<tbody>'+
+            '<tr>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+            '</tr>'+
+            '</tbody>'+
+            '</table>'+
+            '</div>'+
+            '</figcaption>' +
+            '</figure>');
+    $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
+    $("#modal-leg .modal-body .leg-description").html('<h3>Beskrivelse:</h3>' + description);
+    if (preparation) {
+        $("#modal-leg .modal-body .leg-description").append('<h3>Forberedelse</h3>' + preparation);
     }
+    if (note) {
+        $("#modal-leg .modal-body .leg-description").append('<h3>Noter:</h3>' + note);
+    }
+    /*
+      $("#modal-title").text(leg.name);
+      $(".modal-body").html(description);
+    */
+    $("#modal-leg").modal("show");
+    ga('send', 'pageview', '/leg/' + leg.url);
 
-    function showCategory(category, noReset) {
-        // rename_url(category.url);
-        if (noReset) {
+
+}
+
+function showCategory(category, noReset) {
+    // rename_url(category.url);
+    if (noReset) {
+        search.update_filter("category", category.name);
+    } else {
+        resetDisplay().done(function(){
             search.update_filter("category", category.name);
-        } else {
-            resetDisplay().done(function(){
-                search.update_filter("category", category.name);
-                $("#filters2").slideUp(400, function() {
-                    $(".swiper-container").slideDown(400);
-                });
+            $("#filters2").slideUp(400, function() {
+                $(".swiper-container").slideDown(400);
+            });
         });
-        }
     }
+}
 
-    function showSearch() {
-        rename_url("");
-        resetDisplay().done(function() {
+function showSearch() {
+    rename_url("");
+    resetDisplay().done(function() {
         // $("#title").fadeOut(200, function() {
         $("#search-icon").fadeOut(200, function() {
             $("#search-done-icon").fadeIn(200);
         });
-                $("#search").val("").fadeIn(200*2, function() {
-                    // $("#search-icon").addClass("active");
-                });
-                $("#search").focus();
-                $(".swiper-container").slideUp(400);
-                $("#filters2").slideUp(400);
-            // });
+        $("#search").val("").fadeIn(200*2, function() {
+            // $("#search-icon").addClass("active");
         });
-    }
-    function showFilter() {
-        rename_url("");
-        resetDisplay().done(function() {
-            $(".swiper-container").slideUp(200, function() {
-                $("#filters2").slideDown(400);
-            });
+        $("#search").focus();
+        $(".swiper-container").slideUp(400);
+        $("#filters2").slideUp(400);
+        // });
+    });
+}
+function showFilter() {
+    rename_url("");
+    resetDisplay().done(function() {
+        $(".swiper-container").slideUp(200, function() {
+            $("#filters2").slideDown(400);
         });
-    }
+    });
+}
 
-    function resetDisplay() {
-        var start_time = +new Date();
-        search.clear();
-        var promise1 = scrollToTop(400);
-        promise1 = null; //We dont want to wait for scrollToTop anyway
-        // $("#title").text("");
-        var promise2 = $("#search:visible").slideUp(200, function() {
-            $("#title").fadeIn(200);
-        }).promise();
-        var promise3 = $("#search-done-icon").slideUp(200, function() {
-            $("#search-icon").fadeIn(200);
-        }).promise();
+function resetDisplay() {
+    var start_time = +new Date();
+    search.clear();
+    var promise1 = scrollToTop(400);
+    promise1 = null; //We dont want to wait for scrollToTop anyway
+    // $("#title").text("");
+    var promise2 = $("#search:visible").slideUp(200, function() {
+        $("#title").fadeIn(200);
+    }).promise();
+    var promise3 = $("#search-done-icon").slideUp(200, function() {
+        $("#search-icon").fadeIn(200);
+    }).promise();
 
-        $("#leg").hide();
-        $("#container").show();
-        $("#filter_knap").show();
-        $("#soeg_knap").show();
-        $("#swipe_knap").show();
-        $(".navbar .leg_back").hide();
-        return $.when(promise1, promise2, promise3);
-    }
+    $("#leg").hide();
+    $("#container").show();
+    $("#filter_knap").show();
+    $("#soeg_knap").show();
+    $("#swipe_knap").show();
+    $(".navbar .leg_back").hide();
+    return $.when(promise1, promise2, promise3);
+}
 
-    function sort_lege(rankings) {
-        _r=rankings;
-        lege.map(function(leg){
-            leg.score = -1;
-            leg.node.attr("score", -1);
-            // leg.node.find(".score").text(-1);
-        });
-        rankings.map(function(ranked) {
-            ranked.document.score = ranked.score;
-            ranked.document.node.attr("score", ranked.score);
-            // ranked.document.node.find(".score").text(ranked.score);
-        });
-        $("#profiler").text("sorting");
-        var start_time = +new Date();
+function sort_lege(rankings) {
+    _r=rankings;
+    lege.map(function(leg){
+        leg.score = -1;
+        leg.node.attr("score", -1);
+        // leg.node.find(".score").text(-1);
+    });
+    rankings.map(function(ranked) {
+        ranked.document.score = ranked.score;
+        ranked.document.node.attr("score", ranked.score);
+        // ranked.document.node.find(".score").text(ranked.score);
+    });
+    $("#profiler").text("sorting");
+    var start_time = +new Date();
 
-        // $("#lege").fadeOut(200);
-        $("#lege").empty();
-        var shown = lege.filter(function(leg) {return leg.score >= 0;});
-        shown.sort(function(a, b) {
-            if (a.score == b.score) {
-                return a.name.localeCompare(b.name);
-            }
-            return b.score - a.score;
-        });
-        _s = shown;
-        var nodes = shown.map(function(leg) {
-            return leg.node;
-        }, this);
-        $("#lege").append(nodes);
+    // $("#lege").fadeOut(200);
+    $("#lege").empty();
+    var shown = lege.filter(function(leg) {return leg.score >= 0;});
+    shown.sort(function(a, b) {
+        if (a.score == b.score) {
+            return a.name.localeCompare(b.name);
+        }
+        return b.score - a.score;
+    });
+    _s = shown;
+    var nodes = shown.map(function(leg) {
+        return leg.node;
+    }, this);
+    $("#lege").append(nodes);
 
-        $("#lege").show();
+    $("#lege").show();
 
 
-        // $("#lege").fadeIn(200);
+    // $("#lege").fadeIn(200);
 
-        // $("#lege").isotope("updateSortData").isotope();
-        var end_time = +new Date();
-        $("#profiler").text("lege: "+(end_time - start_time) +" total: " + (end_time - total_time));
+    // $("#lege").isotope("updateSortData").isotope();
+    var end_time = +new Date();
+    $("#profiler").text("lege: "+(end_time - start_time) +" total: " + (end_time - total_time));
 
-        return;
-    }
-};
-$(document).ready(init);
+    return;
+}
 
 function scrollToTop(duration) {
     var to = 0;
