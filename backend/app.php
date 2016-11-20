@@ -135,7 +135,7 @@ $application
 						return (string) $value;
 				}
 			} catch (\Exception $exception) {
-				return NULL;
+				return [];
 			}
 
 		};
