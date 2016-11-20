@@ -81,8 +81,13 @@ function init() {
                 var image = '/images/entries/' + leg.images[0]['list'];
                 var classes = "";
             } else {
-                var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
-                var classes = "default";
+                if (leg.game_categories.length > 0) {
+                    var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
+                    var classes = "default";
+                } else {
+                    var image = "/images/lege/default.png";
+                    var classes = "";
+                }
             }
 
             leg.node = $(
