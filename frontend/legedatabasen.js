@@ -291,7 +291,7 @@ function init() {
         $("#modal-leg #leg-presentation-image").remove();
         $("#modal-leg .modal-body .leg-description").before(
             '<figure id="leg-presentation-image">' +
-                '<img data-src="' + image + '" class="img-responsive lazy" id="leg-presentation-image" />' +
+                '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />' +
                 '<figcaption>' +
                 '<h3>' + leg.name + '</h3>' +
                 '<div class="infobar">'+
