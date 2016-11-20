@@ -167,61 +167,6 @@ function init() {
         history.pushState({}, "", "/");
     });
 
-    function route() {
-        // Close modal if shown
-        if ($(".modal").is(":visible")) {
-            $(".modal").modal("hide");
-            return;
-        }
-
-        var url = window.location.pathname;
-        url = url .replace("/lege3", "")
-            .replace("/legedatabasen", "")
-            .replace("/frontend", "");
-        url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
-
-
-        // Show leg
-        if (url.startsWith("leg/")) {
-            var leg = lege_urls[url.substring(4)];
-            if (!leg) {
-                show404();
-                return;
-            }
-            showLeg(leg);
-            return;
-        }
-        if (url.startsWith("kontakt")) {
-            skriv_til_os();
-            return;
-        }
-        // Show category
-        if (url) {
-            var cats = categories.filter(function(category) {
-                return category.url == url;
-            });
-            if (cats.length != 1) {
-                show404();
-                return;
-            }
-            var cat = cats[0];
-            if (category != cat.index) {
-                $(".swiper-container")[0].swiper.slideTo(cat.index);
-            }
-            showCategory(cat);
-            return;
-        }
-        // Show front (with previous category)
-        if (!url) {
-            showCategory(categories[category]);
-            return;
-        }
-
-        // Error
-        show404();
-        return;
-    }
-
     $("#swipe_knap").click(function() {
         showCategory(categories[category]);
     });
@@ -266,6 +211,60 @@ function init() {
 };
 $(document).ready(init);
 
+function route() {
+    // Close modal if shown
+    if ($(".modal").is(":visible")) {
+        $(".modal").modal("hide");
+        return;
+    }
+
+    var url = window.location.pathname;
+    url = url .replace("/lege3", "")
+        .replace("/legedatabasen", "")
+        .replace("/frontend", "");
+    url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
+
+
+    // Show leg
+    if (url.startsWith("leg/")) {
+        var leg = lege_urls[url.substring(4)];
+        if (!leg) {
+            show404();
+            return;
+        }
+        showLeg(leg);
+        return;
+    }
+    if (url.startsWith("kontakt")) {
+        skriv_til_os();
+        return;
+    }
+    // Show category
+    if (url) {
+        var cats = categories.filter(function(category) {
+            return category.url == url;
+        });
+        if (cats.length != 1) {
+            show404();
+            return;
+        }
+        var cat = cats[0];
+        if (category != cat.index) {
+            $(".swiper-container")[0].swiper.slideTo(cat.index);
+        }
+        showCategory(cat);
+        return;
+    }
+    // Show front (with previous category)
+    if (!url) {
+        showCategory(categories[category]);
+        return;
+    }
+
+    // Error
+    show404();
+    return;
+}
 
 function show404() {
     $("#modal-leg .modal-body .leg-teaser").html("");
