@@ -260,7 +260,7 @@ function SearchEngine(options) {
         if (!this._compiled) {throw Error("SearchEngine not yet compiled");}
         work = 0;
 
-        this.abort();
+        this.abort(); // Abort any running timer, we are doing the search now.
 
         // Do filtering
         var filters = Object.keys(this._filters).map(function(name){
@@ -295,6 +295,8 @@ function SearchEngine(options) {
         var result = f.call(this, tokens, selected);
         var end_time = +new Date();
         console.log("Search duration: " + (end_time - start_time));
+
+        result = result.filter(function(document) {return document.score > 0;});
 
         if (this._options.callback) {
             this._options.callback(result);

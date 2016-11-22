@@ -456,6 +456,8 @@ function resetDisplay() {
 
 function sort_lege(rankings) {
     _r=rankings;
+    $("#profiler").text("sorting");
+    var start_time = +new Date();
     lege.map(function(leg){
         leg.score = -1;
         leg.node.attr("score", -1);
@@ -466,21 +468,18 @@ function sort_lege(rankings) {
         ranked.document.node.attr("score", ranked.score);
         // ranked.document.node.find(".score").text(ranked.score);
     });
-    $("#profiler").text("sorting");
-    var start_time = +new Date();
-
-    // $("#lege").fadeOut(200);
-    $("#lege").empty();
-    var shown = lege.filter(function(leg) {return leg.score >= 0;});
-    shown.sort(function(a, b) {
+    rankings.sort(function(a, b) {
         if (a.score == b.score) {
-            return a.name.localeCompare(b.name);
+            return a.document.name.localeCompare(b.document.name);
         }
         return b.score - a.score;
     });
-    _s = shown;
-    var nodes = shown.map(function(leg) {
-        return leg.node;
+
+
+    // $("#lege").fadeOut(200);
+    $("#lege").empty();
+    var nodes = rankings.map(function(leg) {
+        return leg.document.node;
     }, this);
     $("#lege").append(nodes);
 
