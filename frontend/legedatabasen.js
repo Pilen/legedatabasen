@@ -114,7 +114,7 @@ function init() {
             return leg;
         });
 
-        search = new SearchIndex()
+        search = new SearchEngine()
             .method("plain")
             .delay(500)
             .add_field("description")
