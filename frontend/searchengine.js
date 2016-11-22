@@ -1,19 +1,19 @@
 var work = 0;
 
-//// SearchIndex
+//// SearchEngine
 // A general solution for searching in a collection of documents
 // A document could be anything really, an article, a product, a blogpost,
 // pretty much anything. You must supply the methods for accesing data in each
 // document by its `fields'.
 //
-// A SearchIndex works as follows: First it is created, with a possible set of options.
-// Then the SearchIndex is configured, specifying fields, how to access ids, adding documents.
-// Then the SearchIndex is compiled, during compilation various indexes are created depending on the search method.
-// After compilation the SearchIndex is static in the sense that the configuration cant be changed.
-// When the SearchIndex has been compiled it can be searched.
+// A SearchEngine works as follows: First it is created, with a possible set of options.
+// Then the SearchEngine is configured, specifying fields, how to access ids, adding documents.
+// Then the SearchEngine is compiled, during compilation various indexes are created depending on the search method.
+// After compilation the SearchEngine is static in the sense that the configuration cant be changed.
+// When the SearchEngine has been compiled it can be searched.
 //
 // Searching ...
-function SearchIndex(options) {
+function SearchEngine(options) {
     this._documents = [];
     this._fields = [];
     this._get_id = function(document) {return document.id;};
@@ -49,12 +49,12 @@ function SearchIndex(options) {
     //////// Configuration ////////
     // Before compile is called
 
-    // Add a new field to the search index.
+    // Add a new field to the indexes of the SearchEngine.
     // A field is a a property of each document that should be searched.
     // Fields can be assigned a weight specifying the importance of finding a match in this field for a document.
     //
     this.add_field = function(field, weight) {
-        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (this._compiled) {throw Error("SearchEngine already compiled");}
         if (typeof(weight) === "undefined") {
             weight = 1.0;
         }
@@ -65,9 +65,9 @@ function SearchIndex(options) {
         this._fields.push({get:get, weight:weight});
         return this;
     };
-    // Add a document or an array of documents to the searchindex.
+    // Add a document or an array of documents to the SearchEngine.
     this.add = function(documents) {
-        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (this._compiled) {throw Error("SearchEngine already compiled");}
         if (documents instanceof Array) {
             this._documents = this._documents.concat(documents);
         } else {
@@ -78,9 +78,9 @@ function SearchIndex(options) {
 
     // Remove documents
     // Removes either the document with the given id.
-    // Or, if no id is given, removes ALL documents from the SearchIndex.
+    // Or, if no id is given, removes ALL documents from the SearchEngine.
     this.remove = function(id) {
-        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (this._compiled) {throw Error("SearchEngine already compiled");}
         if (typeof document === "undefined") {
             this._documents = [];
         }
@@ -91,9 +91,9 @@ function SearchIndex(options) {
 
     // Specify how to find the id of each document.
     // Accepts either a function or a property name.
-    // Beaware that the id of a document should NOT change after the searchindex has been compiled.
+    // Beaware that the id of a document should NOT change after the SearchEngine has been compiled.
     this.id = function(id) {
-        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (this._compiled) {throw Error("SearchEngine already compiled");}
         if (typeof id === "function") {
             this._get_id = id;
         } else {
@@ -110,10 +110,10 @@ function SearchIndex(options) {
     };
 
     // Set a callback that will recieve the results of searching.
-    // This is a way of using the SearchIndex asynchronously.
-    // When the search query is changed, the SearchIndex will wait for delay milliseconds before calculating the result.
+    // This is a way of using the SearchEngine asynchronously.
+    // When the search query is changed, the SearchEngine will wait for delay milliseconds before calculating the result.
     // And then call the given callback with the results.
-    // This way you can simply hook an input field directly with the SearchIndex and the calculation will only be done when the user stops typing.
+    // This way you can simply hook an input field directly with the SearchEngine and the calculation will only be done when the user stops typing.
     //
     // If you want the results immediately, call the `get_ranking' method.
     this.callback = function(callback) {
@@ -136,13 +136,13 @@ function SearchIndex(options) {
     // Filters have: a name (string), a predicate function, and a argument preprocess function
     // The name is used to reference filters when updating them.
     // The predicate function is a function that takes two arguments, a document and an argument.
-    // The predicate function will be run on each document and if it returns false'ish the document will be ignored/removed from the SearchIndex result.
+    // The predicate function will be run on each document and if it returns false'ish the document will be ignored/removed from the SearchEngine result.
     // The argument is a value that can be suplied with the update_filter method, this is your way to specialize the filters
     // The preprocess function, if given, is a function being run on the argument and will return the actual argument being suplied to the predicate function.
     // Before update_filter is called, the argument will be undefined.
     this.create_filter = function(name, func, preprocess) {
-        if (this._compiled) {throw Error("SearchIndex already compiled");}
-        if (this._filters[name]) {throw Error("SearchIndex already has a filter named " + name);}
+        if (this._compiled) {throw Error("SearchEngine already compiled");}
+        if (this._filters[name]) {throw Error("SearchEngine already has a filter named " + name);}
         var arg = undefined;
         if (preprocess) {
             arg = preprocess(arg);
@@ -172,18 +172,18 @@ function SearchIndex(options) {
         this.create_filter(name, exists, preprocess);
     };
 
-    // Compile the SearchIndex.
+    // Compile the SearchEngine.
     // Serveral of the internal algorithms require a slightly timeconsuming preprocessing step.
-    // This preprocessing is done by the compile method. Call it once you are done setting up the SearchIndex.
+    // This preprocessing is done by the compile method. Call it once you are done setting up the SearchEngine.
     // Once compiled, the basic settings can no longer be modified and no new documents can be added.
     // Only modifying the search query, updating the filters and getting a ranking is possible.
-    // If you want to modify a SearchIndex a new one has to be created.
+    // If you want to modify a SearchEngine a new one has to be created.
     this.compile = function() {
-        if (this._compiled) {throw Error("SearchIndex already compiled");}
+        if (this._compiled) {throw Error("SearchEngine already compiled");}
         this._compiled = true;
         this._documents.map(function(document) {
             var id = this._get_id(document);
-            if (typeof id === "undefined") {throw Error("SearchIndex encountered an undefined id");}
+            if (typeof id === "undefined") {throw Error("SearchEngine encountered an undefined id");}
             this._fields.map(function(field, i) {
                 var combined_id = id + "/" + i;
                 var data = field.get(document);
@@ -214,13 +214,13 @@ function SearchIndex(options) {
     //////// Use ////////
     // After compile is called
 
-    // Query the SearchIndex.
-    // This is the query for the SearchIndex that each document will be ranked against.
+    // Query the SearchEngine.
+    // This is the query for the SearchEngine that each document will be ranked against.
     //
     // Calling this will schedule a search, that will be run after the specified delay and call the specified callback.
     // If the delay or callback is not specified the search result will return immediately.
     this.query = function(query) {
-        if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
+        if (!this._compiled) {throw Error("SearchEngine not yet compiled");}
         this._query = query || "";
         return this._schedule_search();
     };
@@ -233,14 +233,14 @@ function SearchIndex(options) {
     // Calling this will schedule a search, that will be run after the specified delay and call the specified callback.
     // If the delay or callback is not specified the search result will return immediately.
     this.update_filter = function(name, arg) {
-        if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
+        if (!this._compiled) {throw Error("SearchEngine not yet compiled");}
         var filter = this._filters[name];
-        if (!filter) {throw Error("SearchIndex does not have a filter named " + name);}
+        if (!filter) {throw Error("SearchEngine does not have a filter named " + name);}
         filter.arg = filter.preprocess(arg);
         return this._schedule_search();
     };
 
-    // Clear the search index.
+    // Clear the SearchEngine.
     // Like searching for nothing/everything
     this.clear = function() {
         var filters = Object.keys(this._filters).map(function(name){
@@ -253,11 +253,11 @@ function SearchIndex(options) {
     // Perform the actual seach.
     // Calculate the ranking of each document and use the filters.
     // This method uses the filters to make a selection of documents and then calculates the rankings.
-    // Any callback specified for the SearchIndex will be called and the result set will be returned.
+    // Any callback specified for the SearchEngine will be called and the result set will be returned.
     // This method is only really required to be called manually if no callback has been specified.
     // The method is automatically called when the search query or filters are updated.
     this.search = function() {
-        if (!this._compiled) {throw Error("SearchIndex not yet compiled");}
+        if (!this._compiled) {throw Error("SearchEngine not yet compiled");}
         work = 0;
 
         this.abort();
