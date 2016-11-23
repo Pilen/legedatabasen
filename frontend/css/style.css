@@ -838,6 +838,8 @@ padding:0px 10px;
 /* varying sizes */
 
 .element-item {
+    width: 300px; /* Fallback solution */
+    height: 136.042px; /* Fallback solution */
     width: calc(100.00vw - (100.00vw - 100%));
     height: calc(((100.00vw) / 3.5) + 50px);
 }
@@ -847,6 +849,8 @@ padding:0px 10px;
 
 @media (min-width: 768px) {
     .element-item {
+        width: 300px; /* Fallback solution */
+        height: 136.042px; /* Fallback solution */
         width: calc(50.00vw - (100.00vw - 100%)/2);
         height: calc((50.00vw / 3) + 50px);
     }
@@ -862,6 +866,8 @@ padding:0px 10px;
 
 @media (min-width: 992px) {
     .element-item {
+        width: 300px; /* Fallback solution */
+        height: 136.042px; /* Fallback solution */
         width: calc(33.333333vw - (100.00vw - 100%)/3);
         height: calc(((33.333333vw) / 3) + 50px);
     }
@@ -877,8 +883,10 @@ padding:0px 10px;
 
 @media (min-width: 1200px) {
     .element-item {
+        width: 300px; /* Fallback solution */
+        height: 136.042px; /* Fallback solution */
         width: calc(25.00vw - (100.00vw - 100%)/4 - 1px);
-        height: calc(((25.00vw)/3) + 50px);
+        height: calc(((25.00vw) / 3) + 50px);
     }
     .element-item .navn {
         font-size:22pt;
