@@ -24,6 +24,14 @@ var category_swiper;
 var total_time;
 var menu_offset;
 
+var group_2 = "pusling|tumling|bæver|bæverflok|familie|famillie|familiespejder|familliespejder|mikro|mikrospejder|mini|minispejder|små";
+var group_7 = "pilt|væbner|ulve|ulveflok|junior|juniortrop|mellem|mellemste";
+var group_13 = "seniorvæbner|senior|spejder|spejdertrop|seniortrop|rover|roverklan|stor|større|største";
+var regex_2 = new RegExp("\\b("+group_2+")[ers]*\\b", "i");
+var regex_7 = new RegExp("\\b("+group_7+")[ers]*\\b", "i");
+var regex_13 = new RegExp("\\b("+group_13+")[ers]*\\b", "i");
+var regex_any = new RegExp("\\b("+group_2+"|"+group_7+"|"+group_13+")[ers]*\\b", "gi");
+
 function init() {
 
 
@@ -144,6 +152,36 @@ function init() {
             .create_filter("location", function(leg, arg) {
                 return !arg || leg.game_area == arg;
             }, function(arg) {return arg || "";})
+            .create_filter("search", function(leg, arg) {
+                if (arg) {
+                    return arg[leg.age];
+                } else {
+                    return true;
+                }
+            }, function(arg) {
+                var result = {"2": false, "7": false, "13": false};
+                var found = false;
+                if (regex_2.test(arg)) {
+                    console.log("2+");
+                    found = true;
+                    result["2"] = true;
+                }
+                if (regex_7.test(arg)) {
+                    console.log("7+");
+                    found = true;
+                    result["7"] = true;
+                }
+                if (regex_13.test(arg)) {
+                    console.log("13+");
+                    found = true;
+                    result["13"] = true;
+                }
+                if (found) {
+                    return result;
+                } else {
+                    return null;
+                }
+            })
             .callback(sort_lege)
             .compile();
 
@@ -152,6 +190,8 @@ function init() {
             var search_text = $("#search")[0].value;
             search_text = search_text.toLowerCase();
             magic(search_text);
+            search.update_filter("search", search_text);
+            search_text = search_text.replace(regex_any, "");
             search.query(search_text);
         }
 
