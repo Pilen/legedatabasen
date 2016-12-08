@@ -937,14 +937,58 @@ img.leg-box-image {
     height: 100%;
     opacity: 1.0;
     border-radius: 4px;
-   filter: saturate(60%);
+    filter: saturate(60%);
     object-fit: cover;
     object-position: 0 0;
 }
+/* figure .video-wrapper {
+   position: relative;
+   padding-bottom: 56.25%; // 16:9
+   padding-top: 25px;
+   height: 0;
+   }
+   figure .video-wrapper iframe {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   }
+   #ytplayer {
+   position: relative;
+   padding-bottom: 56.25%; // 16:9
+   padding-top: 25px;
+   height: 0;
+   }
+   #ytplayer iframe {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   } */
 
+#ytplayer {
+    /* width: 100%; */
+    /* padding: auto; */
+    /* position: relative; */
+    /* margin: auto; */
+    align: center;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
 
-
-
+}
+#ytplayer-wrapper {
+    margin: 0px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    align: center;
+    text-align: center;
+    height: 100%;
+    /* background-color: rgb(69, 104, 137); */
+}
 /* Submenu icon */
 /* .submenu-icon-wrapper {
    display: inline-block;
