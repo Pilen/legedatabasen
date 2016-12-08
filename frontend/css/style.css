@@ -983,7 +983,6 @@ img.leg-box-image {
     text-align: center;
     padding: 0px;
     margin: 0px;
-
 }
 #ytplayer-wrapper {
     margin: 0px;
@@ -993,6 +992,7 @@ img.leg-box-image {
     align: center;
     text-align: center;
     height: 100%;
+    overflow: hidden;
     /* background-color: rgb(69, 104, 137); */
 }
 /* Submenu icon */
