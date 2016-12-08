@@ -23,6 +23,7 @@ var search;
 var category_swiper;
 var total_time;
 var menu_offset;
+var player;
 
 var group_2 = "pusling|tumling|bæver|bæverflok|familie|famillie|familiespejder|familliespejder|mikro|mikrospejder|mini|minispejder|små";
 var group_7 = "pilt|væbner|ulve|ulveflok|junior|juniortrop|mellem|mellemste";
@@ -34,6 +35,12 @@ var regex_any = new RegExp("\\b("+group_2+"|"+group_7+"|"+group_13+")[ers]*\\b",
 
 function init() {
 
+    // // Setup youtube
+    // var tag = document.createElement("script");
+    // tag.src = "//www.youtube.com/iframe_api";
+    // var firstScriptTag = document.getElementsByTagName("script")[0];
+    // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // console.log("loading youtube");
 
     // Create categories
     categories.map(function(category, key) {
@@ -222,6 +229,9 @@ function init() {
     $(".leg_back").on("click", closeLeg);
 
     $('#modal-leg').on('hide.bs.modal', function (e) {
+        if (player) {
+            player.stopVideo();
+        }
         history.pushState({}, "", "/");
     });
 
@@ -376,10 +386,23 @@ function showLeg(leg) {
     } else {
         var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
     }
+    var video = '';
+    if (leg.videos.length > 0) {
+        // video = '<iframe width="100%" height="100%" src="//www.youtube.com/embed/' + leg.videos[0] + '"></iframe';
+        // video = '<iframe width="100%" height="100%" src="//www.youtube.com/embed/' + leg.videos[0] + '"></iframe';
+        // video = '<iframe width="630" height="390" frameborder="0"src="//www.youtube.com/embed/' + leg.videos[0] + '?enablejsapi=1"></iframe';
+        // video = '<iframe width="640" height="390" frameborder="0"src="//www.youtube.com/embed/' + leg.videos[0] + '?enablejsapi=1"></iframe';
+        // video = '<iframe src="//www.youtube.com/embed/' + leg.videos[0] + '"></iframe';
+        video = '<div id="ytplayer-wrapper"><div id="ytplayer"></div></div>';
+        // video = '<div class="ytplayer-wrapper"><div id="ytplayer"></div></div>';
+    } else {
+
+
+    }
     $("#modal-leg #leg-presentation-image").remove();
     $("#modal-leg .modal-body .leg-description").before(
         '<figure id="leg-presentation-image">' +
-            '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />' +
+            (video ? video : '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />') +
             '<figcaption>' +
             '<h3>' + leg.name + '</h3>' +
             '<div class="infobar">'+
@@ -408,8 +431,34 @@ function showLeg(leg) {
       $("#modal-title").text(leg.name);
       $(".modal-body").html(description);
     */
+
+    $("#modal-leg").on("shown.bs.modal", function() {
+        if (video) {
+        var width = Math.ceil($("#ytplayer").width());
+        var height = Math.ceil(width / (16 / 9));
+
+        console.log($("#ytplayer").width());
+        console.log($("#ytplayer").innerWidth());
+        console.log($("#ytplayer").outerWidth());
+        console.log(width, height);
+        player = new YT.Player("ytplayer", {
+            width: width + "px",
+            height: height + "px",
+            videoId: leg.videos[0]
+            // events: {
+            //     onReady: function(e) {console.log("ready");},
+            //     onStateChange: function(e) {console.log("state change");}
+            // }
+        });
+        $("#ytplayer-wrapper").height(height + "px"); // Why is this necessary?
+
+        console.log("creating video", leg.videos[0]);
+    }
+    });
+
     contactify();
     $("#modal-leg").modal("show");
+
     ga('send', 'pageview', '/leg/' + leg.url);
 
 
@@ -684,4 +733,9 @@ function magic(text) {
         console.log("profiler disabled");
         $("#profiler").hide();
     }
+}
+
+
+function onYouTubeIframeAPIReady() {
+    console.log("youtube is ready");
 }
