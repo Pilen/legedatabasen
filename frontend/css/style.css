@@ -339,7 +339,13 @@ background-color: #233b52;
 width: 100%;
 
 }
-
+.video-icon {
+    position: absolute;
+    right: 0px;
+    font-size: 20pt;
+    font-weight: 400;
+    padding: 10px;
+}
 .modal-body {
   padding: 0;
 	}

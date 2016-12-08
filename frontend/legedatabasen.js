@@ -110,7 +110,7 @@ function init() {
                  '<div class="leg '+ classes +'">'+
                  '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
                  '<p class="navn outlined">'+leg.name+'</p>'+
-                 (leg.videos.length > 0 ? '<p class="pull-right outlined fdficon" style="font-size:20pt;font-weight:400;padding:10px;">&#xf407;</p>' : '')+
+                 (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+
