@@ -159,6 +159,9 @@ function init() {
             .create_filter("location", function(leg, arg) {
                 return !arg || leg.game_area == arg;
             }, function(arg) {return arg || "";})
+            .create_filter("letter", function(leg, arg) {
+                return (arg && leg.name.toLowerCase()[0] == arg) || !arg;
+            })
             .create_filter("search", function(leg, arg) {
                 if (arg) {
                     return arg[leg.age];
@@ -199,7 +202,12 @@ function init() {
             magic(search_text);
             search.update_filter("search", search_text);
             search_text = search_text.replace(regex_any, "");
-            search.query(search_text);
+            if (search_text.length == 1) {
+                search.update_filter("letter", search_text);
+            } else {
+                search.update_filter("letter", null);
+                search.query(search_text);
+            }
         }
 
         $('.lazy').lazy();
