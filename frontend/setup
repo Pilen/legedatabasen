@@ -1,6 +1,8 @@
 #!/bin/sh
 
-wget --server-response legedatabasen.dk -O /dev/null 2>&1 | grep "200 OK" > /dev/null
+# wget --server-response legedatabasen.dk -O /dev/null 2>&1 | grep "200 OK" > /dev/null
+ssh -q -p 42000 www-data@dev.legedatabasen.dk exit
+
 if [ $? -ne 0 ] ;then
     echo "Failed to connect to legedatabasen.dk";
     echo "Nothing done";
