@@ -432,28 +432,26 @@ function showLeg(leg) {
       $(".modal-body").html(description);
     */
 
-    $("#modal-leg").on("shown.bs.modal", function() {
+    $("#modal-leg").one("shown.bs.modal", function() {
+        console.log("modal shown");
         if (video) {
-        var width = Math.ceil($("#ytplayer").width());
-        var height = Math.ceil(width / (16 / 9));
+            var width = Math.ceil($("#ytplayer").width());
+            var height = Math.ceil(width / (16 / 9));
 
-        console.log($("#ytplayer").width());
-        console.log($("#ytplayer").innerWidth());
-        console.log($("#ytplayer").outerWidth());
-        console.log(width, height);
-        player = new YT.Player("ytplayer", {
-            width: width + "px",
-            height: height + "px",
-            videoId: leg.videos[0]
-            // events: {
-            //     onReady: function(e) {console.log("ready");},
-            //     onStateChange: function(e) {console.log("state change");}
-            // }
-        });
-        $("#ytplayer-wrapper").height(height + "px"); // Why is this necessary?
+            console.log(width, height);
+            player = new YT.Player("ytplayer", {
+                width: width + "px",
+                height: height + "px",
+                videoId: leg.videos[0]
+                // events: {
+                //     onReady: function(e) {console.log("ready");},
+                //     onStateChange: function(e) {console.log("state change");}
+                // }
+            });
+            $("#ytplayer-wrapper").height(height + "px"); // Why is this necessary?
 
-        console.log("creating video", leg.videos[0]);
-    }
+            console.log("creating video", leg.videos[0]);
+        }
     });
 
     contactify();
