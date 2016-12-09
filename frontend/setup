@@ -1,0 +1,16 @@
+#!/bin/sh
+
+wget --server-response legedatabasen.dk -O /dev/null 2>&1 | grep "200 OK" > /dev/null
+if [ $? -ne 0 ] ;then
+    echo "Failed to connect to legedatabasen.dk";
+    echo "Nothing done";
+    exit 1;
+else
+    echo "Connection to legedatabasen.dk";
+fi
+
+set -e
+rm -rf bower_components data.json images/entries
+bower install
+wget dev.legedatabasen.dk/data.json
+scp -r -P 42000 "www-data@dev.legedatabasen.dk:~/legedatabasen/frontend/images/entries/" images/entries/
