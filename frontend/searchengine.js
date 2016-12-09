@@ -143,10 +143,11 @@ function SearchEngine(options) {
     this.create_filter = function(name, func, preprocess) {
         if (this._compiled) {throw Error("SearchEngine already compiled");}
         if (this._filters[name]) {throw Error("SearchEngine already has a filter named " + name);}
-        var arg = undefined;
-        if (preprocess) {
-            arg = preprocess(arg);
+
+        if (! preprocess) {
+            preprocess = function(x) {return x;};
         }
+        var arg = preprocess(undefined);
         this._filters[name] = {func: func,
                                arg: arg,
                                preprocess: preprocess};
