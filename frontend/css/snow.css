@@ -1,0 +1,93 @@
+/* Inspired by http://standardista.com/snow */
+
+/* #snow i:nth-of-type(5n)    { height: 30px; width: 30px; }
+   #snow i:nth-of-type(5n+1)  { height: 24px; width: 24px; }
+   #snow i:nth-of-type(5n+2)  { height: 10px; width: 10px; }
+
+   #snow i:nth-of-type(3n)    { animation-delay: 2.3s; }
+   #snow i:nth-of-type(3n+1)  { animation-delay: 1.5s; }
+   #snow i:nth-of-type(3n+2)  { animation-delay: 3.4s; }
+
+   #snow i:nth-of-type(11n)   { animation-timing-function: ease-in-out; }
+   #snow i:nth-of-type(11n+1) { animation-timing-function: ease-out;}
+   #snow i:nth-of-type(11n+2) { animation-timing-function: ease; }
+   #snow i:nth-of-type(11n+3) { animation-timing-function: cubic-bezier(0.2, 0.3, 0.8, 0.9); }
+
+ */
+/* #snow div:nth-of-type(3n)   i{left: 0px; background-color: red;} */
+/* #snow div:nth-of-type(3n+1) i{left: 100px; background-color: green;} */
+/* #snow div:nth-of-type(3n+2) i{left: 200px; background-color: blue} */
+
+#snow {
+    position: fixed;
+    z-index: 100000000000000000000 !important;
+    width: 0px;
+    height: 0px;
+}
+#snow i {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    /* display: inline-block; //??? */
+    /* top: 0%; */
+    z-index: 100000000000000000000 !important;
+    border-radius: 50%;
+    background-image:
+    linear-gradient(180deg,
+        rgba(255, 255, 255, 0) 40%,
+        #ffffff 40%,
+        #ffffff 60%,
+        rgba(255, 255, 255, 0) 60%),
+    linear-gradient(90deg,
+        rgba(255, 255, 0, 0) 40%,
+        #ffffff 40%,
+        #ffffff 60%,
+        rgba(0, 255, 255, 0) 60%),
+    linear-gradient(45deg,
+        rgba(255, 255, 0, 0) 43%,
+        #ffffff 43%,
+        #ffffff 57%,
+        rgba(0, 255, 255, 0) 57%),
+    linear-gradient(135deg,
+        rgba(255, 255, 0, 0) 43%,
+        #ffffff 43%,
+        #ffffff 57%,
+        rgba(0, 255, 255, 0) 57%);
+
+    animation: snow-swaying 7s ease-in-out  0s infinite;
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 0.1);
+}
+#snow div {
+    /* This is to make it possible to have two different animations on the snow
+       Both animating the "same" property */
+    width: 0px;
+    height: 0px;
+    top: 0%;
+    z-index: 100000000000000000000 !important;
+    position: absolute;
+    animation: snow-falling 6s linear 0s infinite;
+}
+
+
+@keyframes snow-falling {
+    0% {
+        /* top: 0px; */
+        /* top: 0%; */
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    100% {
+        /* top: 300px; */
+        /* top: 100%; */
+        transform: translateY(100vh);
+        opacity: 0.8;
+    }
+}
+@keyframes snow-swaying {
+    0%, 50%, 100% {
+        transform: translateX(0px);
+    }
+    25%, 75% {
+        transform: translateX(120px);
+    }
+}
