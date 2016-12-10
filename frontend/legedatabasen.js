@@ -565,7 +565,7 @@ function sort_lege(rankings) {
     });
     rankings.sort(function(a, b) {
         if (a.score == b.score) {
-            return a.document.name.localeCompare(b.document.name);
+            return a.document.name.localeCompare(b.document.name, "da");
         }
         return b.score - a.score;
     });
