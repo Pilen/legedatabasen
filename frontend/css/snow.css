@@ -28,6 +28,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
+    top: -20px;
     /* display: inline-block; //??? */
     /* top: 0%; */
     z-index: 100000000000000000000 !important;
@@ -73,7 +74,7 @@
     0% {
         /* top: 0px; */
         /* top: 0%; */
-        transform: translateY(0px);
+        transform: translateY(0vh);
         opacity: 1;
     }
     100% {
