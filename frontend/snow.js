@@ -1,4 +1,5 @@
 
+var snow_point = 0;
 function snow () {
     function randf(min, max) {
         return Math.random() * (max - min) + min;
@@ -30,5 +31,10 @@ function snow () {
                     '"></i></div>'));
     }
     tag.append(list);
+    $("#snow i").on("click", function(event) {
+    // $(".ribbon").on("click", function(event) {
+        snow_point++;
+        $(".ribbon").text(snow_point + " point!");
+    });
 }
 $(document).ready(snow);
