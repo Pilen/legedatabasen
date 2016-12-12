@@ -40,7 +40,7 @@ function snow () {
             submenu_score = $('<div class="score" style="text-align: center; padding: 30px; font-size: 25pt; "></div>');
             $("#submenu").append(submenu_score);
         }
-        submenu_score.text(snow_point + " point");
+        submenu_score.text(snow_point + " point!");
     });
 }
 $(document).ready(snow);
