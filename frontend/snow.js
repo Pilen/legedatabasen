@@ -35,6 +35,12 @@ function snow () {
     // $(".ribbon").on("click", function(event) {
         snow_point++;
         $(".ribbon").text(snow_point + " point!");
+        var submenu_score = $("#submenu .score");
+        if (submenu_score.length == 0) {
+            submenu_score = $('<div class="score" style="text-align: center; padding: 30px; font-size: 25pt; "></div>');
+            $("#submenu").append(submenu_score);
+        }
+        submenu_score.text(snow_point + " point");
     });
 }
 $(document).ready(snow);
