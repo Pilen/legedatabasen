@@ -407,8 +407,7 @@ function showLeg(leg) {
 
 
     }
-    $("#modal-leg #leg-presentation-image").remove();
-    $("#modal-leg .modal-body .leg-description").before(
+    $("#modal-leg .modal-body .leg-header").html(
         '<figure id="leg-presentation-image">' +
             (video ? video : '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />') +
             '<figcaption>' +
