@@ -1158,3 +1158,47 @@ img.leg-box-image {
        border-bottom: 3px solid transparent;
        border-top: 3px solid #233B52; */
 }
+
+
+
+
+
+.bubble {
+    position: relative;
+    display:inline-block;
+    max-width:250px;
+    min-height:1.5em;
+    min-width: 40px;
+    padding: 20px;
+    background: #FFFFFF;
+    border: #7F7F7F solid 4px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.bubble:after {
+    content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 20%;
+    border-style: solid;
+    border-width: 15px 15px 0;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+.bubble:before {
+    content: "";
+    position: absolute;
+    bottom: -19.5px;
+    left: calc(20% - 3px) ;
+    border-style: solid;
+    border-width: 18px 18px 0;
+    border-color: #7F7F7F transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+}
