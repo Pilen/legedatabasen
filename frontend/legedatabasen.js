@@ -232,7 +232,11 @@ function init() {
         if (been_at_front) {
             window.history.back();
         } else {
-            history.pushState({}, "", "/");
+            if (window.location.pathname == "/") {
+                route()
+            } else {
+                history.pushState({}, "", "/");
+            }
         }
     }
     $(".leg_back").on("click", closeLeg);
