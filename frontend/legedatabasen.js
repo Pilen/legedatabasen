@@ -216,6 +216,7 @@ function init() {
             route();
         });
 
+        mus()
         route();
     });
 
