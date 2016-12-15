@@ -9,7 +9,7 @@ function mus() {
 
     var count = 10;
     for (var i = 0; i < count; i++) {
-        var xpos = randf(0, 100);
+        var xpos = randf(10, 90);
         var ypos = randf(0, 100);
         var tag = $('<img class="mus" src="images/pebernoed.png" style="'+
                     'position: absolute;'+
