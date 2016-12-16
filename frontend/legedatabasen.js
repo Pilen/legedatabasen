@@ -216,18 +216,18 @@ function init() {
             route();
         });
 
-        mus()
+        // Setup games/scripts in each leg
+        lege_urls["mus"].script = playMus;
+
+        mus();
         route();
     });
 
     $('#lege').on("click", "a", function(event){
         event.preventDefault();
-        history.pushState({}, '', $(this).attr("href"));
-        route();
-        been_at_front = true;
+        openUrl($(this).attr("href"));
         return false;
     });
-
     function closeLeg() {
         if (been_at_front) {
             window.history.back();
@@ -313,6 +313,14 @@ function init() {
     contactify();
 };
 $(document).ready(init);
+
+function openUrl(url) {
+    if (window.location.pathname == "/") {
+        been_at_front = true;
+    }
+    history.pushState({}, '', url);
+    route();
+}
 
 function route() {
     // Close modal if shown
@@ -467,6 +475,9 @@ function showLeg(leg) {
     });
 
     contactify();
+    if (leg.script) {
+        leg.script();
+    }
     $("#modal-leg").modal("show");
 
     ga('send', 'pageview', '/leg/' + leg.url);
@@ -748,4 +759,34 @@ function magic(text) {
 
 function onYouTubeIframeAPIReady() {
     console.log("youtube is ready");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// Common Game Parts
+function randf(min, max) {
+    return Math.random() * (max - min) + min;
+}
+function randi(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }
