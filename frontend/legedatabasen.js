@@ -33,14 +33,18 @@ var regex_7 = new RegExp("\\b("+group_7+")[ers]*\\b", "i");
 var regex_13 = new RegExp("\\b("+group_13+")[ers]*\\b", "i");
 var regex_any = new RegExp("\\b("+group_2+"|"+group_7+"|"+group_13+")[ers]*\\b", "gi");
 
-function init() {
+var debug;
 
+function init() {
     // // Setup youtube
     // var tag = document.createElement("script");
     // tag.src = "//www.youtube.com/iframe_api";
     // var firstScriptTag = document.getElementsByTagName("script")[0];
     // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     // console.log("loading youtube");
+
+    debug = $("#debug");
+    debug.text("init");
 
     // Create categories
     categories.map(function(category, key) {
@@ -83,7 +87,9 @@ function init() {
 
     // Load lege
     $.getJSON("/data.json", function (data) {
+        debug.text("data received");
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
+        window.setTimeout(function() {
         lege = data.map(function(leg, key) {
             leg.game_area = leg.area.length > 0 ? leg.area[0].area.toLocaleLowerCase() : "INGEN STEDER!";
             leg.age = age_group(leg.min_age);
@@ -128,6 +134,7 @@ function init() {
             leg.node.appendTo('#lege');
             return leg;
         });
+        debug.text("lege created");
 
         search = new SearchEngine()
             .method("plain")
@@ -210,7 +217,7 @@ function init() {
             }
         }
 
-        $('.lazy').lazy();
+        // $('.lazy').lazy();
 
         $(window).on('popstate', function() {
             route();
@@ -221,6 +228,12 @@ function init() {
 
         mus();
         route();
+        debug.text("final");
+        $(".loading-balloon").hide();
+        $("#container").show();
+        lazy();
+        debug.text("done");
+    }, 0);
     });
 
     $('#lege').on("click", "a", function(event){
@@ -761,7 +774,61 @@ function onYouTubeIframeAPIReady() {
     console.log("youtube is ready");
 }
 
+function lazy() {
+    var delay = 5;
+    var timer = window.setInterval(lazyLoader, delay);
 
+    var count = 0;
+    var progressbar = $("#progressbar");
+    progressbar.show();
+
+    function lazyLoader() {
+        if (typeof _r === "undefined") {
+            console.log("Not yet ready");
+            return;
+        }
+        console.log("doing lazy");
+
+        var selected = _r;
+
+        for (var i = 0; i < selected.length; i++) {
+            var current = selected[i].document;
+            _c = current;
+            if (!current.image) {
+                lazyLoadImage(current);
+                count++;
+                progressbar.css("width", (count/lege.length * 100) + "%");
+                return;
+            }
+        }
+
+        var all = lege;
+        for (var i = 0; i < all.length; i++) {
+            var current = all[i];
+            _c = current;
+            if (!current.image) {
+                lazyLoadImage(current);
+                count++;
+                progressbar.css("width", (count/lege.length * 100) + "%");
+                return;
+            }
+        }
+        progressbar.slideUp();
+        console.log("No more left to load");
+        debug.text("shown");
+        window.clearInterval(timer);
+    }
+
+    function lazyLoadImage(leg) {
+        _leg = leg;
+        if (!leg || !leg.node) {
+            window.clearInterval(timer);
+        }
+        leg.image = true;
+        var img = leg.node.find("img");
+        img.attr("src", img.attr("data-src"));
+    }
+}
 
 
 
