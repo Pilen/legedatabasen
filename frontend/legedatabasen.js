@@ -534,6 +534,7 @@ function showSubmenu() {
         return showCategory(category);
     }
     rename_url("");
+    $(".filter input[type=radio]").prop("checked", false);
     resetDisplay().done(function() {
         $(".swiper-container").slideUp(200, function() {
             $(".menu-icon").addClass("open");
