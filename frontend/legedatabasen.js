@@ -226,7 +226,7 @@ function init() {
         // Setup games/scripts in each leg
         lege_urls["mus"].script = playMus;
 
-        mus();
+        // mus();
         route();
         debug.text("final");
         $(".loading-balloon").hide();
