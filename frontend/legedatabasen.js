@@ -33,7 +33,11 @@ var regex_7 = new RegExp("\\b("+group_7+")[ers]*\\b", "i");
 var regex_13 = new RegExp("\\b("+group_13+")[ers]*\\b", "i");
 var regex_any = new RegExp("\\b("+group_2+"|"+group_7+"|"+group_13+")[ers]*\\b", "gi");
 
-var debug;
+function debug(string) {
+    console.log("debug:", string);
+    debug.tag.text(string);
+}
+// debug = console.log
 
 function init() {
     // // Setup youtube
@@ -43,8 +47,8 @@ function init() {
     // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     // console.log("loading youtube");
 
-    debug = $("#debug");
-    debug.text("init");
+    debug.tag = $("#debug");
+    debug("init");
 
     // Create categories
     categories.map(function(category, key) {
@@ -87,7 +91,7 @@ function init() {
 
     // Load lege
     $.getJSON("/data.json", function (data) {
-        debug.text("data received");
+        debug("data received");
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
         window.setTimeout(function() {
         lege = data.map(function(leg, key) {
@@ -134,7 +138,7 @@ function init() {
             leg.node.appendTo('#lege');
             return leg;
         });
-        debug.text("lege created");
+        debug("lege created");
 
         search = new SearchEngine()
             .method("plain")
@@ -228,11 +232,11 @@ function init() {
 
         // mus();
         route();
-        debug.text("final");
+        debug("final");
         $(".loading-balloon").hide();
         $("#container").show();
         lazy();
-        debug.text("done");
+        debug("done");
     }, 0);
     });
 
@@ -336,6 +340,7 @@ function openUrl(url) {
 }
 
 function route() {
+    debug("in route");
     // Close modal if shown
     if ($(".modal").is(":visible")) {
         $(".modal").modal("hide");
@@ -816,7 +821,7 @@ function lazy() {
         }
         progressbar.slideUp();
         console.log("No more left to load");
-        debug.text("shown");
+        debug("shown");
         window.clearInterval(timer);
     }
 
