@@ -481,7 +481,7 @@ function showLeg(leg) {
         var node = $("#modal-leg .modal-body .leg-description");
         node.append('<h3>Legekategorier:</h3>');
         leg.game_categories.map(function(c) {
-            var img = $('<img class="modal-category" src="/images/categories/'+c.image+'" alt="'+c.name+'" />');
+            var img = $('<img class="modal-category btn" src="/images/categories/'+c.image+'" alt="'+c.name+'" />');
             node.append(img);
             img.on("click", function(event) {
                 closeLeg();
