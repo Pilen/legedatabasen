@@ -945,6 +945,10 @@ figure figcaption .infobar {
     background-color: rgba(249, 175, 26, 0.90);
 }
 
+.modal-category {
+    width: 30%;
+
+}
 img.leg-box-image {
     position: absolute;
     left: 0;

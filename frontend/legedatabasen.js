@@ -13,6 +13,7 @@ var categories = [
     {name: "Rundkredslege"},
     {name: "Banelege"}
 ];
+var category_map = {};
 
 var category = 5;  // Current category
 var lege;          // List of all lege
@@ -55,6 +56,7 @@ function init() {
         category.index = key;
         category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
+        category_map[category.name.toLocaleLowerCase()] = category;
         var node = $('<div class="swiper-slide category outlined" id="'+key+'" ' +
                      'style="background-image: url(/images/categories/'+category.image+');">' +
                      category.name +
@@ -102,7 +104,11 @@ function init() {
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
             leg.participants = participants_group(leg.min_participants);
-            leg.game_categories = leg.game_categories.filter(function(c) {return c.name.toLocaleLowerCase().indexOf("alle lege") == -1;});
+            leg.game_categories = leg.game_categories.filter(function(c) {
+                return c.name.toLocaleLowerCase().indexOf("alle lege") == -1;
+            }).map(function(c) {
+                return category_map[c.name.toLocaleLowerCase()];
+            });
             lege_urls[leg.url] = leg;
 
             if (leg.images.length > 0) {
@@ -249,17 +255,6 @@ function init() {
         openUrl($(this).attr("href"));
         return false;
     });
-    function closeLeg() {
-        if (been_at_front) {
-            window.history.back();
-        } else {
-            if (window.location.pathname == "/") {
-                route()
-            } else {
-                history.pushState({}, "", "/");
-            }
-        }
-    }
     $(".leg_back").on("click", closeLeg);
 
     $('#modal-leg').on('hide.bs.modal', function (e) {
@@ -400,6 +395,18 @@ function route() {
     return;
 }
 
+function closeLeg() {
+    if (been_at_front) {
+        window.history.back();
+    } else {
+        if (window.location.pathname == "/") {
+            route()
+        } else {
+            history.pushState({}, "", "/");
+        }
+    }
+}
+
 function show404() {
     $("#modal-leg .modal-body .leg-teaser").html("");
     $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
@@ -469,6 +476,19 @@ function showLeg(leg) {
     }
     if (note) {
         $("#modal-leg .modal-body .leg-description").append('<h3>Noter:</h3>' + note);
+    }
+    if (leg.game_categories.length > 0) {
+        var node = $("#modal-leg .modal-body .leg-description");
+        node.append('<h3>Legekategorier:</h3>');
+        leg.game_categories.map(function(c) {
+            var img = $('<img class="modal-category" src="/images/categories/'+c.image+'" alt="'+c.name+'" />');
+            node.append(img);
+            img.on("click", function(event) {
+                closeLeg();
+                showCategory(c);
+                category_swiper.slideTo(c.index);
+            });
+        });
     }
     /*
       $("#modal-title").text(leg.name);
