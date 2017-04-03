@@ -76,6 +76,9 @@ function init() {
         keyboardControl: true,
         initialSlide: category
     });
+    category_swiper.on("onInit", function(e) {
+        debug("category swiper init");
+    });
     // category_swiper.on("touchStart", function(swiper) {
     //     search.abort();
     // });
@@ -235,6 +238,7 @@ function init() {
         debug("final");
         $(".loading-balloon").hide();
         $("#container").show();
+        category_swiper.init();
         lazy();
         debug("done");
     }, 0);
@@ -353,6 +357,7 @@ function route() {
         .replace("/frontend", "");
     url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
 
+    category_swiper.init();
 
     // Show leg
     if (url.startsWith("leg/")) {
