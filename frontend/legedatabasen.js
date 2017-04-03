@@ -490,6 +490,18 @@ function showLeg(leg) {
             });
         });
     }
+
+    //////// Disabled for now ////////
+    // var similar = similarLege(leg);
+    // if (similar.length > 0) {
+    //     var node = $("#modal-leg .modal-body .leg-description");
+    //     node.append('<h3>Har du prøvet:</h3>');
+    //     similar.map(function(l) {
+    //         node.append(l.node.clone());
+    //     });
+    // }
+    //////////////////////////////////
+
     /*
       $("#modal-title").text(leg.name);
       $(".modal-body").html(description);
@@ -648,6 +660,30 @@ function sort_lege(rankings) {
 
     return;
 }
+
+//////// Disabled for now ////////
+// function similarLege(leg) {
+//     if (leg.game_categories.length == 0) {
+//         return [];
+//     }
+//     var category = leg.game_categories[0];
+//     var similar = [];
+//     var start = randi(0, lege.length);
+//     for (var l = 0; l < lege.length; l++) {
+//         var other = lege[(start + l) % lege.length];
+//         for (var c = 0; c < other.game_categories.length; c++) {
+//             if (other.game_categories[c] === category) {
+//                 similar.push(other);
+//                 break;
+//             }
+//         }
+//         if (similar.length >= 4) {
+//             return similar;
+//         }
+//     }
+//     return similar;
+// }
+//////////////////////////////////
 
 function scrollToTop(duration) {
     var to = 0;
