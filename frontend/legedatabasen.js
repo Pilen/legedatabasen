@@ -94,6 +94,18 @@ function init() {
         }
     });
 
+    //////// Disabled for now ////////
+    // // Create category selector
+    // categories.map(function(c) {
+    //     if (c.name.toLocaleLowerCase().indexOf("alle lege") != -1) {
+    //         return;
+    //     }
+    //     $("#category-selector").append('<img src="/images/categories/'+c.image+'">');
+    // });
+    //////////////////////////////////
+
+
+
     // Load lege
     $.getJSON("/data.json", function (data) {
         debug("data received");

@@ -605,6 +605,9 @@ button {
     height:130px;
     background-color:white;
 }
+#category-selector img{
+    width: 200px;
+}
 div:focus {
     outline: none;
 }
