@@ -140,19 +140,24 @@ function init() {
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg '+ classes +'">'+
                  '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
-                 '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
+                 '<div class="headerbar">'+
+                 '<p class="navn">'+leg.name+'</p>'+
+                 '</div>'+
                  '<div class="infobar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+
                  '<tr>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:25pt;">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:25pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:25pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:25pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
+                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
+                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
                  '</tr>'+
                  '</tbody>'+
                  '</table>'+
+                 '</div>'+
+                 '<div class="teaserbar">'+
+                 '<p>Dette er en teaser - Husk at lege</p><br><p>I denne leg skal du huske at tjekke om der er bugs på din hjemmeside</p>'+
                  '</div>'+
                  '</div>'+
                  '</a>'));
