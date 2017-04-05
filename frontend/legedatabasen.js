@@ -58,7 +58,7 @@ function init() {
         category.image = category.image || category.name.replace(" ", "") + ".svg";
         category_map[category.name.toLocaleLowerCase()] = category;
         var node = $('<div class="swiper-slide category outlined" id="'+key+'" ' +
-                     'style="background-image: url(/images/categories/'+category.image+');">' +
+                     'style="background-image: url(//static-images.legedatabasen.dk/categories/'+category.image+');">' +
                      category.name +
                      '</div>');
         node.appendTo(".swiper-wrapper");
@@ -112,14 +112,14 @@ function init() {
             lege_urls[leg.url] = leg;
 
             if (leg.images.length > 0) {
-                var image = '/images/entries/' + leg.images[0]['list'];
+                var image = 'entries/' + leg.images[0]['list'];
                 var classes = "";
             } else {
                 if (leg.game_categories.length > 0) {
-                    var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
+                    var image = "lege/" + leg.game_categories[0].name + "-default.png";
                     var classes = "default";
                 } else {
-                    var image = "/images/lege/default.png";
+                    var image = "lege/default.png";
                     var classes = "";
                 }
             }
@@ -127,7 +127,7 @@ function init() {
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg '+ classes +'">'+
-                 '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
+                 '<img data-src="//static-images.legedatabasen.dk/' + image + '" class="leg-box-image lazy" src="">' +
                  '<p class="navn outlined">'+leg.name+'</p>'+
                  (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
                  '<div class="infobar">'+
@@ -433,9 +433,9 @@ function showLeg(leg) {
     //$(".navbar .leg_back").show();
 
     if (leg.images.length > 0) {
-        var image = '/images/entries/' + leg.images[0]['detail'];
+        var image = '/entries/' + leg.images[0]['detail'];
     } else {
-        var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
+        var image = "/lege/" + leg.game_categories[0].name + "-default.png";
     }
     var video = '';
     if (leg.videos.length > 0) {
@@ -452,7 +452,7 @@ function showLeg(leg) {
     }
     $("#modal-leg .modal-body .leg-header").html(
         '<figure id="leg-presentation-image">' +
-            (video ? video : '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />') +
+            (video ? video : '<img src="//static-images.legedatabasen.dk' + image + '" class="img-responsive" id="leg-presentation-image" />') +
             '<figcaption>' +
             '<h3>' + leg.name + '</h3>' +
             '<div class="infobar">'+
@@ -481,7 +481,7 @@ function showLeg(leg) {
         var node = $("#modal-leg .modal-body .leg-description");
         node.append('<h3>Legekategorier:</h3>');
         leg.game_categories.map(function(c) {
-            var img = $('<img class="modal-category btn" src="/images/categories/'+c.image+'" alt="'+c.name+'" />');
+            var img = $('<img class="modal-category btn" src="//static-images.legedatabasen.dk/categories/'+c.image+'" alt="'+c.name+'" />');
             node.append(img);
             img.on("click", function(event) {
                 closeLeg();
