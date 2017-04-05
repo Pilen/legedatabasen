@@ -145,13 +145,18 @@ $application
 				'list' => [
 					'w' => 800,
 					'h' => 400,
-					'fit' => 'fill'
+					'fit' => 'fill',
+					'f' => 'faces',
+					'fm' => 'jpg',
+					'q' => 75
 				],
 				'detail' => [
 					'w' => 720,
 					'h' => 405,
 					'fit' => 'fill',
-					'f' => 'faces'
+					'f' => 'faces',
+					'fm' => 'jpg',
+					'q' => 75
 				]
 			];
 			$methodName = 'get' . ucfirst($fieldName);
