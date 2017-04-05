@@ -731,8 +731,8 @@ a[href^='/kontakt']:after {
     font-size:16pt;
     font-weight: 300;
     cursor:pointer;
-}
-.category_navn {
+    font-family: Lilita, sans-serif;
+
     font-weight:300;
     font-size:20pt;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
