@@ -846,6 +846,7 @@ a[href^='/kontakt']:after {
 .leg .teaserbar p {
     position: relative;
     top: 5px;
+    color: #1d1d1b
 }
 
 .leg .teaserbar:hover {
