@@ -143,8 +143,8 @@ $application
 		$images = function($fieldName, \Contentful\Delivery\DynamicEntry $entry) use ($fieldMapping, $locale, $imageFolder) {
 			$imageFormats = [
 				'list' => [
-					'w' => 300,
-					'h' => 150,
+					'w' => 400,
+					'h' => 300,
 					'fit' => 'fill',
 					'f' => 'faces',
 					'fm' => 'jpg',
