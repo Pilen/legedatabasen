@@ -833,7 +833,8 @@ a[href^='/kontakt']:after {
     width:100%;
     padding:0px 10px;
     font-weight: 300;
-	font-size: 0pt;
+	font-size: 12pt;
+    opacity: 0.0;
 	/*
 	border-style: solid;
     border-top-width: 1px;
@@ -842,18 +843,31 @@ a[href^='/kontakt']:after {
 	border-bottom-width: 0px;
     border-color: #456889;*/
 }
+.leg .teaserbar p {
+    position: relative;
+    top: 5px;
+}
 
 .leg .teaserbar:hover {
 	background: #F4F6F6;
  /*background-color: rgba(252, 252, 252, 0.7);*/
-  background: linear-gradient(to bottom right, rgba(252,252,252,0.9),rgba(252,252,252,0.5)); /* Standard syntax */
- font-size: 12pt;
+    background: linear-gradient(to bottom right, rgba(252,252,252,0.9),rgba(252,252,252,0.5)); /* Standard syntax */
+    opacity: 1.0;
  border-style: solid;
     border-top-width: 1px;
 	border-left-width: 1px;
 	border-right-width: 1px;
 	border-bottom-width: 0px;
 	border-color: #456889;
+}
+.leg .teaserbar .categories {
+    position: absolute;
+    bottom: -20%;
+}
+
+.leg .teaserbar .categories img {
+    float: right;
+    width: 50%;
 }
 .infobar {
 padding:0px 10px;

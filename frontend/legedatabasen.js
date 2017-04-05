@@ -136,6 +136,10 @@ function init() {
                 }
             }
 
+            var in_categories = "";
+            if (leg.game_categories.length > 0) {
+                in_categories = '<img class="modal-category btn" src="/images/categories/'+leg.game_categories[0].image+'" alt="'+leg.game_categories[0].name+'" />';
+            }
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg '+ classes +'">'+
@@ -157,7 +161,8 @@ function init() {
                  '</table>'+
                  '</div>'+
                  '<div class="teaserbar">'+
-                 '<p>Dette er en teaser - Husk at lege</p><br><p>I denne leg skal du huske at tjekke om der er bugs på din hjemmeside</p>'+
+                 '<div class="categories">' + in_categories + '</div>' +
+                 '<p>' + (leg.teaser || '') + '</p>' +
                  '</div>'+
                  '</div>'+
                  '</a>'));
@@ -909,7 +914,7 @@ function lazy() {
             window.clearInterval(timer);
         }
         leg.image = true;
-        var img = leg.node.find("img");
+        var img = leg.node.find("img.leg-box-image");
         img.attr("src", img.attr("data-src"));
     }
 }
