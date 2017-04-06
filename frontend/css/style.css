@@ -1043,7 +1043,25 @@ a[href^='/kontakt']:after {
         display:none;
     }
 
-    .element-item .leg .headerbar {
+   
+    .element-item{
+        padding:5px;
+    }
+
+    img.leg-box-image {
+        height:100%!important;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    #lege-wrapper{
+        padding:0px;
+    }
+
+
+}
+@media (min-width: 601px) and (max-width: 1000px) {
+ .element-item .leg .headerbar {
         bottom:26px !important;
         background-color: rgba(35,59,82,0.4);
         height:26px;
@@ -1066,21 +1084,6 @@ a[href^='/kontakt']:after {
         font-size:14pt !important;
 
     }
-    .element-item{
-        padding:5px;
-    }
-
-    img.leg-box-image {
-        height:100%!important;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-    }
-
-    #lege-wrapper{
-        padding:0px;
-    }
-
-
 }
 @media (min-width: 1000px) {
     #lege-wrapper{
