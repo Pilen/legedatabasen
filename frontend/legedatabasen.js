@@ -165,7 +165,7 @@ function init() {
 
             var in_categories = "";
             if (leg.game_categories.length > 0) {
-                in_categories = '<img class="modal-category btn" src="/images/categories/'+leg.game_categories[0].image+'" alt="'+leg.game_categories[0].name+'" />';
+                in_categories = '<img class="modal-category" src="/images/categories/'+leg.game_categories[0].image+'" alt="'+leg.game_categories[0].name+'" />';
             }
             leg.node = $(
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
