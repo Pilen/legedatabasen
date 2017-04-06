@@ -94,16 +94,43 @@ function init() {
         }
     });
 
-    //////// Disabled for now ////////
-    // // Create category selector
-    // categories.map(function(c) {
-    //     if (c.name.toLocaleLowerCase().indexOf("alle lege") != -1) {
-    //         return;
-    //     }
-    //     $("#category-selector").append('<img src="/images/categories/'+c.image+'">');
+    // Create category selector
+    var tmp_alle = categories[Math.floor(categories.length / 2)];
+    var tmp_categories = categories.filter(function(c, k) {return c !== tmp_alle;});
+    var row_1 = tmp_categories.slice(0, 6);
+    var row_2 = tmp_categories.slice(row_1.length);
+    row_1.splice(Math.floor(row_1.length / 2), 0, tmp_alle);
+    function selector(category) {
+        return ('<input type="radio" name="category-selector" id="category-selector-' + category.index + '" value="' + category.index + '"/>' +
+                '<label for="category-selector-' + category.index + '">' +
+                '<div class="category outlined" id="selector-'+category.index+'" ' +
+                'style="background-image: url(/images/categories/'+category.image+');">' +
+                category.name +
+                '</div>' +
+               '</label>');
+    };
+    $("#category-selector").append('<div class="row">' +
+                                   row_1.map(selector).join("") +
+                                   '</div>' +
+                                   '<div class="row">' +
+                                   row_2.map(selector).join(""));
+    debug("Q");
+    $("#category-selector input").on("click", function(e) {
+        debug("category-selector");
+        _ = e;
+        var selected = e.target.value;
+        console.log("selected: "+selected);
+        debug(selected);
+        debug(categories[selected]);
+        if (selected != category) {
+            category = selected;
+            showCategory(categories[selected], true /* No reset */);
+        }
+        // return false;
+    });
+    // $("#category-selector .category").on("mousedown", function(e) {
+    //     $("#category-" + e.target.id).click();
     // });
-    //////////////////////////////////
-
 
 
     // Load lege

@@ -616,9 +616,33 @@ button {
     height:130px;
     background-color:white;
 }
-#category-selector img{
-    width: 200px;
+
+#category-selector .category {
+    display: inline-block;
+    opacity: 0.5;
+    user-select: none;
 }
+#category-selector .category:hover {
+    background-color: rgba(236, 236, 232, 0.5);
+    border-radius: 6px;
+
+}
+#category-selector .row {
+    display: inline-block;
+    /* margin: auto; */
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+#category-selector input[type=radio]:checked + label .category {
+    opacity: 1;
+    /* width: 250px; */
+    /* height: 250px; */
+}
+#category-selector input[type=radio] {
+    display: none;
+}
+
 div:focus {
     outline: none;
 }
