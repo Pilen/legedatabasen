@@ -888,6 +888,7 @@ a[href^='/kontakt']:after {
 .leg .teaserbar .categories {
     position: absolute;
     bottom: -20%;
+    width: 100%;
 }
 
 .leg .teaserbar .categories img {
