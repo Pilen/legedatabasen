@@ -1339,6 +1339,7 @@ img.leg-box-image {
 
 }
 .ribbon-wrapper {
+	display: none;
     position: absolute;
     /* left: -5px; top: -5px; */
     left: 0px; top: 0px;
