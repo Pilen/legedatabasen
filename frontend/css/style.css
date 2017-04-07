@@ -1426,6 +1426,7 @@ img.leg-box-image {
 .loading-balloon {
     content: url("/images/balloon.png");
     animation: loading-balloon-animation 1.7s infinite ease;
+    -webkit-animation: loading-balloon-animation 1.7s infinite ease;
     width: 50%;
     height: 50%;
     margin: auto;
