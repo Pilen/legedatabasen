@@ -171,7 +171,9 @@ function init() {
                 ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
                  '<div class="leg '+ classes +'">'+
                  '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
-                 (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
+                 // (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
+                 (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf2a7;</p>' : '')+
+                 // (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf409;</p>' : '')+
                  '<div class="headerbar">'+
                  '<p class="navn">'+leg.name+'</p>'+
                  '</div>'+
