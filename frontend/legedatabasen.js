@@ -293,9 +293,12 @@ function init() {
         // mus();
         route();
         debug("final");
+        //category_swiper.init();
+        //setTimeout(function () { $(".loading-balloon").hide(); }, 100); 
         $(".loading-balloon").hide();
         $("#container").show();
-        category_swiper.init();
+        setTimeout(function () {category_swiper.init(); }, 1); 
+        
         lazy();
         debug("done");
     }, 0);
