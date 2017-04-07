@@ -1439,6 +1439,15 @@ img.leg-box-image {
     100% {transform: scale(1.0, 1.0);}
 }
 
+@-webkit-keyframes loading-balloon-animation {
+    0%   {-webkit-transform: scale(0.1, 0.1);}
+    30%  {-webkit-transform: scale(0.30, 0.30);}
+    40%  {-webkit-transform: scale(0.25, 0.25);}
+    70%  {-webkit-transform: scale(0.75, 0.75);}
+	80%  {-webkit-transform: scale(0.70, 0.70);}
+    100% {-webkit-transform: scale(1.0, 1.0);}
+}
+
 .spinner {
     /* color: #ffffff; */
     color: rgb(69, 104, 137);
