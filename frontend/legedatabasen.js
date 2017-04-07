@@ -291,7 +291,7 @@ function init() {
         // mus();
         route();
         debug("final");
-        category_swiper.init();
+        // category_swiper.init();
         $(".loading-balloon").hide();
         $("#container").show();
         lazy();
