@@ -60,7 +60,7 @@ input[type="text"]
 }
 
 #container {
-   /* display: none; */
+    /* display: none; */
 }
 
 .skjold {
@@ -1073,7 +1073,7 @@ a[href^='/kontakt']:after {
 
 }
 @media (min-width: 601px) and (max-width: 1000px) {
- .element-item .leg .headerbar {
+    .element-item .leg .headerbar {
         bottom:26px !important;
         background-color: rgba(35,59,82,0.4);
         height:26px;
@@ -1438,7 +1438,7 @@ img.leg-box-image {
 .loading-balloon {
     content: url("/images/balloon.png");
     animation: loading-balloon-animation 1.7s infinite ease;
-   /* -webkit-animation: loading-balloon-animation 1.7s infinite ease;*/
+    /* -webkit-animation: loading-balloon-animation 1.7s infinite ease;*/
     width: 50%;
     height: 50%;
     margin: auto;
@@ -1451,15 +1451,6 @@ img.leg-box-image {
     80% {transform: scale(0.70, 0.70);}
     100% {transform: scale(1.0, 1.0);}
 }
-/*
-@-webkit-keyframes loading-balloon-animation {
-    0%   {-webkit-transform: scale(0.1, 0.1);}
-    30%  {-webkit-transform: scale(0.30, 0.30);}
-    40%  {-webkit-transform: scale(0.25, 0.25);}
-    70%  {-webkit-transform: scale(0.75, 0.75);}
-	80%  {-webkit-transform: scale(0.70, 0.70);}
-    100% {-webkit-transform: scale(1.0, 1.0);}
-}*/
 
 .spinner {
     /* color: #ffffff; */
