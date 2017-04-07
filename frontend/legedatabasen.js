@@ -295,7 +295,7 @@ function init() {
         //setTimeout(function () { $(".loading-balloon").hide(); }, 100); 
         $(".loading-balloon").hide();
         $("#container").show();
-        setTimeout(function () {category_swiper.init(); }, 20); 
+        setTimeout(function () {category_swiper.init(); }, 1); 
         
         lazy();
         debug("done");
