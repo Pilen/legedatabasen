@@ -293,7 +293,7 @@ function init() {
         debug("final");
         category_swiper.init();
         $("#container").show();
-        setTimeout(function () { $(".loading-balloon").hide(); }, 100); 
+        setTimeout(function () { $(".loading-balloon").hide(); }, 1000); 
         lazy();
         debug("done");
     }, 0);
