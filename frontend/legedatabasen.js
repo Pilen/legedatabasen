@@ -291,11 +291,11 @@ function init() {
         // mus();
         route();
         debug("final");
-        category_swiper.init();
-        setTimeout(function () { $(".loading-balloon").hide(); }, 1700); 
+        //category_swiper.init();
+        setTimeout(function () { $(".loading-balloon").hide(); }, 100); 
         //$(".loading-balloon").hide();
         $("#container").show();
-        setTimeout(function () {category_swiper.init(); }, 200); 
+        setTimeout(function () {category_swiper.init(); }, 100); 
         
         lazy();
         debug("done");
