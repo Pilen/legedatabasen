@@ -1432,9 +1432,10 @@ img.leg-box-image {
 }
 @keyframes loading-balloon-animation {
     0%   {transform: scale(0.1, 0.1)}
-    10%  {transform: scale(0.15, 0.05)}
-    40%  {transform: scale(0.30, 0.20);}
-    70%  {transform: scale(0.50, 0.70);}
+    30%  {transform: scale(0.30, 0.30)}
+    40%  {transform: scale(0.25, 0.25);}
+    70%  {transform: scale(0.75, 0.75);}
+	80%  {transform: scale(0.70, 0.70);}
     100% {transform: scale(1.0, 1.0);}
 }
 
