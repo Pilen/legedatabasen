@@ -291,9 +291,9 @@ function init() {
         // mus();
         route();
         debug("final");
+        category_swiper.init();
         $(".loading-balloon").hide();
         $("#container").show();
-        category_swiper.init();
         lazy();
         debug("done");
     }, 0);
