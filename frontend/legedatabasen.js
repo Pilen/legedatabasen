@@ -292,8 +292,8 @@ function init() {
         route();
         debug("final");
         //category_swiper.init();
-        setTimeout(function () { $(".loading-balloon").hide(); }, 100); 
-        //$(".loading-balloon").hide();
+        //setTimeout(function () { $(".loading-balloon").hide(); }, 100); 
+        $(".loading-balloon").hide();
         $("#container").show();
         setTimeout(function () {category_swiper.init(); }, 100); 
         
