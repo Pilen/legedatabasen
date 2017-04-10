@@ -296,7 +296,7 @@ function init() {
         $(".loading-balloon").hide();
         $("#container").show();
         //category_swiper.init();
-        setTimeout(function () {category_swiper.init(); }, 1);
+        setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
         lazy();
         debug("done");
     }, 0);
