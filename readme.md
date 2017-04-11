@@ -15,3 +15,14 @@ scp -r -P 42000 "www-data@dev.legedatabasen.dk:~/legedatabasen/frontend/images/e
 * Modal: Visningen af en leg sker i en modal, som er et 'vindue' der lægges 'oven' på siden.
 * (Kategori) Swiper: Metoden til at vælge lege kategori, primært til telefoner. Man kan swipe eller klikke for at bladre igennem kategorierne, den i midten er "valgt"
 * (Kategori) Selector: Metoden til at vælge lege kategori, primært til browsere. Et 'grid' af ikoner, 1 kan være valgt (eller ingen)
+
+
+# Notes on javascript performance
+It is fastest to create elements like
+```
+    var x = '';
+    for (var i = 0; i < 1000; i++) {
+        x += '<div>'+i+'</div>\n';
+    }
+    $("#testing")[0].innerHTML = x;
+```

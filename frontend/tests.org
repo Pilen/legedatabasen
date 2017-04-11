@@ -1,0 +1,104 @@
+* Tests
+** History API
+*** OK: Frem (åbent design spørgsmål)
+    Scroll ned
+    Vælg en leg og klik på den
+    Luk legen
+    Scroll til et andet sted på siden
+    Tryk på browserens 'frem' knap
+    Vises den lukkede leg igen?
+    Hvad vises i baggrunden? (og hvad skal faktisk vises)??????????
+
+** Lege
+*** OK: Kategoriknap
+    Scroll ned
+    vælg en leg
+    tryk på en kategori
+    Er du scrollet til toppen?
+    Er den korrekte kategori valgt?
+
+*** OK: filtre -> leg -> kategoriknap
+   Åben filtre
+   åben en leg
+   tryk på en kategori
+   vises den korrekte kategori?
+*** OK: søgning -> leg -> kategoriknap
+   Åben søgning
+   åben en leg
+   tryk på en kategori
+   vises den korrekte kategori?
+
+** Filtre
+*** OK: luk filtre til forrige kategori
+    Vælg en kategori
+    Åben filtre
+    filtrer (f.eks. 30+, 60 min, 13+, Stor)
+    luk filtre
+    Er du på den samme kategori som før?
+    Vises de korrekte lege?
+
+*** OK: filtre nulstilles / kan genvælges
+    Åben filtre
+    filtrer (f.eks. 30+, 60 min, 13+, Stor)
+    luk filtre
+    åben filtre
+    Er alle filtrene fravalgt?
+    kan man vælge de samme igen (i et enkelt klik)
+
+** Søgning
+*** OK: filtre -> søgning
+    Åben filtre
+    Filtrer
+    Tryk søg
+    Søges der i alle lege?
+
+*** OK: kategori -> søgning
+    Vælg en kategori
+    Tryk søg
+    Søges der i alle lege?
+
+** Routing
+*** OK: simpel routing
+    Besøg /leg/admiral
+    Kommer du ind på den rigtige side?
+*** ISSUE?: routing -> back
+    Fra forsiden
+    Gå til en kategori
+    Besøg /leg/admiral
+    Tryk tilbage
+    Er du på den samme kategori?
+*** OK: extern -> routing -> back
+    Gå til google.com
+    Besøg /leg/admiral
+    tryk browserens tilbage
+    Hvor er du nu????
+    # på forsiden, hvis man trykker tilbage én gang til er man atter på google.com
+*** OK: extern -> routing -> luk
+    Gå til google.com
+    Besøg /leg/admiral
+    tryk på luk leg / uden for modal
+    Er du nu på 'forsiden'?
+
+
+** Fejl
+*** OK: simple routing 404
+    Besøg /enstrnutu/
+    Vises 404 siden?
+
+*** 404 back
+    Besøg /enstrnutu/
+    Tryk browserens tilbage
+    Er du på den forrige side?
+
+*** 404 luk
+    Besøg /enstrnutu/
+    Tryk luk
+    Er du på den forrige side?
+
+
+* Missing in refactor
+** Youtube
+   Fix
+   Load asynkront/lazy
+   virk hvis ikke der er forbindelse / vis billeder
+** jquery attr/prop
