@@ -327,7 +327,7 @@ function SearchEngine(options) {
                 window.clearTimeout(this._timer);
             }
             var _this = this; // Used to avoid javascript quirkyness. See https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout#The_this_problem
-            window.setTimeout(function(){_this.search();}, this._options.delay);
+            this._timer = window.setTimeout(function(){_this.search();}, this._options.delay);
             return null;
         } else {
             return this.search();
