@@ -15,16 +15,20 @@ var categories = [
 ];
 var category_map = {};
 
+var stateActions = {};
+
 var category = 5;  // Current category
 var lege;          // List of all lege
 var lege_urls = {}; // url -> lege
-var state;
+var currentState = null;
+var defaultState;
 var been_at_front = false;
 var search;
 var category_swiper;
 var total_time;
-var menu_offset;
+var menubar_offset;
 var player;
+var modalClosedFromBack = false;
 
 var group_2 = "pusling|tumling|bæver|bæverflok|familie|famillie|familiespejder|familliespejder|mikro|mikrospejder|mini|minispejder|små";
 var group_7 = "pilt|væbner|ulve|ulveflok|junior|juniortrop|mellem|mellemste";
@@ -40,7 +44,22 @@ function debug(string) {
 }
 // debug = console.log
 
-function init() {
+
+/*******************************************************************************
+                                 Initialization
+*******************************************************************************/
+
+function main() {
+    $.when($.getJSON("/data.json"),
+           $.ready)
+        .done(init);
+}
+main();
+
+function init(data) {
+    debug.tag = $("#debug");
+    debug("init");
+
     // // Setup youtube
     // var tag = document.createElement("script");
     // tag.src = "//www.youtube.com/iframe_api";
@@ -48,23 +67,82 @@ function init() {
     // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     // console.log("loading youtube");
 
-    debug.tag = $("#debug");
-    debug("init");
 
-    // Create categories
+    // Prepare categories
     categories.map(function(category, key) {
         category.index = key;
         category.url = (typeof category.url !== "undefined") ? category.url : category.name.toLocaleLowerCase().replace(" ", "_");
         category.image = category.image || category.name.replace(" ", "") + ".svg";
         category_map[category.name.toLocaleLowerCase()] = category;
-        var node = $('<div class="swiper-slide category outlined" id="'+key+'" ' +
-                     'style="background-image: url(/images/categories/'+category.image+');">' +
-                     category.name +
-                     '</div>');
-        node.appendTo(".swiper-wrapper");
     });
 
-    // Create category swiper
+    initSwiper();
+
+    initSelector();
+
+    initStickyMenubar();
+
+    initNavigation();
+
+    initFilters();
+
+    // Initialize lege
+    initLege(data[0]).then(function() {
+        $('#lege').on("click", "a.element-item", function(event){
+            event.preventDefault();
+            pushState(showLeg(this.getAttribute("leg")));
+            return false;
+        });
+        $(".leg_back").on("click", function(e) {
+            $("#modal-leg").modal("hide");
+        });
+
+        $('#modal-leg').on('hide.bs.modal', function (e) {
+            if (player) {
+                player.stopVideo();
+                player = null;
+            }
+            if (modalClosedFromBack) {
+                // Second time we get here
+                modalClosedFromBack = false;
+            } else {
+                popState();
+            }
+            // replaceState(showCategory(category));
+            // history.pushState({}, "", "/");
+        });
+
+        contactify();
+
+        initSearch();
+        initStateActions();
+
+        $(window).on('popstate', onPopState);
+
+        // Setup games/scripts in each leg
+        lege_urls["mus"].script = playMus;
+
+        // mus();
+        defaultState = showCategory(category);
+        route();
+        $(".loading-balloon").hide();
+        $("#container").show();
+        //category_swiper.init();
+        setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
+        lazy();
+        debug("done");
+    });
+}
+
+function initSwiper() {
+    var html = categories.map(function(category) {
+        return ('<div class="swiper-slide category outlined" id="'+category.index+'" ' +
+                'style="background-image: url(/images/categories/'+category.image+');">' +
+                category.name +
+                '</div>');
+    }).join("\n");
+    $(".swiper-wrapper")[0].innerHTML = html;
+
     category_swiper = new Swiper(".swiper-container", {
         loop: true,
         centeredSlides: true,
@@ -84,17 +162,22 @@ function init() {
     // category_swiper.on("touchStart", function(swiper) {
     //     search.abort();
     // });
+    // category_swiper.on("slideChangeStart", function(swiper) {
+    //     console.log("slideChangeStart", swiper);
+    // });
     category_swiper.on("slideChangeEnd", function(swiper) {
-        total_time = +new Date();
+        total_time = performance.now();
         var selected = swiper.realIndex;
         $("#profiler").text(categories[selected].name);
         if (selected != category) {
             category = selected;
-            showCategory(categories[selected], true /* No reset */);
+            // showCategory(selected, true /* No reset */);
+            replaceState(showCategory(selected));
         }
     });
+}
 
-    // Create category selector
+function initSelector() {
     var tmp_alle = categories[Math.floor(categories.length / 2)];
     var tmp_categories = categories.filter(function(c, k) {return c !== tmp_alle;});
     var row_1 = tmp_categories.slice(0, 6);
@@ -114,31 +197,47 @@ function init() {
                                    '</div>' +
                                    '<div class="row">' +
                                    row_2.map(selector).join(""));
-    debug("Q");
     $("#category-selector input").on("click", function(e) {
         debug("category-selector");
-        _ = e;
         var selected = e.target.value;
         console.log("selected: "+selected);
         debug(selected);
         debug(categories[selected]);
         if (selected != category) {
             category = selected;
-            showCategory(categories[selected], true /* No reset */);
+            // showCategory(selected, true /* No reset */);
+            replaceState(showCategory(selected));
         }
         // return false;
     });
     // $("#category-selector .category").on("mousedown", function(e) {
     //     $("#category-" + e.target.id).click();
     // });
+}
 
+function initFilters() {
+    // $('.filter input[type=radio], .filter input[type=radio]+label').click(function() {
+    $('.filter input[type=radio]').click(function(e) {
+        var radio = this;
+        var $filter = $(radio).parent();
+        if ($filter.data("current") === radio.id) {
+            $filter.data("current", null);
+            radio.checked = false;
+            search.update_filter(radio.name, undefined);
+        } else {
+            $filter.data("current", radio.id);
+            search.update_filter(radio.name, radio.value);
+        }
+    });
+}
 
-    // Load lege
-    $.getJSON("/data.json", function (data) {
-        debug("data received");
+function initLege(data) {
+    // Use a deferred/promise to ensure rendering of swiper+pagination is atomic...
+    var deferred = $.Deferred();
+    function doStuff() {
         data = data.filter(function(d) {return d.name;}); // There is an empty leg with no name
-        window.setTimeout(function() {
         lege = data.map(function(leg, key) {
+            leg.index = key;
             leg.game_area = leg.area.length > 0 ? leg.area[0].area.toLocaleLowerCase() : "INGEN STEDER!";
             leg.age = age_group(leg.min_age);
             leg.duration = duration_group(leg.min_time);
@@ -168,7 +267,7 @@ function init() {
                 in_categories = '<img class="modal-category" src="/images/categories/'+leg.game_categories[0].image+'" alt="'+leg.game_categories[0].name+'" />';
             }
             leg.node = $(
-                ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'">'+
+                ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
                  '<div class="leg '+ classes +'">'+
                  '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
                  // (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
@@ -198,275 +297,357 @@ function init() {
             leg.node.appendTo('#lege');
             return leg;
         });
-        debug("lege created");
+        deferred.resolve(lege);
+    }
+    doStuff();
+    return deferred.promise();
+}
 
-        search = new SearchEngine()
-            .method("plain")
-            .delay(500)
-            .add_field("description")
-            .add_field("name", 10)
-        // .add_field("tags", 9)
-        // .add_field(auto_tags, 1)
-            .id("url")
-            .add(lege)
-            .create_filter("category", function(leg, arg) {
-                // Only keep lege where the category is found in the tags
-                // return leg.tags.toLowerCase().indexOf(arg) != -1;
-                if (arg == "Alle lege") {
-                    return true;
-                }
-                var categories = leg.game_categories.map(function(c){return c.name;}).join(",");
-                return categories.indexOf(arg) != -1;
-            }, function(arg) {return arg || "";})
-            .create_filter("participants", function(leg, arg) {
-                return !arg || leg.participants == arg;
-            }, function(arg) {return arg || "";})
-            .create_filter("duration", function(leg, arg) {
-                return !arg || leg.duration == arg;
-            }, function(arg) {return arg || "";})
-            .create_filter("age", function(leg, arg) {
-                return !arg || leg.age == arg;
-            }, function(arg) {return arg || "";})
-            .create_filter("location", function(leg, arg) {
-                return !arg || leg.game_area == arg;
-            }, function(arg) {return arg || "";})
-            .create_filter("letter", function(leg, arg) {
-                return (arg && leg.name.toLowerCase()[0] == arg) || !arg;
-            })
-            .create_filter("search", function(leg, arg) {
-                if (arg) {
-                    return arg[leg.age];
-                } else {
-                    return true;
-                }
-            }, function(arg) {
-                var result = {"2": false, "7": false, "13": false};
-                var found = false;
-                if (regex_2.test(arg)) {
-                    console.log("2+");
-                    found = true;
-                    result["2"] = true;
-                }
-                if (regex_7.test(arg)) {
-                    console.log("7+");
-                    found = true;
-                    result["7"] = true;
-                }
-                if (regex_13.test(arg)) {
-                    console.log("13+");
-                    found = true;
-                    result["13"] = true;
-                }
-                if (found) {
-                    return result;
-                } else {
-                    return null;
-                }
-            })
-            .callback(sort_lege)
-            .compile();
-
-        $("#search").on("input", search_update);
-        function search_update(event) {
-            var search_text = $("#search")[0].value;
-            search_text = search_text.toLowerCase();
-            magic(search_text);
-            search.update_filter("search", search_text);
-            search_text = search_text.replace(regex_any, "");
-            if (search_text.length == 1) {
-                search.update_filter("letter", search_text);
-            } else {
-                search.update_filter("letter", null);
-                search.query(search_text);
-            }
-        }
-
-        // $('.lazy').lazy();
-
-        $(window).on('popstate', function() {
-            route();
-        });
-
-        // Setup games/scripts in each leg
-        lege_urls["mus"].script = playMus;
-
-        // mus();
-        route();
-        debug("final");
-        $(".loading-balloon").hide();
-        $("#container").show();
-        //category_swiper.init();
-        setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
-        lazy();
-        debug("done");
-    }, 0);
-    });
-
-    $('#lege').on("click", "a", function(event){
-        event.preventDefault();
-        openUrl($(this).attr("href"));
-        return false;
-    });
-    $(".leg_back").on("click", closeLeg);
-
-    $('#modal-leg').on('hide.bs.modal', function (e) {
-        if (player) {
-            player.stopVideo();
-        }
-        history.pushState({}, "", "/");
-    });
-
-    $("#swipe_knap").click(function() {
-        showCategory(categories[category]);
-    });
-    $(".menu-icon").click(function() {
-        showSubmenu();
-    });
-    $("#filter_knap").click(function() {
-        showFilter();
-    });
-    $("#search-icon").click(function() {
-        showSearch();
-    });
-    $("#search-done-icon").click(function() {
-        showCategory(categories[category]);
-    });
-
-    function stickyMenu() {
+function initStickyMenubar() {
+    function stickyMenubar() {
         var position = $(this).scrollTop();
-        if (position >= menu_offset) {
+        if (position >= menubar_offset) {
             $(".navigation").css("position", "fixed");
         } else {
             $(".navigation").css("position", "static");
         }
     }
     $(window).resize(function() {
-        menu_offset = $(".navigation-filler").offset().top;
-        stickyMenu();
+        menubar_offset = $(".navigation-filler").offset().top;
+        stickyMenubar();
     }).resize();
     $(window).scroll(function() {
-        var state = "lege";
-        stickyMenu();
-        return;
-        var position = $(this).scrollTop();
-
-        if(state == "lege" && position >= 120) {
-            $("#title").text(categories[category].name);
-        } else if(state == "leg" && position >= 50) {
-            $("#title").text(leg.name);
-        } else {
-            $("#title").text("");
-        }
+        stickyMenubar();
     });
-
-    // $('.filter input[type=radio], .filter input[type=radio]+label').click(function() {
-    $('.filter input[type=radio]').click(function() {
-        console.log("input click");
-        var radio = $(this);
-        _ = radio;
-        if (radio.data('waschecked') == true) {
-            radio.prop('checked', false);
-            radio.data('waschecked', false);
-            search.update_filter(radio[0].name, undefined);
-        } else {
-            radio.data('waschecked', true);
-            search.update_filter(radio[0].name, radio[0].value);
-        }
-        // remove was checked from other radios
-        radio.siblings('input[name="rad"]').data('waschecked', false);
-
-
-    });
-
-    contactify();
-};
-$(document).ready(init);
-
-function openUrl(url) {
-    if (window.location.pathname == "/") {
-        been_at_front = true;
-    }
-    history.pushState({}, '', url);
-    route();
 }
 
-function route() {
-    debug("in route");
-    // Close modal if shown
-    if ($(".modal").is(":visible")) {
-        $(".modal").modal("hide");
-        return;
+function initNavigation() {
+    // $("#swipe_knap").click(function() {
+    //     replaceState(showCategory(category));
+    // });
+    $(".menu-icon").click(function() {
+        if (currentState.type === "filters") {
+            replaceState(showCategory(category));
+        } else {
+            replaceState(showFilters());
+        }
+    });
+    // $("#filter_knap").click(function() {
+    //     replaceState(showFilters());
+    // });
+    $("#search-icon").click(function() {
+        replaceState(showSearch());
+    });
+    $("#search-done-icon").click(function() {
+        // TODO: should this be a popState instead?
+        replaceState(showCategory(category));
+    });
+
+}
+
+function initSearch() {
+    search = new SearchEngine()
+        .method("plain")
+        .delay(500)
+        .add_field("description")
+        .add_field("name", 10)
+    // .add_field("tags", 9)
+    // .add_field(auto_tags, 1)
+        .id("url")
+        .add(lege)
+        .create_filter("category", function(leg, arg) {
+            // Only keep lege where the category is found in the tags
+            // return leg.tags.toLowerCase().indexOf(arg) != -1;
+            if (arg == "Alle lege") {
+                return true;
+            }
+            var categories = leg.game_categories.map(function(c){return c.name;}).join(",");
+            return categories.indexOf(arg) != -1;
+        }, function(arg) {return arg || "";})
+        .create_filter("participants", function(leg, arg) {
+            return !arg || leg.participants == arg;
+        }, function(arg) {return arg || "";})
+        .create_filter("duration", function(leg, arg) {
+            return !arg || leg.duration == arg;
+        }, function(arg) {return arg || "";})
+        .create_filter("age", function(leg, arg) {
+            return !arg || leg.age == arg;
+        }, function(arg) {return arg || "";})
+        .create_filter("location", function(leg, arg) {
+            return !arg || leg.game_area == arg;
+        }, function(arg) {return arg || "";})
+        .create_filter("letter", function(leg, arg) {
+            return (arg && leg.name.toLowerCase()[0] == arg) || !arg;
+        })
+        .create_filter("search", function(leg, arg) {
+            if (arg) {
+                return arg[leg.age];
+            } else {
+                return true;
+            }
+        }, function(arg) {
+            var result = {"2": false, "7": false, "13": false};
+            var found = false;
+            if (regex_2.test(arg)) {
+                console.log("2+");
+                found = true;
+                result["2"] = true;
+            }
+            if (regex_7.test(arg)) {
+                console.log("7+");
+                found = true;
+                result["7"] = true;
+            }
+            if (regex_13.test(arg)) {
+                console.log("13+");
+                found = true;
+                result["13"] = true;
+            }
+            if (found) {
+                return result;
+            } else {
+                return null;
+            }
+        })
+        .callback(sort_lege)
+        .compile();
+
+    $("#search").on("input", search_update);
+    function search_update(event) {
+        var search_text = $("#search")[0].value;
+        search_text = search_text.toLowerCase();
+        magic(search_text);
+        search.update_filter("search", search_text);
+        search_text = search_text.replace(regex_any, "");
+        if (search_text.length == 1) {
+            search.update_filter("letter", search_text);
+        } else {
+            search.update_filter("letter", null);
+            search.query(search_text);
+        }
     }
+}
 
+
+/*******************************************************************************
+                                      URL
+*******************************************************************************/
+
+function showCategory(category) {return {type: "category", url: "/", arg: category};}
+function showSearch() {return {type: "search", url: "/", arg: null};}
+function showFilters() {return {type: "filters", url: "/", arg: null};}
+function showLeg(leg) {return {type: "leg", url: "/leg/"+lege[leg].url, arg: leg, parent: currentState};}
+function show404() {return {type: "404", url: "/404", arg: null};}
+
+function pushState(state) {
+    history.pushState(state, state.type, state.url);
+    showState(state);
+}
+
+function replaceState(state) {
+    history.replaceState(state, state.type, state.url);
+    showState(state);
+}
+
+function popState() {
+    history.back();
+    showState(currentState);
+}
+
+function onPopState(event) {
+    var state = event.originalEvent.state;
+    console.assert(state);
+    showState(state, true);
+}
+
+function showState(state, back) {
+    console.assert(state);
+    if (!state) {
+        state = defaultState;
+    }
+    var oldState = currentState;
+    currentState = state;
+    var action = stateActions[state.type];
+    console.assert(action);
+    if (!oldState) {
+        // No old state to hide
+        action.show(state.arg);
+    } else if (state.hasOwnProperty("parent")) {
+        // Overlay, so dont hide
+        action.show(state.arg);
+    } else if (oldState.type !== state.type) {
+        var oldAction = stateActions[oldState.type];
+        if (oldState.hasOwnProperty("parent") && back) {
+            // Close overlay, dont show anything new.
+            oldAction.hide(oldState.arg);
+        } else {
+            if (oldState.hasOwnProperty("parent")) {
+                // Must be overlay going forward to nonoverlay, so remove them all.
+                var oldActions = [];
+                while (oldState && oldState.hasOwnProperty("parent")) {
+                    var oldAction = stateActions[oldState.type];
+                    oldActions.push(oldAction.hide(oldState.arg));
+                    oldState = oldState.parent;
+                }
+                // The chain should always originate in a non overlay state
+                console.assert(oldState);
+                oldAction = stateActions[oldState.type];
+                oldActions.push(oldAction.hide(oldState.arg));
+                $.when.apply($, oldActions).then(function() {
+                    action.show(state.arg);
+                });
+            } else {
+                oldAction.hide(oldState.arg).then(function() {
+                    action.show(state.arg);
+                });
+            }
+        }
+    } else {
+        action.update(state.arg);
+    }
+}
+
+function initStateActions() {
+    stateActions["category"] = {
+        show: function(index) {
+            scrollToTop(400);
+            $(".swiper-container").slideDown(400);
+            var category = categories[index];
+            if (category_swiper.realIndex !== category.index) {
+                category_swiper.slideTo(category.index);
+            }
+            search.clear();
+            search.update_filter("category", category.name);
+        },
+        update: function(index) {
+            scrollToTop(400);
+            var category = categories[index];
+            if (category_swiper.realIndex !== category.index) {
+                category_swiper.slideTo(category.index);
+            }
+            search.clear();
+            search.update_filter("category", category.name);
+        },
+        hide: function() {
+            return $.when(//scrollToTop(400),
+                          $(".swiper-container").slideUp(400).promise());
+        }
+    };
+
+
+    stateActions["search"] = {
+        show: function() {
+            scrollToTop(400);
+            $("#search-icon").fadeOut(200, function() {
+                $("#search-done-icon").fadeIn(200);
+            });
+            $("#search").val("").fadeIn(200*2, function() {
+                // $("#search-icon").addClass("active");
+            });
+            $("#search").focus();
+            search.clear();
+        },
+        update: function() {
+        },
+        hide: function() {
+            $("#search-done-icon").fadeOut(200, function() {
+                $("#search-icon").fadeIn(200);
+            });
+            return $.when(//scrollToTop(400),
+                          $("#search").slideUp(200).promise());
+            // var deferred = $.Deferred();
+            // $("#search").slideUp(200, function() {
+            //     $("#title").fadeIn(200, function() {
+            //         deferred.resolve();
+            //     });
+            // });
+            // return deferred.promise();
+        }
+    };
+
+
+    stateActions["filters"] = {
+        show: function() {
+            scrollToTop(400);
+            $(".menu-icon").addClass("open");
+            $(".filter input[type=radio]").prop("checked", false);
+            $(".filter").data("current", null);
+            $("#submenu").slideDown(400);
+        },
+        update: function() {
+            $(".filter input[type=radio]").prop("checked", false);
+        },
+        hide: function() {
+            return $.when(//scrollToTop(400),
+                $(".menu-icon").removeClass("open"),
+                          $("#submenu").slideUp(400).promise());
+        }
+    };
+
+    stateActions["leg"] = {
+        show: function(index) {
+            displayLeg(lege[index]);
+        },
+        update: function(index) {
+            displayLeg(lege[index]);
+        },
+        hide: function() {
+            modalClosedFromBack = true;
+            $(".modal").modal("hide");
+            var deferred = $.Deferred();
+            deferred.resolve();
+            return deferred.promise();
+        }
+    };
+
+    stateActions["404"] = {
+        show: function(index) {
+            $("#modal-leg .modal-body .leg-teaser").html("");
+            $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
+            $("#modal-leg").modal("show");
+        },
+        update: function(index) {
+        },
+        hide: function() {
+            return stateActions["leg"].hide();
+        }
+    };
+}
+
+
+function route() {
     var url = window.location.pathname;
-    url = url .replace("/lege3", "")
-        .replace("/legedatabasen", "")
-        .replace("/frontend", "");
     url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
-
-    category_swiper.init();
+    replaceState(defaultState);
 
     // Show leg
     if (url.startsWith("leg/")) {
         var leg = lege_urls[url.substring(4)];
-        if (!leg) {
-            show404();
+        if (leg) {
+            pushState(showLeg(leg.index));
             return;
         }
-        showLeg(leg);
-        return;
     }
     if (url.startsWith("kontakt")) {
-        skriv_til_os();
+        // This is reached because someone opened the /kontakt link in some other fassion
+        contact();
         return;
     }
-    // Show category
-    if (url) {
-        var cats = categories.filter(function(category) {
-            return category.url == url;
-        });
-        if (cats.length != 1) {
-            show404();
-            return;
-        }
-        var cat = cats[0];
-        if (category != cat.index) {
-            $(".swiper-container")[0].swiper.slideTo(cat.index);
-        }
-        showCategory(cat);
-        return;
-    }
-    // Show front (with previous category)
-    if (!url) {
-        showCategory(categories[category]);
+    if (url === "") {
+        // Just show the default state
         return;
     }
 
-    // Error
-    show404();
+    pushState(show404());
     return;
 }
 
-function closeLeg() {
-    if (been_at_front) {
-        window.history.back();
-    } else {
-        if (window.location.pathname == "/") {
-            route()
-        } else {
-            history.pushState({}, "", "/");
-        }
-    }
-}
+/*******************************************************************************
 
-function show404() {
-    $("#modal-leg .modal-body .leg-teaser").html("");
-    $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
-    $("#modal-leg").modal("show");
-}
+*******************************************************************************/
 
-function showLeg(leg) {
-    _=leg;
+function displayLeg(leg) {
+    console.log("displayLeg");
     /*
       $("#container").hide();
       $("#filter_knap").hide();
@@ -536,9 +717,10 @@ function showLeg(leg) {
             var img = $('<img class="modal-category btn" src="/images/categories/'+c.image+'" alt="'+c.name+'" />');
             node.append(img);
             img.on("click", function(event) {
-                closeLeg();
-                showCategory(c);
-                category_swiper.slideTo(c.index);
+                pushState(showCategory(c.index));
+                // $(".modal").modal("hide");
+                // showCategory(c.index);
+                // category_swiper.slideTo(c.index);
             });
         });
     }
@@ -559,6 +741,7 @@ function showLeg(leg) {
       $(".modal-body").html(description);
     */
 
+    $("#modal-leg").off("shown.bs.modal");
     $("#modal-leg").one("shown.bs.modal", function() {
         console.log("modal shown");
         if (video) {
@@ -569,11 +752,12 @@ function showLeg(leg) {
             player = new YT.Player("ytplayer", {
                 width: width + "px",
                 height: height + "px",
-                videoId: leg.videos[0]
-                // events: {
+                videoId: leg.videos[0],
+                events: {
+                    OnError: function(e) {console.log("Youtube error:", e);}
                 //     onReady: function(e) {console.log("ready");},
                 //     onStateChange: function(e) {console.log("state change");}
-                // }
+                }
             });
             $("#ytplayer-wrapper").height(height + "px"); // Why is this necessary?
 
@@ -588,94 +772,13 @@ function showLeg(leg) {
     $("#modal-leg").modal("show");
 
     ga('send', 'pageview', '/leg/' + leg.url);
-
-
-}
-
-function showCategory(category, noReset) {
-    // rename_url(category.url);
-    if (noReset) {
-        search.update_filter("category", category.name);
-    } else {
-        resetDisplay().done(function(){
-            search.update_filter("category", category.name);
-            $("#filters2").slideUp(400, function() {
-                $(".swiper-container").slideDown(400);
-            });
-        });
-    }
-}
-
-function showSearch() {
-    rename_url("");
-    resetDisplay().done(function() {
-        // $("#title").fadeOut(200, function() {
-        $("#search-icon").fadeOut(200, function() {
-            $("#search-done-icon").fadeIn(200);
-        });
-        $("#search").val("").fadeIn(200*2, function() {
-            // $("#search-icon").addClass("active");
-        });
-        $("#search").focus();
-        $(".swiper-container").slideUp(400);
-        $("#filters2").slideUp(400);
-        // });
-    });
-}
-function showSubmenu() {
-    if ($("#submenu").is(":visible")) {
-        console.log("cat instead");
-        return showCategory(category);
-    }
-    rename_url("");
-    $(".filter input[type=radio]").prop("checked", false);
-    resetDisplay().done(function() {
-        $(".swiper-container").slideUp(200, function() {
-            $(".menu-icon").addClass("open");
-            $("#submenu").slideDown(400, function() {
-            });
-        });
-    });
-}
-
-function showFilter() {
-    rename_url("");
-    resetDisplay().done(function() {
-        $(".swiper-container").slideUp(200, function() {
-            $("#filters2").slideDown(400);
-        });
-    });
-}
-
-function resetDisplay() {
-    var start_time = +new Date();
-    search.clear();
-    var promise1 = scrollToTop(400);
-    promise1 = null; //We dont want to wait for scrollToTop anyway
-    // $("#title").text("");
-    var promise2 = $("#search:visible").slideUp(200, function() {
-        $("#title").fadeIn(200);
-    }).promise();
-    var promise3 = $("#search-done-icon").slideUp(200, function() {
-        $("#search-icon").fadeIn(200);
-    }).promise();
-    var promise4 = $("#submenu:visible").slideUp(200);
-
-    $(".menu-icon").removeClass("open");
-
-    $("#leg").hide();
-    $("#container").show();
-    $("#filter_knap").show();
-    $("#soeg_knap").show();
-    $("#swipe_knap").show();
-    $(".navbar .leg_back").hide();
-    return $.when(promise1, promise2, promise3, promise4);
 }
 
 function sort_lege(rankings) {
+    debug("sorting");
     _r=rankings;
     $("#profiler").text("sorting");
-    var start_time = +new Date();
+    var start_time = performance.now();
     lege.map(function(leg){
         leg.score = -1;
         leg.node.attr("score", -1);
@@ -707,7 +810,7 @@ function sort_lege(rankings) {
     // $("#lege").fadeIn(200);
 
     // $("#lege").isotope("updateSortData").isotope();
-    var end_time = +new Date();
+    var end_time = performance.now();
     $("#profiler").text("lege: "+(end_time - start_time) +" total: " + (end_time - total_time));
 
     return;
@@ -745,6 +848,7 @@ function scrollToTop(duration) {
     var deferred = $.Deferred();
 
     if (start == to) {
+        console.log("scroll already at top");
         deferred.resolve();
         return deferred.promise();
     }
@@ -836,9 +940,9 @@ function rename_url(url) {
     if (url != previous_url) {
         previous_url = url;
         setTimeout(function() {
-            var start_time = +new Date();
+            var start_time = performance.now();
             history.replaceState({}, "", url);
-            var end_time = +new Date();
+            var end_time = performance.now();
         }, 100);
     }
 }
@@ -912,7 +1016,6 @@ function lazy() {
 
         for (var i = 0; i < selected.length; i++) {
             var current = selected[i].document;
-            _c = current;
             if (!current.image) {
                 lazyLoadImage(current);
                 count++;
@@ -924,7 +1027,6 @@ function lazy() {
         var all = lege;
         for (var i = 0; i < all.length; i++) {
             var current = all[i];
-            _c = current;
             if (!current.image) {
                 lazyLoadImage(current);
                 count++;
@@ -933,7 +1035,6 @@ function lazy() {
             }
         }
         progressbar.slideUp();
-        console.log("No more left to load");
         debug("shown");
         window.clearInterval(timer);
     }
