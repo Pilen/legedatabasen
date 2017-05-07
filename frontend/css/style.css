@@ -552,6 +552,22 @@ input[type="text"]
 button {
     z-index: 3;
 }
+@media (min-width: 800px) {
+    .swiper-container {
+        display: none !important;
+    }
+    #category-selector {
+        display: block !important;
+    }
+}
+@media (max-width: 800px) {
+    .swiper-container {
+        display: block !important;
+    }
+    #category-selector {
+        display: none !important;
+    }
+}
 .swiper-container {
 }
 .swiper-slide {
@@ -613,7 +629,8 @@ button {
     user-select: none;
     width: 100%;
     height: 100%;
-    min-width: inherit;
+    min-width: 150px;
+    /* min-width: inherit; */
     margin: auto;
 
 }
@@ -633,7 +650,7 @@ button {
     left: 50%;
     /* min-width:  */
     transform: translate(-50%, 0);
-    background-color: #ffeeee;
+    /* background-color: #ffeeee; */
 }
 #category-selector input[type=radio]:checked + label .category {
     opacity: 1;

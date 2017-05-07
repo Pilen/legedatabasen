@@ -28,7 +28,9 @@ var category_swiper;
 var total_time;
 var menubar_offset;
 var player;
+
 var modalClosedFromBack = false;
+var ignoreCategorySelectorClick = false;
 
 var group_2 = "pusling|tumling|bæver|bæverflok|familie|famillie|familiespejder|familliespejder|mikro|mikrospejder|mini|minispejder|små";
 var group_7 = "pilt|væbner|ulve|ulveflok|junior|juniortrop|mellem|mellemste";
@@ -200,9 +202,10 @@ function initSelector() {
     $("#category-selector input").on("click", function(e) {
         debug("category-selector");
         var selected = e.target.value;
-        console.log("selected: "+selected);
-        debug(selected);
-        debug(categories[selected]);
+        if (ignoreCategorySelectorClick) {
+            ignoreCategorySelectorClick = false;
+            return;
+        }
         if (selected != category) {
             category = selected;
             // showCategory(selected, true /* No reset */);
@@ -511,11 +514,13 @@ function initStateActions() {
     stateActions["category"] = {
         show: function(index) {
             scrollToTop(400);
-            $(".swiper-container").slideDown(400);
+            $("#selection-container").slideDown(400);
             var category = categories[index];
             if (category_swiper.realIndex !== category.index) {
                 category_swiper.slideTo(category.index);
             }
+            ignoreCategorySelectorClick = true;
+            $('#category-selector input[value="'+index+'"').click();
             search.clear();
             search.update_filter("category", category.name);
         },
@@ -525,12 +530,14 @@ function initStateActions() {
             if (category_swiper.realIndex !== category.index) {
                 category_swiper.slideTo(category.index);
             }
+            ignoreCategorySelectorClick = true;
+            $('#category-selector input[value="'+index+'"').click();
             search.clear();
             search.update_filter("category", category.name);
         },
         hide: function() {
             return $.when(//scrollToTop(400),
-                          $(".swiper-container").slideUp(400).promise());
+                          $("#selection-container").slideUp(400).promise());
         }
     };
 
