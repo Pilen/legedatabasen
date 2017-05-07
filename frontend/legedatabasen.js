@@ -440,7 +440,7 @@ function showCategory(category) {return {type: "category", url: "/", arg: catego
 function showSearch() {return {type: "search", url: "/", arg: null};}
 function showFilters() {return {type: "filters", url: "/", arg: null};}
 function showLeg(leg) {return {type: "leg", url: "/leg/"+lege[leg].url, arg: leg, parent: currentState};}
-function show404() {return {type: "404", url: "/404", arg: null};}
+function show404(url) {return {type: "404", url: "/404/"+url, arg: url};}
 
 function pushState(state) {
     history.pushState(state, state.type, state.url);
@@ -608,10 +608,11 @@ function initStateActions() {
     };
 
     stateActions["404"] = {
-        show: function(index) {
+        show: function(original_url) {
             $("#modal-leg .modal-body .leg-teaser").html("");
             $("#modal-leg .modal-body .leg-description").html("<h3>404</h3><p>Hmm, det ser ud til at siden du leder efter ikke findes. Vi har sendt Søren ud for at lede</p><p>Du er meget velkommen til at brokke dig til Legeudvalget imens.</p>");
             $("#modal-leg").modal("show");
+            ga('send', 'pageview', location.pathname);
         },
         update: function(index) {
         },
@@ -645,7 +646,7 @@ function route() {
         return;
     }
 
-    pushState(show404());
+    pushState(show404(url));
     return;
 }
 
@@ -778,7 +779,7 @@ function displayLeg(leg) {
     }
     $("#modal-leg").modal("show");
 
-    ga('send', 'pageview', '/leg/' + leg.url);
+    ga('send', 'pageview', location.pathname);
 }
 
 function sort_lege(rankings) {
