@@ -1,17 +1,19 @@
 var $=$;
 
+// `category.index` is set to the coresponding index in the list
+// `category.selector` should be unique
 var categories = [
-    {name: "Sanselege"},
-    {name: "Boldlege"},
-    {name: "Hjernelege"},
-    {name: "Tonselege"},
-    {name: "Gemmelege"},
-    {name: "Alle lege"},
-    {name: "Fangelege"},
-    {name: "Bordlege"},
-    {name: "Rundkredslege"},
-    {name: "Sanglege"},
-    {name: "Banelege"}
+    {name: "Sanselege",     selector:  5},
+    {name: "Boldlege",      selector:  3},
+    {name: "Hjernelege",    selector:  7},
+    {name: "Tonselege",     selector:  0},
+    {name: "Gemmelege",     selector:  1},
+    {name: "Alle lege",     selector:  2},
+    {name: "Fangelege",     selector:  4},
+    {name: "Bordlege",      selector:  6},
+    {name: "Rundkredslege", selector: 10},
+    {name: "Sanglege",      selector:  8},
+    {name: "Banelege",      selector:  9}
 ];
 var category_map = {};
 
@@ -180,11 +182,11 @@ function initSwiper() {
 }
 
 function initSelector() {
-    var tmp_alle = categories[Math.floor(categories.length / 2)];
-    var tmp_categories = categories.filter(function(c, k) {return c !== tmp_alle;});
-    var row_1 = tmp_categories.slice(0, 4);
-    var row_2 = tmp_categories.slice(row_1.length);
-    row_1.splice(Math.floor(row_1.length / 2), 0, tmp_alle);
+    var categories_copy = categories.slice(0);
+    categories_copy.sort(function(a, b) {return a.selector - b.selector;});
+    var row_1 = categories_copy.slice(0, 5);
+    var row_2 = categories_copy.slice(row_1.length);
+
     function selector(category) {
         return ('<input type="radio" name="category-selector" id="category-selector-' + category.index + '" value="' + category.index + '"/>' +
                 '<label for="category-selector-' + category.index + '">' +
