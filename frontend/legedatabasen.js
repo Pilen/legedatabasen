@@ -63,6 +63,7 @@ main();
 function init(data) {
     debug.tag = $("#debug");
     debug("init");
+    magic(location.search.substring(1));
 
     // // Setup youtube
     // var tag = document.createElement("script");
@@ -992,13 +993,17 @@ function participants_group(participants) {
 
 
 function magic(text) {
-    if (text.search(/^profile[r]?[ :]+on/) != -1) {
+    if (text.search(/^profile[r]?[ :=]+on/) != -1) {
         console.log("profiler enabled");
         $("#profiler").show();
     }
-    if (text.search(/^profile[r]?[ :]+off/) != -1) {
+    if (text.search(/^profile[r]?[ :=]+off/) != -1) {
         console.log("profiler disabled");
         $("#profiler").hide();
+    }
+    if (text.search(/^visualdebug[ :=]+on/) != -1) {
+        console.log("visualdebug enabled");
+        debug.tag.show();
     }
 }
 

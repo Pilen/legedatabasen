@@ -22,7 +22,7 @@ port = 8080
 
 class LegedatabasenRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == "/" or self.path.startswith("/leg/") or self.path.startswith("/qwf"):
+        if self.path == "/" or self.path.startswith("/leg/") or self.path.startswith("/?") or self.path.startswith("/qwf"):
             file = "index.html"
         else:
             file = self.path[1:]
