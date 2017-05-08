@@ -133,8 +133,9 @@ function init(data) {
         lege_urls["mus"].script = playMus;
 
         // mus();
-        debug("routing stuff");
+        debug("default state");
         defaultState = showCategory(category);
+        debug("calling route");
         route();
         debug("final stuff");
         $(".loading-balloon").hide();
@@ -637,26 +638,33 @@ function initStateActions() {
 function route() {
     var url = window.location.pathname;
     url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
+    debug("got url, now replacing");
     replaceState(defaultState);
+    debug("replacing done");
 
     // Show leg
     if (url.startsWith("leg/")) {
+        debug("going to a leg");
         var leg = lege_urls[url.substring(4)];
         if (leg) {
+            debug("leg exists");
             pushState(showLeg(leg.index));
             return;
         }
     }
     if (url.startsWith("kontakt")) {
+        debug("at contact");
         // This is reached because someone opened the /kontakt link in some other fassion
         contact();
         return;
     }
     if (url === "") {
+        debug("plain url, so default");
         // Just show the default state
         return;
     }
 
+    debug("thats a 404");
     pushState(show404(url));
     return;
 }
