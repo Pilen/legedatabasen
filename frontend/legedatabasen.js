@@ -182,7 +182,7 @@ function initSwiper() {
 function initSelector() {
     var tmp_alle = categories[Math.floor(categories.length / 2)];
     var tmp_categories = categories.filter(function(c, k) {return c !== tmp_alle;});
-    var row_1 = tmp_categories.slice(0, 6);
+    var row_1 = tmp_categories.slice(0, 4);
     var row_2 = tmp_categories.slice(row_1.length);
     row_1.splice(Math.floor(row_1.length / 2), 0, tmp_alle);
     function selector(category) {
