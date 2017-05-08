@@ -46,8 +46,9 @@ function debug(string) {
     console.log("debug:", string);
     debug.tag.text(string);
 }
-// debug = console.log
-
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    debug("onerror @"+url+" "+lineNo+":"+columnNo+" "+msg+" ===> "+error);
+};
 
 /*******************************************************************************
                                  Initialization
@@ -81,6 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
+    debug("about to init stuff");
     initSwiper();
 
     initSelector();
@@ -92,7 +94,9 @@ function init(data) {
     initFilters();
 
     // Initialize lege
+    debug("about to initLege");
     initLege(data[0]).then(function() {
+        debug("in initLege");
         $('#lege').on("click", "a.element-item", function(event){
             event.preventDefault();
             pushState(showLeg(this.getAttribute("leg")));
@@ -119,6 +123,7 @@ function init(data) {
 
         contactify();
 
+        debug("going to initSearch");
         initSearch();
         initStateActions();
 
@@ -128,12 +133,15 @@ function init(data) {
         lege_urls["mus"].script = playMus;
 
         // mus();
+        debug("routing stuff");
         defaultState = showCategory(category);
         route();
+        debug("final stuff");
         $(".loading-balloon").hide();
         $("#container").show();
         //category_swiper.init();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
+        debug("going lazy");
         lazy();
         debug("done");
     });
