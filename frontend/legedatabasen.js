@@ -2,15 +2,15 @@ var $=$;
 
 var categories = [
     {name: "Sanselege"},
-    {name: "Gemmelege"},
-    {name: "Fangelege"},
     {name: "Boldlege"},
-    {name: "Tonselege"},
-    {name: "Alle lege"},
-    {name: "Sanglege"},
     {name: "Hjernelege"},
+    {name: "Tonselege"},
+    {name: "Gemmelege"},
+    {name: "Alle lege"},
+    {name: "Fangelege"},
     {name: "Bordlege"},
     {name: "Rundkredslege"},
+    {name: "Sanglege"},
     {name: "Banelege"}
 ];
 var category_map = {};
