@@ -477,8 +477,11 @@ function pushState(state) {
 }
 
 function replaceState(state) {
+    debug("in replaceState");
     history.replaceState(state, state.type, state.url);
+    debug("going to show");
     showState(state);
+    debug("shown");
 }
 
 function popState() {
@@ -493,6 +496,7 @@ function onPopState(event) {
 }
 
 function showState(state, back) {
+    debug("showState "+state);
     console.assert(state);
     if (!state) {
         state = defaultState;
@@ -502,18 +506,24 @@ function showState(state, back) {
     var action = stateActions[state.type];
     console.assert(action);
     if (!oldState) {
+        debug("show new");
         // No old state to hide
         action.show(state.arg);
     } else if (state.hasOwnProperty("parent")) {
+        debug("show overlay");
         // Overlay, so dont hide
         action.show(state.arg);
     } else if (oldState.type !== state.type) {
+        debug("hund");
         var oldAction = stateActions[oldState.type];
         if (oldState.hasOwnProperty("parent") && back) {
+            debug("kat");
             // Close overlay, dont show anything new.
             oldAction.hide(oldState.arg);
         } else {
+            debug("guldfisk");
             if (oldState.hasOwnProperty("parent")) {
+                debug("hamster");
                 // Must be overlay going forward to nonoverlay, so remove them all.
                 var oldActions = [];
                 while (oldState && oldState.hasOwnProperty("parent")) {
@@ -521,20 +531,26 @@ function showState(state, back) {
                     oldActions.push(oldAction.hide(oldState.arg));
                     oldState = oldState.parent;
                 }
+                debug("krage")
                 // The chain should always originate in a non overlay state
                 console.assert(oldState);
                 oldAction = stateActions[oldState.type];
                 oldActions.push(oldAction.hide(oldState.arg));
+                debug("kalkun");
                 $.when.apply($, oldActions).then(function() {
+                    debug("ugle");
                     action.show(state.arg);
                 });
             } else {
+                debug("kanin")
                 oldAction.hide(oldState.arg).then(function() {
+                    debug("hare");
                     action.show(state.arg);
                 });
             }
         }
     } else {
+        debug("kamel");
         action.update(state.arg);
     }
 }
