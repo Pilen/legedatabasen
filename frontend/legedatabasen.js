@@ -496,7 +496,7 @@ function onPopState(event) {
 }
 
 function showState(state, back) {
-    debug("showState "+state);
+    debug("showState "+JSON.stringify(state));
     console.assert(state);
     if (!state) {
         state = defaultState;
@@ -504,6 +504,7 @@ function showState(state, back) {
     var oldState = currentState;
     currentState = state;
     var action = stateActions[state.type];
+    debug("action is "+action);
     console.assert(action);
     if (!oldState) {
         debug("show new");
@@ -558,25 +559,33 @@ function showState(state, back) {
 function initStateActions() {
     stateActions["category"] = {
         show: function(index) {
+            debug("in st sh");
             scrollToTop(400);
+            debug("they see me scrolling");
             $("#selection-container").slideDown(400);
             var category = categories[index];
             if (category_swiper.realIndex !== category.index) {
+                debug("they see me sliding");
                 category_swiper.slideTo(category.index);
             }
             ignoreCategorySelectorClick = true;
             $('#category-selector input[value="'+index+'"').click();
+            debug("and therefore i search");
             search.clear();
             search.update_filter("category", category.name);
         },
         update: function(index) {
+            debug("in st up");
             scrollToTop(400);
+            debug("in st up scrolling");
             var category = categories[index];
             if (category_swiper.realIndex !== category.index) {
+                debug("in st up sliding");
                 category_swiper.slideTo(category.index);
             }
             ignoreCategorySelectorClick = true;
             $('#category-selector input[value="'+index+'"').click();
+            debug("in st up search");
             search.clear();
             search.update_filter("category", category.name);
         },
