@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 6");
+    debug("iteration 7");
     initSwiper();
 
     initSelector();
@@ -569,9 +569,14 @@ function initStateActions() {
             }
             ignoreCategorySelectorClick = true;
             debug("can I find the thing?");
-            debug(""+$('#category-selector input[value="'+index+'"'));
-            debug($('#category-selector input[value="'+index+'"'));
-            debug($('#category-selector input[value="'+index+'"').length);
+            try {
+                debug('#category-selector input[value="'+index+'"');
+                debug(""+$('#category-selector input[value="'+index+'"'));
+                debug($('#category-selector input[value="'+index+'"'));
+                debug($('#category-selector input[value="'+index+'"').length);
+            } catch (err) {
+                debug("jquery failed with: "+err.message);
+            }
             debug("I will click");
             $('#category-selector input[value="'+index+'"').click();
             debug("and therefore i search");
