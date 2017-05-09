@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("about to init stuff");
+    debug("iteration 0");
     initSwiper();
 
     initSelector();
@@ -95,9 +95,7 @@ function init(data) {
     initFilters();
 
     // Initialize lege
-    debug("about to initLege");
     initLege(data[0]).then(function() {
-        debug("in initLege");
         $('#lege').on("click", "a.element-item", function(event){
             event.preventDefault();
             pushState(showLeg(this.getAttribute("leg")));
