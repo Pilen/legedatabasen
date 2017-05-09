@@ -94,9 +94,22 @@ input[type="text"]
     padding-right: 100px;
     padding-top: 20px;
 }
+#top-image {
+    background-color: rgba(69, 104, 137, 0.9);
+}
 #top-image img {
     width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     /* height: 100px; */
+    z-index: 1;
+}
+#top-image img.active {
+    z-index: 3;
+}
+#top-image img.next {
+    z-index: 2;
 }
 .navigation-filler {
     position: relative;

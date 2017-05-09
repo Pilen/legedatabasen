@@ -141,6 +141,7 @@ function init(data) {
         $(".loading-balloon").hide();
         $("#container").show();
         //category_swiper.init();
+        initTopImageChange();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
         debug("going lazy");
         lazy();
@@ -443,6 +444,22 @@ function initSearch() {
     }
 }
 
+function initTopImageChange() {
+    var first = $("#top-image img:first").addClass("active");
+    var height = first.height();
+    $("#top-image .filler").height(height);
+    function changeTopImage() {
+        var active = $("#top-image img.active");
+        var next = active.next().length > 0 ? active.next() : $("#top-image img:first");
+        next.addClass("next");
+        active.fadeOut(1000*3, function() {
+            active.show().removeClass("active");
+            next.addClass("active").removeClass("next");
+        });
+    }
+    changeTopImage();
+    setInterval(changeTopImage, 1000*6);
+}
 
 /*******************************************************************************
                                       URL
