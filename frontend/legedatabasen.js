@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 3");
+    debug("iteration 4");
     initSwiper();
 
     initSelector();
