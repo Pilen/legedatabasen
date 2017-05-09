@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 5");
+    debug("iteration 6");
     initSwiper();
 
     initSelector();
@@ -568,9 +568,11 @@ function initStateActions() {
                 category_swiper.slideTo(category.index);
             }
             ignoreCategorySelectorClick = true;
-            debug("I will click");
+            debug("can I find the thing?");
+            debug(""+$('#category-selector input[value="'+index+'"'));
             debug($('#category-selector input[value="'+index+'"'));
-            debug($('#category-selector input[value="'+index+'"').length());
+            debug($('#category-selector input[value="'+index+'"').length);
+            debug("I will click");
             $('#category-selector input[value="'+index+'"').click();
             debug("and therefore i search");
             search.clear();
