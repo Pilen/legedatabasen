@@ -570,15 +570,15 @@ function initStateActions() {
             ignoreCategorySelectorClick = true;
             debug("can I find the thing?");
             try {
-                debug('#category-selector input[value="'+index+'"');
-                debug(""+$('#category-selector input[value="'+index+'"'));
-                debug($('#category-selector input[value="'+index+'"'));
-                debug($('#category-selector input[value="'+index+'"').length);
+                debug('#category-selector input[value="'+index+'"]');
+                debug(""+$('#category-selector input[value="'+index+'"]'));
+                debug($('#category-selector input[value="'+index+'"]'));
+                debug($('#category-selector input[value="'+index+'"]').length);
             } catch (err) {
                 debug("jquery failed with: "+err.message);
             }
             debug("I will click");
-            $('#category-selector input[value="'+index+'"').click();
+            $('#category-selector input[value="'+index+'"]').click();
             debug("and therefore i search");
             search.clear();
             search.update_filter("category", category.name);
