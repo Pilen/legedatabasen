@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 4");
+    debug("iteration 5");
     initSwiper();
 
     initSelector();
@@ -569,6 +569,8 @@ function initStateActions() {
             }
             ignoreCategorySelectorClick = true;
             debug("I will click");
+            debug($('#category-selector input[value="'+index+'"'));
+            debug($('#category-selector input[value="'+index+'"').length());
             $('#category-selector input[value="'+index+'"').click();
             debug("and therefore i search");
             search.clear();
