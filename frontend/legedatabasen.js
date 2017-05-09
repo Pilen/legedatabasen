@@ -169,10 +169,11 @@ function initSwiper() {
     // category_swiper.on("touchStart", function(swiper) {
     //     search.abort();
     // });
-    // category_swiper.on("slideChangeStart", function(swiper) {
-    //     console.log("slideChangeStart", swiper);
-    // });
+    category_swiper.on("slideChangeStart", function(swiper) {
+        console.log("slideChangeStart", swiper);
+    });
     category_swiper.on("slideChangeEnd", function(swiper) {
+        console.log("slideChangeEnd", swiper);
         total_time = performance.now();
         var selected = Number(swiper.realIndex);
         $("#profiler").text(categories[selected].name);
