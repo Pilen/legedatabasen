@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 2");
+    debug("iteration 3");
     initSwiper();
 
     initSelector();
@@ -180,7 +180,7 @@ function initSwiper() {
     // });
     category_swiper.on("slideChangeEnd", function(swiper) {
         total_time = performance.now();
-        var selected = swiper.realIndex;
+        var selected = Number(swiper.realIndex);
         $("#profiler").text(categories[selected].name);
         if (selected != category) {
             category = selected;
@@ -564,7 +564,7 @@ function initStateActions() {
             var category = categories[index];
             debug("comparison of " + category_swiper.realIndex + " !== " + category.index+" ==> "+(category_swiper.realIndex !== category.index));
             debug("types "+typeof(category_swiper.realIndex) + ", " + typeof(category.index));
-            if (category_swiper.realIndex !== category.index) {
+            if (Number(category_swiper.realIndex) !== category.index) {
                 debug("they see me sliding");
                 debug("swiper: "+ category_swiper + " " + category_swiper.realIndex + " " + category_swiper.activeIndex);
                 debug("swiper.slideTo" + category_swiper.slideTo);
@@ -583,7 +583,7 @@ function initStateActions() {
             scrollToTop(400);
             debug("in st up scrolling");
             var category = categories[index];
-            if (category_swiper.realIndex !== category.index) {
+            if (Number(category_swiper.realIndex) !== category.index) {
                 debug("in st up sliding");
                 category_swiper.slideTo(category.index);
             }
