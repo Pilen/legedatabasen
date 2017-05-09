@@ -82,7 +82,7 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 0");
+    debug("iteration 1");
     initSwiper();
 
     initSelector();
@@ -562,7 +562,7 @@ function initStateActions() {
             debug("they see me scrolling");
             $("#selection-container").slideDown(400);
             var category = categories[index];
-            debug("comparison of " + category_swiper.realIndex + " !== " + category.index+" ==> "+category_swiper.realIndex !== category.index);
+            debug("comparison of " + category_swiper.realIndex + " !== " + category.index+" ==> "+(category_swiper.realIndex !== category.index));
             if (category_swiper.realIndex !== category.index) {
                 debug("they see me sliding");
                 debug("swiper: "+ category_swiper + " " + category_swiper.realIndex + " " + category_swiper.activeIndex);
