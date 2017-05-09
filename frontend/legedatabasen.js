@@ -87,6 +87,7 @@ function init(data) {
 
     initSelector();
 
+    initTopImageChange();
     initStickyMenubar();
 
     initNavigation();
@@ -141,7 +142,6 @@ function init(data) {
         $(".loading-balloon").hide();
         $("#container").show();
         //category_swiper.init();
-        initTopImageChange();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
         debug("going lazy");
         lazy();
