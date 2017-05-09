@@ -553,7 +553,7 @@ function initStateActions() {
                 category_swiper.slideTo(category.index);
             }
             ignoreCategorySelectorClick = true;
-            $('#category-selector input[value="'+index+'"').click();
+            $('#category-selector input[value="'+index+'"]').click();
             search.clear();
             search.update_filter("category", category.name);
         },
