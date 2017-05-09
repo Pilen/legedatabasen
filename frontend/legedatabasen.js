@@ -82,7 +82,6 @@ function init(data) {
         category_map[category.name.toLocaleLowerCase()] = category;
     });
 
-    debug("iteration 8");
     initSwiper();
 
     initSelector();
@@ -122,7 +121,6 @@ function init(data) {
 
         contactify();
 
-        debug("going to initSearch");
         initSearch();
         initStateActions();
 
@@ -132,16 +130,12 @@ function init(data) {
         lege_urls["mus"].script = playMus;
 
         // mus();
-        debug("default state");
         defaultState = showCategory(category);
-        debug("calling route");
         route();
-        debug("final stuff");
         $(".loading-balloon").hide();
         $("#container").show();
         //category_swiper.init();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
-        debug("going lazy");
         lazy();
         debug("done");
     });
@@ -220,7 +214,6 @@ function initSelector() {
         if (selected != category) {
             category = selected;
             // showCategory(selected, true /* No reset */);
-            debug("replaceState again");
             replaceState(showCategory(selected));
         }
         // return false;
@@ -476,11 +469,8 @@ function pushState(state) {
 }
 
 function replaceState(state) {
-    debug("in replaceState");
     history.replaceState(state, state.type, state.url);
-    debug("going to show");
     showState(state);
-    debug("shown");
 }
 
 function popState() {
@@ -495,7 +485,6 @@ function onPopState(event) {
 }
 
 function showState(state, back) {
-    debug("showState "+JSON.stringify(state));
     console.assert(state);
     if (!state) {
         state = defaultState;
@@ -503,27 +492,20 @@ function showState(state, back) {
     var oldState = currentState;
     currentState = state;
     var action = stateActions[state.type];
-    debug("action is "+action);
     console.assert(action);
     if (!oldState) {
-        debug("show new");
         // No old state to hide
         action.show(state.arg);
     } else if (state.hasOwnProperty("parent")) {
-        debug("show overlay");
         // Overlay, so dont hide
         action.show(state.arg);
     } else if (oldState.type !== state.type) {
-        debug("hund");
         var oldAction = stateActions[oldState.type];
         if (oldState.hasOwnProperty("parent") && back) {
-            debug("kat");
             // Close overlay, dont show anything new.
             oldAction.hide(oldState.arg);
         } else {
-            debug("guldfisk");
             if (oldState.hasOwnProperty("parent")) {
-                debug("hamster");
                 // Must be overlay going forward to nonoverlay, so remove them all.
                 var oldActions = [];
                 while (oldState && oldState.hasOwnProperty("parent")) {
@@ -531,26 +513,20 @@ function showState(state, back) {
                     oldActions.push(oldAction.hide(oldState.arg));
                     oldState = oldState.parent;
                 }
-                debug("krage")
                 // The chain should always originate in a non overlay state
                 console.assert(oldState);
                 oldAction = stateActions[oldState.type];
                 oldActions.push(oldAction.hide(oldState.arg));
-                debug("kalkun");
                 $.when.apply($, oldActions).then(function() {
-                    debug("ugle");
                     action.show(state.arg);
                 });
             } else {
-                debug("kanin")
                 oldAction.hide(oldState.arg).then(function() {
-                    debug("hare");
                     action.show(state.arg);
                 });
             }
         }
     } else {
-        debug("kamel");
         action.update(state.arg);
     }
 }
@@ -558,43 +534,25 @@ function showState(state, back) {
 function initStateActions() {
     stateActions["category"] = {
         show: function(index) {
-            debug("in st sh: " + index);
             scrollToTop(400);
-            debug("they see me scrolling");
             $("#selection-container").slideDown(400);
             var category = categories[index];
             if (Number(category_swiper.realIndex) !== category.index) {
-                debug("they see me sliding");
                 category_swiper.slideTo(category.index);
             }
             ignoreCategorySelectorClick = true;
-            debug("can I find the thing?");
-            try {
-                debug('#category-selector input[value="'+index+'"]');
-                debug(""+$('#category-selector input[value="'+index+'"]'));
-                debug($('#category-selector input[value="'+index+'"]'));
-                debug($('#category-selector input[value="'+index+'"]').length);
-            } catch (err) {
-                debug("jquery failed with: "+err.message);
-            }
-            debug("I will click");
             $('#category-selector input[value="'+index+'"]').click();
-            debug("and therefore i search");
             search.clear();
             search.update_filter("category", category.name);
         },
         update: function(index) {
-            debug("in st up");
             scrollToTop(400);
-            debug("in st up scrolling");
             var category = categories[index];
             if (Number(category_swiper.realIndex) !== category.index) {
-                debug("in st up sliding");
                 category_swiper.slideTo(category.index);
             }
             ignoreCategorySelectorClick = true;
             $('#category-selector input[value="'+index+'"').click();
-            debug("in st up search");
             search.clear();
             search.update_filter("category", category.name);
         },
@@ -689,33 +647,26 @@ function initStateActions() {
 function route() {
     var url = window.location.pathname;
     url = url.replace(/^\/|\/$/g, ""); // Trim off slashes at the start + end
-    debug("got url, now replacing");
     replaceState(defaultState);
-    debug("replacing done");
 
     // Show leg
     if (url.startsWith("leg/")) {
-        debug("going to a leg");
         var leg = lege_urls[url.substring(4)];
         if (leg) {
-            debug("leg exists");
             pushState(showLeg(leg.index));
             return;
         }
     }
     if (url.startsWith("kontakt")) {
-        debug("at contact");
         // This is reached because someone opened the /kontakt link in some other fassion
         contact();
         return;
     }
     if (url === "") {
-        debug("plain url, so default");
         // Just show the default state
         return;
     }
 
-    debug("thats a 404");
     pushState(show404(url));
     return;
 }
