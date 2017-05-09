@@ -564,10 +564,10 @@ function initStateActions() {
             debug("they see me scrolling");
             $("#selection-container").slideDown(400);
             var category = categories[index];
-            if (category_swiper.realIndex !== category.index) {
+            if (true || category_swiper.realIndex !== category.index) {
                 debug("they see me sliding");
-                debug("swiper: "+ category_swiper + " <-> " + JSON.stringify(category_swiper));
-                debug("swiper.slideTo" + category_swiper.slideTo + " <-> " + JSON.stringify(category_swiper.slideTo));
+                debug("swiper: "+ category_swiper + " " + category_swiper.realIndex + " " + category_swiper.activeIndex);
+                debug("swiper.slideTo" + category_swiper.slideTo);
                 debug("category: "+ category + " <-> " + JSON.stringify(category));
                 category_swiper.slideTo(category.index);
                 debug("why wont you slide?");
