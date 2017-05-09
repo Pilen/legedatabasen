@@ -220,6 +220,7 @@ function initSelector() {
         if (selected != category) {
             category = selected;
             // showCategory(selected, true /* No reset */);
+            debug("replaceState again");
             replaceState(showCategory(selected));
         }
         // return false;
@@ -562,17 +563,12 @@ function initStateActions() {
             debug("they see me scrolling");
             $("#selection-container").slideDown(400);
             var category = categories[index];
-            debug("comparison of " + category_swiper.realIndex + " !== " + category.index+" ==> "+(category_swiper.realIndex !== category.index));
-            debug("types "+typeof(category_swiper.realIndex) + ", " + typeof(category.index));
             if (Number(category_swiper.realIndex) !== category.index) {
                 debug("they see me sliding");
-                debug("swiper: "+ category_swiper + " " + category_swiper.realIndex + " " + category_swiper.activeIndex);
-                debug("swiper.slideTo" + category_swiper.slideTo);
-                debug("category: "+ category + " <-> " + JSON.stringify(category));
                 category_swiper.slideTo(category.index);
-                debug("why wont you slide?");
             }
             ignoreCategorySelectorClick = true;
+            debug("I will click");
             $('#category-selector input[value="'+index+'"').click();
             debug("and therefore i search");
             search.clear();
