@@ -64,7 +64,7 @@ main();
 function init(data) {
     debug.tag = $("#debug");
     debug("init");
-    magic(location.search.substring(1));
+    magic(decodeURI(location.search.substring(1)));
 
     // // Setup youtube
     // var tag = document.createElement("script");
