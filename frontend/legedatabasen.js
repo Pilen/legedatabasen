@@ -559,14 +559,18 @@ function showState(state, back) {
 function initStateActions() {
     stateActions["category"] = {
         show: function(index) {
-            debug("in st sh");
+            debug("in st sh: " + index);
             scrollToTop(400);
             debug("they see me scrolling");
             $("#selection-container").slideDown(400);
             var category = categories[index];
             if (category_swiper.realIndex !== category.index) {
                 debug("they see me sliding");
+                debug("swiper: "+ category_swiper + " <-> " + JSON.stringify(category_swiper));
+                debug("swiper.slideTo" + category_swiper.slideTo + " <-> " + JSON.stringify(category_swiper.slideTo));
+                debug("category: "+ category + " <-> " + JSON.stringify(category));
                 category_swiper.slideTo(category.index);
+                debug("why wont you slide?");
             }
             ignoreCategorySelectorClick = true;
             $('#category-selector input[value="'+index+'"').click();
