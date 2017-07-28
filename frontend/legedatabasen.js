@@ -442,15 +442,14 @@ function initTopImageChange() {
     var height = first.height();
     $("#top-image .filler").height(height);
     function changeTopImage() {
+        var previous = $("#top-image img.previous").removeClass("previous");
         var active = $("#top-image img.active");
         var next = active.next().length > 0 ? active.next() : $("#top-image img:first");
-        next.addClass("next");
-        active.fadeOut(1000*3, function() {
-            active.show().removeClass("active");
-            next.addClass("active").removeClass("next");
-        });
+        active.addClass("previous");
+        active.removeClass("active");
+        next.addClass("active");
     }
-    changeTopImage();
+    // changeTopImage();
     setInterval(changeTopImage, 1000*6);
 }
 

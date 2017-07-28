@@ -103,13 +103,17 @@ input[type="text"]
     top: 0;
     left: 0;
     /* height: 100px; */
+    transition: opacity 3s ease-in-out;
+    opacity: 0;
     z-index: 1;
 }
 #top-image img.active {
     z-index: 3;
+    opacity: 1;
 }
-#top-image img.next {
+#top-image img.previous {
     z-index: 2;
+    opacity: 1;
 }
 .navigation-filler {
     position: relative;
