@@ -105,3 +105,14 @@ Placed in index.html in the header.
     display: inline-block;
 }
 #+END_SRC
+* Snow
+  Makes it snow on the entire page.
+  In index.html in the head section under "Just for fun"
+#+BEGIN_SRC html
+        <link rel="stylesheet" href="/css/snow.css" type="text/css">
+        <script src="/snow.js"></script>
+#+END_SRC
+  As the first thing in the body
+#+BEGIN_SRC html
+        <div id="snow"></div>
+#+END_SRC
