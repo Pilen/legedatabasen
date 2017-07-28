@@ -378,11 +378,11 @@ input[type="text"]
     padding: 0;
 }
 
-.modal-body .leg-description {
+.modal-body .leg-content {
     padding: 15px;
 }
 
-.modal-body .leg-description h1 {
+.modal-body .leg-content h1 {
     color: black;
 }
 
@@ -737,7 +737,7 @@ div:focus {
         padding:5px 15px;
     }
 }
-.leg-description {
+.leg-content {
     font-family: Roboto;
     font-size: 1em;
     color:black;

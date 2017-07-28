@@ -679,29 +679,18 @@ function route() {
 
 function displayLeg(leg) {
     console.log("displayLeg");
-    /*
-      $("#container").hide();
-      $("#filter_knap").hide();
-      $("#soeg_knap").hide();
-      $("#swipe_knap").hide();
-    */
 
     var description = marked(leg.description.replace(/^#([^\s])/mg, "# $1"));
-    d = description;
     var preparation = marked(leg.preparation.replace(/^#([^\s])/mg, "# $1"));
     var note = marked(leg.note.replace(/^#([^\s])/mg, "# $1"));
-    // $("#leg").show();
-    // $("#leg-navn").text(leg.name);
-    // $("#leg-teaser").text(leg.teaser);
-    // $("#leg-beskrivelse").html(description);
-    //$(".navbar .leg_back").show();
+    var image = "";
+    var video = "";
 
     if (leg.images.length > 0) {
-        var image = '/images/entries/' + leg.images[0]['detail'];
+        image = '/images/entries/' + leg.images[0]['detail'];
     } else {
-        var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
+        image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
     }
-    var video = '';
     if (leg.videos.length > 0) {
         // video = '<iframe width="100%" height="100%" src="//www.youtube.com/embed/' + leg.videos[0] + '"></iframe';
         // video = '<iframe width="100%" height="100%" src="//www.youtube.com/embed/' + leg.videos[0] + '"></iframe';
@@ -710,10 +699,8 @@ function displayLeg(leg) {
         // video = '<iframe src="//www.youtube.com/embed/' + leg.videos[0] + '"></iframe';
         video = '<div id="ytplayer-wrapper"><div id="ytplayer"></div></div>';
         // video = '<div class="ytplayer-wrapper"><div id="ytplayer"></div></div>';
-    } else {
-
-
     }
+
     $("#modal-leg .modal-body .leg-header").html(
         '<figure id="leg-presentation-image">' +
             (video ? video : '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />') +
@@ -733,14 +720,14 @@ function displayLeg(leg) {
             '</div>'+
             '</figcaption>' +
             '</figure>');
-    $("#modal-leg .modal-body .leg-teaser").html('<strong>' + leg.teaser + '</strong>');
-    $("#modal-leg .modal-body .leg-description").html('<h3>Beskrivelse:</h3>' + description);
-    if (preparation) {
-        $("#modal-leg .modal-body .leg-description").append('<h3>Forberedelse</h3>' + preparation);
-    }
-    if (note) {
-        $("#modal-leg .modal-body .leg-description").append('<h3>Noter:</h3>' + note);
-    }
+    $("#modal-leg .modal-body .leg-content").html(
+        (('<div class="leg-teaser" style="display:none"><strong>' + leg.teaser + '</strong></div>') +
+         ('<div class="leg-description">' +
+          '<h3>Beskrivelse:</h3>'+
+          description +
+          (preparation ? '<h3>Forberedelse:</h3>'+ preparation : '') +
+          (note ? '<h3>Noter:</h3>'+ note : '') +
+          '</div>')));
     if (leg.game_categories.length > 0) {
         var node = $("#modal-leg .modal-body .leg-description");
         node.append('<h3>Legekategorier:</h3>');
