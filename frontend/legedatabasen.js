@@ -66,6 +66,8 @@ function init(data) {
     debug("init");
     magic(decodeURI(location.search.substring(1)));
 
+    marked.setOptions({breaks: true});
+
     // // Setup youtube
     // var tag = document.createElement("script");
     // tag.src = "//www.youtube.com/iframe_api";
