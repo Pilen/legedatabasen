@@ -440,9 +440,9 @@ function initSearch() {
 }
 
 function initTopImageChange() {
-    var first = $("#top-image img:first").addClass("active");
-    var height = first.height();
-    $("#top-image .filler").height(height);
+    // There is a problem that if the element is not shown at the start,
+    // it has height: 0.
+    // To avoid that we set the height manually in the html
     function changeTopImage() {
         var previous = $("#top-image img.previous").removeClass("previous");
         var active = $("#top-image img.active");
