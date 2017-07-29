@@ -314,6 +314,18 @@ function initLege(data) {
     return deferred.promise();
 }
 
+function addWindowResizeHook(newFunction) {
+    // Will also trigger the hook immediately.
+    var oldFunction = window.onresize;
+    window.onresize = function() {
+        if (typeof oldFunction == "function") {
+            oldFunction();
+        }
+        newFunction();
+    };
+    newFunction();
+}
+
 function initStickyMenubar() {
     function stickyMenubar() {
         var position = $(this).scrollTop();
@@ -323,10 +335,10 @@ function initStickyMenubar() {
             $(".navigation").css("position", "static");
         }
     }
-    $(window).resize(function() {
+    addWindowResizeHook(function() {
         menubar_offset = $(".navigation-filler").offset().top;
         stickyMenubar();
-    }).resize();
+    });
     $(window).scroll(function() {
         stickyMenubar();
     });
@@ -441,8 +453,16 @@ function initSearch() {
 
 function initTopImageChange() {
     // There is a problem that if the element is not shown at the start,
-    // it has height: 0.
-    // To avoid that we set the height manually in the html
+    // it has height: 0. To avoid that we reset the height whenever the
+    // window is resized.
+
+    function resizeHeight() {
+        var first = $("#top-image img:first").addClass("active");
+        var height = first.height();
+        $("#top-image .filler").height(height);
+    };
+    addWindowResizeHook(resizeHeight);
+
     function changeTopImage() {
         var previous = $("#top-image img.previous").removeClass("previous");
         var active = $("#top-image img.active");
