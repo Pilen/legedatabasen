@@ -326,6 +326,30 @@ function addWindowResizeHook(newFunction) {
     newFunction();
 }
 
+function initTopImageChange() {
+    // There is a problem that if the element is not shown at the start,
+    // it has height: 0. To avoid that we reset the height whenever the
+    // window is resized.
+
+    function resizeHeight() {
+        var first = $("#top-image img:first").addClass("active");
+        var height = first.height();
+        $("#top-image .filler").height(height);
+    };
+    addWindowResizeHook(resizeHeight);
+
+    function changeTopImage() {
+        var previous = $("#top-image img.previous").removeClass("previous");
+        var active = $("#top-image img.active");
+        var next = active.next().length > 0 ? active.next() : $("#top-image img:first");
+        active.addClass("previous");
+        active.removeClass("active");
+        next.addClass("active");
+    }
+    // changeTopImage();
+    setInterval(changeTopImage, 1000*6);
+}
+
 function initStickyMenubar() {
     function stickyMenubar() {
         var position = $(this).scrollTop();
@@ -449,30 +473,6 @@ function initSearch() {
             search.query(search_text);
         }
     }
-}
-
-function initTopImageChange() {
-    // There is a problem that if the element is not shown at the start,
-    // it has height: 0. To avoid that we reset the height whenever the
-    // window is resized.
-
-    function resizeHeight() {
-        var first = $("#top-image img:first").addClass("active");
-        var height = first.height();
-        $("#top-image .filler").height(height);
-    };
-    addWindowResizeHook(resizeHeight);
-
-    function changeTopImage() {
-        var previous = $("#top-image img.previous").removeClass("previous");
-        var active = $("#top-image img.active");
-        var next = active.next().length > 0 ? active.next() : $("#top-image img:first");
-        active.addClass("previous");
-        active.removeClass("active");
-        next.addClass("active");
-    }
-    // changeTopImage();
-    setInterval(changeTopImage, 1000*6);
 }
 
 /*******************************************************************************
