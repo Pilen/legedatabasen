@@ -80,6 +80,12 @@ input[type="text"]
 .anchor {
     position: relative;
 }
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
 .scrollbar-keeper {
     position: absolute;
     height: calc(100% + 1px);
@@ -797,6 +803,31 @@ a[href^='/kontakt']:after {
     color: white;
     cursor:pointer;
 }
+.category-about {
+    background-repeat: no-repeat;
+    /* background-position-x: center; */
+    background-position: center;
+    background-size: contain;
+    /* background-size: 158px 120px; */
+    /* height:120px; */
+    /* min-width:200px; */
+    text-align:center;
+    /* line-height: 200px; */
+    /* line-height:145px; */
+    /* font-size:16pt; */
+    /* font-weight: 300; */
+    /* cursor:pointer; */
+    font-family: Lilita, sans-serif;
+    font-weight:300;
+    font-size:20pt;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    color: white;
+    cursor:pointer;
+
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
 
 .dropdown-btns {
     color:rgba(255,255,255,0.7);
@@ -1382,6 +1413,29 @@ img.leg-box-image {
 
 
  */
+
+
+@media (max-width: 1000px) {
+    .only-for-big-screens {
+        display: none !important;
+    }
+}
+
+.about-balloon {
+    background-image: url("/images/balloon_yellow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 1000px;
+    right: 10px;
+}
+.about-balloon:hover {
+    background-color: rgba(121, 134, 139, 0.5);
+    border-radius: 5px;
+}
 
 #progressbar {
     background-color: rgb(225, 83, 16);

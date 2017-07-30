@@ -3,17 +3,17 @@ var $=$;
 // `category.index` is set to the coresponding index in the list
 // `category.selector` should be unique
 var categories = [
-    {name: "Sanselege",     selector:  5},
-    {name: "Boldlege",      selector:  3},
-    {name: "Hjernelege",    selector:  7},
-    {name: "Tonselege",     selector:  0},
-    {name: "Gemmelege",     selector:  1},
-    {name: "Alle lege",     selector:  2},
-    {name: "Fangelege",     selector:  4},
-    {name: "Bordlege",      selector:  6},
-    {name: "Rundkredslege", selector: 10},
-    {name: "Sanglege",      selector:  8},
-    {name: "Banelege",      selector:  9}
+    {name: "Sanselege",     selector:  5, about: 0, description: "Lege hvor sanserne er i spil.", example: "blindebuk-i-kreds"},
+    {name: "Boldlege",      selector:  3, about: 8, description: "Lege der involverer en bold.", example: "stikbold"},
+    {name: "Hjernelege",    selector:  7, about: 3, description: "Lege der handler om det der foregår i hovedet, dette inkluderer også navnelege.", example: "grupper-af..."},
+    {name: "Tonselege",     selector:  0, about: 6, description: "Lege hvor man kommer fysisk tæt på hinanden.", example: "muffeldyr"},
+    {name: "Gemmelege",     selector:  1, about: 1, description: "Lege der handler om at gemme sig.", example: "daaseskjul"},
+    {name: "Alle lege",     selector:  2, about: 10, description: "Her kan du finde samtlige lege i legedatabasen", example: ""},
+    {name: "Fangelege",     selector:  4, about: 4, description: "Lege hvor det handler om at fange andre.", example: "tagfat"},
+    {name: "Bordlege",      selector:  6, about: 2, description: "Lege der foregår ved eller omkring et bord.", example: "hvad-er-det"},
+    {name: "Rundkredslege", selector: 10, about: 9, description: "Lege der skal foregå i en rundkreds.", example: "bankeboef"},
+    {name: "Sanglege",      selector:  8, about: 5, description: "Lege der involverer sang, musik og råbende ritualer.", example: "ol-kildetunnel"},
+    {name: "Banelege",      selector:  9, about: 7, description: "Lege der kræver en specifik bane, stafetter og linjelege.", example: "den-flittige-bi"}
 ];
 var category_map = {};
 
@@ -97,11 +97,7 @@ function init(data) {
 
     // Initialize lege
     initLege(data[0]).then(function() {
-        $('#lege').on("click", "a.element-item", function(event){
-            event.preventDefault();
-            pushState(showLeg(this.getAttribute("leg")));
-            return false;
-        });
+        $('#lege').on("click", "a.element-item", openLeg);
         $(".leg_back").on("click", function(e) {
             $("#modal-leg").modal("hide");
         });
@@ -136,6 +132,11 @@ function init(data) {
         route();
         $(".loading-balloon").hide();
         $("#container").show();
+        $(".about-balloon").click(function() {
+            event.preventDefault();
+            pushState(showAbout());
+            return false;
+        }).show();
         //category_swiper.init();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
         lazy();
@@ -484,6 +485,7 @@ function showSearch() {return {type: "search", url: "/", arg: null};}
 function showFilters() {return {type: "filters", url: "/", arg: null};}
 function showLeg(leg) {return {type: "leg", url: "/leg/"+lege[leg].url, arg: leg, parent: currentState};}
 function show404(url) {return {type: "404", url: "/404/"+url, arg: url};}
+function showAbout() {return {type: "about", url: "/om-legedatabasen", arg: null,  parent: currentState};}
 
 function pushState(state) {
     history.pushState(state, state.type, state.url);
@@ -663,6 +665,18 @@ function initStateActions() {
             return stateActions["leg"].hide();
         }
     };
+
+    stateActions["about"] = {
+        show: display_about,
+        update: display_about,
+        hide: function() {
+            modalClosedFromBack = true;
+            $(".modal").modal("hide");
+            var deferred = $.Deferred();
+            deferred.resolve();
+            return deferred.promise();
+        }
+    };
 }
 
 
@@ -693,6 +707,11 @@ function route() {
     return;
 }
 
+function openLeg(event){
+    event.preventDefault();
+    pushState(showLeg(this.getAttribute("leg")));
+    return false;
+}
 /*******************************************************************************
 
 *******************************************************************************/
@@ -809,6 +828,108 @@ function displayLeg(leg) {
     }
     $("#modal-leg").modal("show");
 
+    ga('send', 'pageview', location.pathname);
+}
+
+function display_about() {
+    var description = marked(
+        ('# Velkommen til Legedatabasen.dk' +
+         '\n' +
+         'Legedatabasen er en inspirationsportal til leg. Men inden du begynder at spørge efter forskellige ideer til legene fingermaling, er det nok godt at vi lige definere lidt hvilken type leg der findes her på siden.\n' +
+         'Den leg der findes på legedatabasen er det vi kalder regelstyret, fællesskabende, gruppelege.\n' +
+         'Børn, unge og voksne, står alle indimellem i situationer hvor de mangler en aktivitet, en pause, en icebreaker eller bare noget til at få smilet frem imellem sig, og sådan noget har vi masser af her på legedatabasen.\n' +
+         '\n' +
+         'I topbaren her på siden kan du lave en specifik søgning ved at trykke på søgeknappen.\n' +
+         'Hvis du gerne vil filtrere i legene kan dette gøres ved at trykke på filterknappen.\n' +
+         '\n' +
+         'Under topbaren kan du vælge hvilken legekategori du vil lede i, dette bruges hvis du fx. gerne vil lede efter gemmelege, eller boldlege.\n' +
+         '\n' +
+         'Når du trykker på en leg popper legen op med sådan en visning som du er kommet frem til her.\n' +
+         'I toppen vil du se et billede eller en video af legen.\n' +
+         'Under billedet vil legens navn og legens filtre blive vist. Her filtreres legen efter antal deltagere, hvor lang tid legen mindst tager, hvilken alder legen mindst passer til og hvilket størrelse areal legen passer bedst på.\n' +
+         '\n' +
+         '### Beskrivelse:\n' +
+         'Her beskrives legen på en tydelig overskuelig måde.\n' +
+         '### Noter:\n' +
+         'Her gives der noter til legen hvis der fx. findes nogle mulige udvidelser til legen, eller man skal være særligt opmærksom på noget.\n' +
+         ''));
+    var end = marked(
+        ('## Mere om legedatabasen\n' +
+         'Legedatabasen er udviklet af frivillige og det er i kraft af mange menneskers arbejde at legedatabasen kan være en platform hvor man kan finde inspiration til leg. Vi leder altid efter at gøre legedatabasen endnu bedre og den bedste måde at gøre dette på er med hjælp fra hinanden.\n' +
+         'Hvis du har nogle tanker, kommentarer eller forslag til forbedringer så er du meget velkommen til at skrive dem til vores [email adresse](/kontakt)\n' +
+         '\n' +
+         'Hvis du har forslag til nye lege du syntes mangler i legedatabasen så udfyld formularen på dette link:\n' +
+         '[Tilføj leg til legedatabasen](https://goo.gl/forms/RFzad0RpxDEAYI6c2)\n' +
+         '\n' +
+         'Vi glæder os til sammen at gøre legedatabasen endnu bedre.\n' +
+         'mvh. FDFs Legeudvalg\n' +
+         ''));
+
+    var categories_copy = categories.slice(0);
+    categories_copy.sort(function(a, b) {return a.about - b.about;});
+    var category_overview = (
+        ('<div style="height: 100%; overflow:auto;">' +
+         categories_copy.map(function(c) {
+             var color = "rgb("+randi(0, 256)+", "+randi(0, 256)+", "+randi(0, 256)+")";
+             var color2 = "rgb("+randi(0, 256)+", "+randi(0, 256)+", "+randi(0, 256)+")";
+             var color = "";
+             var color2 = "";
+
+             var example = "";
+             if (c.example) {
+                 example = ('<br/>Godt eksempel: &ldquo;' +
+                            '<a href="/leg/'+c.example+'" leg="'+lege_urls[c.example].index+'">' +
+                            lege_urls[c.example].name +
+                            '</a>' +
+                            '&rdquo;');
+             }
+             return (
+                 ('<div style="position: relative; float: left; width: 50%; height: 100px; background-color: '+color+'">' +
+                  ('<div class="category-about" category="'+c.index+'" style= "float:left; width: 40%; height: 100%; background-color:'+color2+'; background-image: url(/images/categories/'+c.image+');">' +
+                   '<div style="position: relative; top: 60%; transform:translateY(-50%); font-size: 16pt">' +
+                   c.name +
+                   '</div>' +
+                   '</div>') +
+                  ('<div class="anchor" style="float:right; width: 60%; height: 100%">' +
+                   '<div class="vertical-center">'+
+                   '<p>'+c.description + example+'</p>'+
+                   '</div>' +
+                   '</div>') +
+                  '</div>'));
+         }).join("\n") +
+         '</div>'));
+
+    var image = "/images/om-legedatabasen.jpg";
+    $("#modal-leg .modal-body .leg-header").html(
+        '<figure id="leg-presentation-image">' +
+            '<img src="' + image + '" class="img-responsive" id="leg-presentation-image"/>' +
+            '<figcaption>' +
+            '<h3>' + '-- Legens navn --' + '</h3>' +
+            '<div class="infobar">'+
+            '<table style="width:100%;">'+
+            '<tbody>'+
+            '<tr>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + 'Deltagere' + '</td>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + 'Tid' + ' min</td>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + 'Alder' + '+</td>'+
+            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + 'Areal' + '</td>'+
+            '</tr>'+
+            '</tbody>'+
+            '</table>'+
+            '</div>'+
+            '</figcaption>' +
+            '</figure>');
+    $("#modal-leg .modal-body .leg-content").html('<div>' + description + '</div>' +
+                                                  '<div>' + category_overview + '</div>' +
+                                                  '<div>' + end + '</div>');
+    $("#modal-leg a[leg]").click(openLeg);
+    $("#modal-leg .category-about[category]").click(function() {
+        pushState(showCategory(this.getAttribute("category")));
+    });
+
+    $("#modal-leg").off("shown.bs.modal");
+    $("#modal-leg").modal("show");
+    contactify();
     ga('send', 'pageview', location.pathname);
 }
 
