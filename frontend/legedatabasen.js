@@ -699,7 +699,7 @@ function route() {
         contact();
         return;
     }
-    if (url.startsWith("om-legedatabasen") {
+    if (url.startsWith("om-legedatabasen")) {
         pushState(showAbout());
         return;
     }
