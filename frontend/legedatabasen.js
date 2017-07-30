@@ -140,6 +140,7 @@ function init(data) {
         //category_swiper.init();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
         lazy();
+        $(window).resize();
         debug("done");
     });
 }
