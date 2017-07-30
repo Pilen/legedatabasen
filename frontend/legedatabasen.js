@@ -699,6 +699,10 @@ function route() {
         contact();
         return;
     }
+    if (url.startsWith("om-legedatabasen") {
+        pushState(showAbout());
+        return;
+    }
     if (url === "") {
         // Just show the default state
         return;
