@@ -195,14 +195,15 @@ function initSwiper() {
     // The slideChangeEnd is not always send.
     // See https://github.com/Pilen/legedatabasen/issues/124
     // This links to an issue in the Swiper repository.
-    $(".swiper-pagination-bullet").map(function(index, element) {
-        // Beaware that the arguments for the callback to .map is reversed.
-        // So index is first - http://api.jquery.com/map/
-        $(element).attr("category", index).css("cursor", "pointer");
-    });
-    $(".swiper-container").on("click", ".swiper-pagination-bullet", function(event) {
-        console.log("Custom click handler");
-        category_swiper.slideTo(this.getAttribute("category"));
+    category_swiper.on("onInit", function(e) {
+        $(".swiper-pagination-bullet").map(function(index, element) {
+            // Beaware that the arguments for the callback to .map is reversed.
+            // So index is first - http://api.jquery.com/map/
+            $(element).attr("category", index).css("cursor", "pointer");
+        });
+        $(".swiper-container").on("click", ".swiper-pagination-bullet", function(event) {
+            category_swiper.slideTo(this.getAttribute("category"));
+        });
     });
     // END OF WORKAROUND
 
