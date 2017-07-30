@@ -162,7 +162,8 @@ function initSwiper() {
         // prevButton: ".swiper-button-prev",
         // nextButton: ".swiper-button-next",
         pagination: ".swiper-pagination",
-        paginationClickable: true,
+        // paginationClickable: true, //Sadly does not work correctly! https://github.com/Pilen/legedatabasen/issues/124
+        paginationClickable: false,
         grabCursor: true,
         keyboardControl: true,
         initialSlide: category
@@ -187,6 +188,25 @@ function initSwiper() {
             replaceState(showCategory(selected));
         }
     });
+
+    // WORKAROUND
+    // This is a workaround for swipers pagination not working correctly when
+    // paginationClickable is set to true.
+    // The slideChangeEnd is not always send.
+    // See https://github.com/Pilen/legedatabasen/issues/124
+    // This links to an issue in the Swiper repository.
+    $(".swiper-pagination-bullet").map(function(index, element) {
+        // Beaware that the arguments for the callback to .map is reversed.
+        // So index is first - http://api.jquery.com/map/
+        $(element).attr("category", index).css("cursor", "pointer");
+    });
+    $(".swiper-container").on("click", ".swiper-pagination-bullet", function(event) {
+        console.log("Custom click handler");
+        category_swiper.slideTo(this.getAttribute("category"));
+    });
+    // END OF WORKAROUND
+
+    $($(".swiper-pagination-bullet")[4]).click();
 }
 
 function initSelector() {
