@@ -1,0 +1,32 @@
+
+                     #                     |  about
+                     # swiper          |        selector
+
+                                     small | big
+      ###########################################################
+                     #             600 800 10001200    1600
+                     #             |   |   |   |       |
+      ###########################################################
+             #header #         none            | header
+     submenu  margin #    5px      | 5 a 1 a   |              auto top20
+     submenu padding # 10 0 5 0    | 10 0 5 0  |
+     submenu   width #             | 80%       | 50%
+      filter   width #    100%     |   100%    |              70%
+       filter-header #         none            | filter-header
+lege-wrapper padding #   0         | 0         |
+lege-wrapper pad lrt #                     | 100 100 20       which is default
+element padding      #    5px      |  5px      |
+                                           |  15
+headerbar            # bot26 he26 trans0.4 |                  default bot40 he40 trans08
+infobar height       #      26             |                  default is 40
+infobar icon fontsize#     14pt            |                  style is set to 20
+teaserbar display    #  none       |  none     |
+element navn fontsize#                     | 16| 16    | 16   default 14
+element navn margtop #                     | 4 |  4    | 4    default 0
+modal-lg width       #                     |80 | 60    | 40
+
+
+
+element height and width is seperate
+
+onsdag 10.15
