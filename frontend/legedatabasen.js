@@ -91,13 +91,13 @@ function init(data) {
     initTopImageChange();
     initStickyMenubar();
 
-    initNavigation();
+    initMenubar();
 
     initFilters();
 
     // Initialize lege
     initLege(data[0]).then(function() {
-        $('#lege').on("click", "a.element-item", openLeg);
+        $('#lege').on("click", "a.element", openLeg);
         $(".leg_back").on("click", function(e) {
             $("#modal-leg").modal("hide");
         });
@@ -147,7 +147,7 @@ function init(data) {
 
 function initSwiper() {
     var html = categories.map(function(category) {
-        return ('<div class="swiper-slide category outlined" id="'+category.index+'" ' +
+        return ('<div class="swiper-slide category" id="'+category.index+'" ' +
                 'style="background-image: url(/images/categories/'+category.image+');">' +
                 category.name +
                 '</div>');
@@ -219,7 +219,7 @@ function initSelector() {
     function selector(category) {
         return ('<input type="radio" name="category-selector" id="category-selector-' + category.index + '" value="' + category.index + '"/>' +
                 '<label for="category-selector-' + category.index + '">' +
-                '<div class="category outlined" id="selector-'+category.index+'" ' +
+                '<div class="category" id="selector-'+category.index+'" ' +
                 'style="background-image: url(/images/categories/'+category.image+');">' +
                 category.name +
                 '</div>' +
@@ -301,16 +301,16 @@ function initLege(data) {
                 in_categories = '<img class="modal-category" src="/images/categories/'+leg.game_categories[0].image+'" alt="'+leg.game_categories[0].name+'" />';
             }
             leg.node = $(
-                ('<a href="leg/'+leg.url+'" class="element-item '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
+                ('<a href="leg/'+leg.url+'" class="element '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
                  '<div class="leg '+ classes +'">'+
                  '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
-                 // (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf407;</p>' : '')+
-                 (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf2a7;</p>' : '')+
-                 // (leg.videos.length > 0 ? '<p class="outlined fdficon video-icon">&#xf409;</p>' : '')+
-                 '<div class="headerbar">'+
-                 '<p class="navn">'+leg.name+'</p>'+
+                 // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf407;</p>' : '')+
+                 (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf2a7;</p>' : '')+
+                 // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf409;</p>' : '')+
+                 '<div class="namebar">'+
+                 '<p class="name">'+leg.name+'</p>'+
                  '</div>'+
-                 '<div class="infobar">'+
+                 '<div class="iconbar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+
                  '<tr>'+
@@ -322,7 +322,7 @@ function initLege(data) {
                  '</tbody>'+
                  '</table>'+
                  '</div>'+
-                 '<div class="teaserbar">'+
+                 '<div class="teaseroverlay">'+
                  '<div class="categories">' + in_categories + '</div>' +
                  '<p>' + (leg.teaser || '') + '</p>' +
                  '</div>'+
@@ -377,13 +377,13 @@ function initStickyMenubar() {
     function stickyMenubar() {
         var position = $(this).scrollTop();
         if (position >= menubar_offset) {
-            $(".navigation").css("position", "fixed");
+            $(".menubar").css("position", "fixed");
         } else {
-            $(".navigation").css("position", "static");
+            $(".menubar").css("position", "static");
         }
     }
     addWindowResizeHook(function() {
-        menubar_offset = $(".navigation-filler").offset().top;
+        menubar_offset = $(".menubar-filler").offset().top;
         stickyMenubar();
     });
     $(window).scroll(function() {
@@ -391,11 +391,11 @@ function initStickyMenubar() {
     });
 }
 
-function initNavigation() {
+function initMenubar() {
     // $("#swipe_knap").click(function() {
     //     replaceState(showCategory(category));
     // });
-    $(".menu-icon").click(function() {
+    $(".submenu-icon").click(function() {
         if (currentState.type === "filters") {
             replaceState(showCategory(category));
         } else {
@@ -643,7 +643,7 @@ function initStateActions() {
     stateActions["filters"] = {
         show: function() {
             scrollToTop(400);
-            $(".menu-icon").addClass("open");
+            $(".submenu-icon").addClass("open");
             $(".filter input[type=radio]").prop("checked", false);
             $(".filter").data("current", null);
             $("#submenu").slideDown(400);
@@ -653,7 +653,7 @@ function initStateActions() {
         },
         hide: function() {
             return $.when(//scrollToTop(400),
-                $(".menu-icon").removeClass("open"),
+                $(".submenu-icon").removeClass("open"),
                           $("#submenu").slideUp(400).promise());
         }
     };
@@ -771,7 +771,7 @@ function displayLeg(leg) {
             (video ? video : '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />') +
             '<figcaption>' +
             '<h3>' + leg.name + '</h3>' +
-            '<div class="infobar">'+
+            '<div class="iconbar">'+
             '<table style="width:100%;">'+
             '<tbody>'+
             '<tr>'+
@@ -931,7 +931,7 @@ function display_about() {
             '<img src="' + image + '" class="img-responsive" id="leg-presentation-image"/>' +
             '<figcaption>' +
             '<h3>' + '-- Legens navn --' + '</h3>' +
-            '<div class="infobar">'+
+            '<div class="iconbar">'+
             '<table style="width:100%;">'+
             '<tbody>'+
             '<tr>'+

@@ -24,40 +24,21 @@
 /*                                    TODO                                    */
 /******************************************************************************/
 
-/* rename navigation -> menubar */
-/* rename menu-icon -> submenu-icon */
-
-/* rename element-item -> element */
-/* rename element-item headerbar -> namebar */
-/* rename element-item teaserbar -> teaseroverlay */
-/* rename element-item infobar -> iconbar */
-/* rename element-item navn -> name */
-
 /* should we both have element-item and leg? */
 /* merge selectors! */
 /* new selector for leg-box-image */
 
-/* remove is-varying-sizes */
 /* can lege-wrapper and lege be merged? */
 
-/* remove outlined */
-
-/* remove myform-control in index.html */
-/* Remove all the entries stuff in submenu */
-
-/* Why is modals infobar transparent? */
+/* Why is modals iconbar transparent? */
+/* .name margin-top look into */
 
 /* remove styling from javascript */
 
-/* remove important in .element-item .leg .infobar .fdficon  */
-/* .navn margin-top look into */
-
 /* turn .only-for-big-screens into a .hide-from-start that will be removed on load */
 
-/* Rename modal .infobar */
-/* the modal infobar should be a flexbox */
-
-/* h1 is never actually used anywere */
+/* Rename modal .iconbar */
+/* the modal iconbar should be a flexbox */
 
 /******************************************************************************/
 /*                                    Font                                    */
@@ -86,9 +67,6 @@
 /******************************************************************************/
 body {
     font-family: Roboto, sans-serif;
-}
-h1 {
-    color: white;
 }
 input[type="text"] {
     font-family: RobotoItalic;
@@ -223,7 +201,7 @@ a[href^='/kontakt']:after {
 /*                                  Menubar                                   */
 /******************************************************************************/
 /* TODO can this be simplified?  */
-.navigation-filler {
+.menubar-filler {
     position: relative;
     height: 50px;
     top: 0px;
@@ -232,7 +210,7 @@ a[href^='/kontakt']:after {
     padding: 0px;
     /* background-color: rgb(255, 0, 0); */
 }
-.navigation {
+.menubar {
     /* position: fixed; */
     position: absolute;
     height: 50px;
@@ -243,21 +221,21 @@ a[href^='/kontakt']:after {
     background-color: rgba(69, 104, 137, 0.9);
     z-index: 10000000000000000;
 }
-/* TODO: .navigation .left */
-.navigation .left {
+/* TODO: .menubar .left */
+.menubar .left {
     float: left;
     height: 50px;
     /* background-color: rgba(23, 200, 183, 0.3); */
 
 }
-/* TODO: .navigation .right */
-.navigation .icons {
+/* TODO: .menubar .right */
+.menubar .icons {
     float: right;
     height: 50px;
     line-height: 1px;
     /* background-color: rgba(23, 200, 183, 0.3); */
 }
-/* TODO: .navigation .middle */
+/* TODO: .menubar .middle */
 .search-span {
     overflow: hidden;
     height: 50px;
@@ -277,16 +255,16 @@ a[href^='/kontakt']:after {
     50% {-webkit-transform:rotate(-10deg);}
     100% {-webkit-transform:rotate(10deg);}
 }
-.menu-icon {
+.submenu-icon {
     height: 100%;
     /* padding: 10px; */
     padding: 14px;
     opacity: 0.7;
 }
-.menu-icon:hover {
+.submenu-icon:hover {
     opacity: 1;
 }
-.menu-icon.open {
+.submenu-icon.open {
     background-color: rgb(249, 175, 26);
 }
 .skjold-icon{
@@ -579,7 +557,7 @@ a[href^='/kontakt']:after {
     overflow: auto;
 }
 
-.element-item {
+.element {
     position: relative;
     float: left;
     color: #1d1d1b;
@@ -602,14 +580,14 @@ a[href^='/kontakt']:after {
 .leg.default {
     background-color:#e4e9eb;
 }
-.leg .headerbar {
+.leg .namebar {
     position:absolute;
     width:100%;
     padding:0px 10px;
     color: white;
     font-weight: 300;
 }
-.leg .infobar {
+.leg .iconbar {
     position:absolute;
     bottom:0px;
     background-color: rgba(249, 175, 26, 1.0);
@@ -618,7 +596,7 @@ a[href^='/kontakt']:after {
     color: white;
     font-weight: 300;
 }
-.leg .teaserbar {
+.leg .teaseroverlay {
     -webkit-border-top-right-radius: 5px;
     -webkit-border-top-left-radius: 5px;
     -moz-border-radius-topright: 5px;
@@ -650,27 +628,27 @@ a[href^='/kontakt']:after {
     border-width: 1px 1px 0px 1px;
     border-color: #456889;
 }
-.leg .teaserbar:hover {
+.leg .teaseroverlay:hover {
     opacity: 1.0;
 }
 
-.leg .teaserbar p {
+.leg .teaseroverlay p {
     position: relative;
     top: 5px;
     color: #1d1d1b
 }
-.leg .teaserbar .categories {
+.leg .teaseroverlay .categories {
     position: absolute;
     padding-right: 10px;
     bottom: -20%;
     width: 100%;
 }
-.leg .teaserbar .categories img{
+.leg .teaseroverlay .categories img{
     float: right;
     width: 50%;
 }
 
-.element-item .navn {
+.element .name {
     position: absolute;
     left: 10px;
     top: 0px;
@@ -713,10 +691,6 @@ a[href^='/kontakt']:after {
     padding: 15px;
 }
 
-.modal-body .leg-content h1 {
-    color: black;
-}
-
 #modal-close-top {
     position: absolute;
     color: rgb(255, 255, 255);
@@ -739,10 +713,10 @@ a[href^='/kontakt']:after {
     border-radius: 8px !important;
 }
 
-.modal-body .infobar {
+.modal-body .iconbar {
     padding:0px 10px;
 }
-.mobal-body .infobar td {
+.mobal-body .iconbar td {
     text-align: left;
 
 }
@@ -783,7 +757,7 @@ figure figcaption h3 {
     font-weight: Bold;
 }
 
-figure figcaption .infobar {
+figure figcaption .iconbar {
     background-color: rgba(249, 175, 26, 0.90);
 }
 
@@ -889,28 +863,28 @@ img.leg-box-image {
     #lege-wrapper {
         padding: 0px;
     }
-    .element-item {
+    .element {
         padding: 5px;
         width: 300px; /* Fallback solution */
         height: 136.042px; /* Fallback solution */
         width: calc(100.00vw - (100.00vw - 100%));
         height: calc(((100.00vw) / 3.5) + 40px);
     }
-    .element-item .leg .headerbar {
+    .element .leg .namebar {
         height: 26px;
         bottom: 26px;
         background-color: rgba(35,59,82,0.4);
     }
-    .element-item .leg .infobar {
+    .element .leg .iconbar {
         height: 26px;
     }
-    .element-item .leg .infobar .fdficon {
-        font-size:14pt !important;
+    .element .leg .iconbar .fdficon {
+        font-size:14pt;
     }
-    .element-item .leg .teaserbar {
+    .element .leg .teaseroverlay {
         display: none;
     }
-    .element-item .navn {
+    .element .name {
         font-size: 14pt;
         margin-top: 0px;
     }
@@ -921,7 +895,7 @@ img.leg-box-image {
         width: 80%;
         margin: 5px auto 1px auto;
     }
-    .element-item {
+    .element {
         width: calc(50.00vw - (100.00vw - 100%)/2);
         height: calc(50.00vw * 0.6);
     }
@@ -943,23 +917,23 @@ img.leg-box-image {
     #lege-wrapper {
         padding: 20px 100px 0px 100px;
     }
-    .element-item {
+    .element {
         padding: 15px;
         width: calc(50.00vw - (100.00vw - 100%)/2);
         height: calc(50.00vw * 0.5);
     }
-    .element-item .leg .headerbar {
+    .element .leg .namebar {
         height: 40px;
         bottom: 40px;
         background-color: rgba(35,59,82,0.8);
     }
-    .element-item .leg .infobar {
+    .element .leg .iconbar {
         height:40px;
     }
-    .element-item .leg .infobar .fdficon {
-        font-size: 20pt !important;
+    .element .leg .iconbar .fdficon {
+        font-size: 20pt;
     }
-    .element-item .navn {
+    .element .name {
         font-size: 16pt;
         margin-top: 4px;
     }
@@ -982,11 +956,11 @@ img.leg-box-image {
     .filter-header {
         display: initial;
     }
-    .element-item {
+    .element {
         width: calc(33.333333vw - (100.00vw - 100%)/3);
         height: calc(33.333333vw * 0.6);
     }
-    .element-item .leg .teaserbar {
+    .element .leg .teaseroverlay {
         display: initial;
     }
     .modal-lg {
@@ -995,7 +969,7 @@ img.leg-box-image {
 }
 
 @media (min-width: 1600px) {
-    .element-item {
+    .element {
         width: calc(25.00vw - (100.00vw - 100%)/4 - 1px);
         height: calc(25.00vw * 0.6);
     }
