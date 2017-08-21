@@ -43,7 +43,7 @@ var regex_13 = new RegExp("\\b("+group_13+")[ers]*\\b", "i");
 var regex_any = new RegExp("\\b("+group_2+"|"+group_7+"|"+group_13+")[ers]*\\b", "gi");
 
 function debug(string) {
-    console.log("debug:", string);
+    console.log("debug: " + string);
     debug.tag.text(string);
 }
 window.onerror = function(msg, url, lineNo, columnNo, error) {
