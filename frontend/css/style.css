@@ -718,7 +718,9 @@ a[href^='/kontakt']:after {
 }
 .mobal-body .iconbar td {
     text-align: left;
-
+}
+.modal-body .iconbar .fdficon {
+    font-size: 20pt;
 }
 
 /* TODO: this is rather old? */
@@ -928,7 +930,7 @@ img.leg-box-image {
         background-color: rgba(35,59,82,0.8);
     }
     .element .leg .iconbar {
-        height:40px;
+        height: 40px;
     }
     .element .leg .iconbar .fdficon {
         font-size: 20pt;

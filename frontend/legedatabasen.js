@@ -314,10 +314,10 @@ function initLege(data) {
                  '<table style="width:100%;">'+
                  '<tbody>'+
                  '<tr>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-                 '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+                 '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
+                 '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+                 '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
+                 '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
                  '</tr>'+
                  '</tbody>'+
                  '</table>'+
@@ -775,10 +775,10 @@ function displayLeg(leg) {
             '<table style="width:100%;">'+
             '<tbody>'+
             '<tr>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
             '</tr>'+
             '</tbody>'+
             '</table>'+
@@ -935,10 +935,10 @@ function display_about() {
             '<table style="width:100%;">'+
             '<tbody>'+
             '<tr>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf405;</span></td><td style="width:10%">' + 'Deltagere' + '</td>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf3ba;</span></td><td style="width:15%">' + 'Tid' + ' min</td>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf41e;</span></td><td style="width:10%">' + 'Alder' + '+</td>'+
-            '<td style="width:5%"><span class="fdficon" style="font-size:20pt;">&#xf360;</span></td><td style="width:15%">' + 'Areal' + '</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + 'Deltagere' + '</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + 'Tid' + ' min</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + 'Alder' + '+</td>'+
+            '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + 'Areal' + '</td>'+
             '</tr>'+
             '</tbody>'+
             '</table>'+
