@@ -28,8 +28,6 @@
 /* merge selectors! */
 /* new selector for leg-box-image */
 
-/* can lege-wrapper and lege be merged? */
-
 /* Why is modals iconbar transparent? */
 /* .name margin-top look into */
 
@@ -862,8 +860,8 @@ img.leg-box-image {
     .about-balloon {
         display: none;
     }
-    #lege-wrapper {
-        padding: 0px;
+    #lege {
+        margin: 0px;
     }
     .element {
         padding: 5px;
@@ -916,8 +914,8 @@ img.leg-box-image {
     .about-balloon {
         display: none;
     }
-    #lege-wrapper {
-        padding: 20px 100px 0px 100px;
+    #lege {
+        margin: 20px 100px 0px 100px;
     }
     .element {
         padding: 15px;
