@@ -301,8 +301,8 @@ function initLege(data) {
                 in_categories = '<img class="modal-category" src="/images/categories/'+leg.game_categories[0].image+'" alt="'+leg.game_categories[0].name+'" />';
             }
             leg.node = $(
-                ('<a href="leg/'+leg.url+'" class="element '+leg.tags+'" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
-                 '<div class="leg '+ classes +'">'+
+                ('<div class="element">'+
+                 '<a href="leg/'+leg.url+'" class="leg '+classes+' '+leg.tags+'" style="display:block;" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
                  '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
                  // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf407;</p>' : '')+
                  (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf2a7;</p>' : '')+
@@ -326,8 +326,8 @@ function initLege(data) {
                  '<div class="categories">' + in_categories + '</div>' +
                  '<p>' + (leg.teaser || '') + '</p>' +
                  '</div>'+
-                 '</div>'+
-                 '</a>'));
+                 '</a>'+
+                 '</div>'));
             leg.node.appendTo('#lege');
             return leg;
         });

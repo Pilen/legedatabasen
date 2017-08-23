@@ -558,7 +558,6 @@ a[href^='/kontakt']:after {
 .element {
     position: relative;
     float: left;
-    color: #1d1d1b;
 }
 
 .leg {
@@ -566,6 +565,7 @@ a[href^='/kontakt']:after {
     -moz-border-radius: 6px;
     border-radius: 6px;
     box-shadow: none;
+    color: #1d1d1b;
 
     overflow: hidden;
 
