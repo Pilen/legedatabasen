@@ -97,7 +97,7 @@ function init(data) {
 
     // Initialize lege
     initLege(data[0]).then(function() {
-        $('#lege').on("click", "a.element", openLeg);
+        $('#elements').on("click", "a.leg", openLeg);
         $(".leg_back").on("click", function(e) {
             $("#modal-leg").modal("hide");
         });
@@ -285,14 +285,11 @@ function initLege(data) {
 
             if (leg.images.length > 0) {
                 var image = '/images/entries/' + leg.images[0]['list'];
-                var classes = "";
             } else {
                 if (leg.game_categories.length > 0) {
                     var image = "/images/lege/" + leg.game_categories[0].name + "-default.png";
-                    var classes = "default";
                 } else {
                     var image = "/images/lege/default.png";
-                    var classes = "";
                 }
             }
 
@@ -302,13 +299,13 @@ function initLege(data) {
             }
             leg.node = $(
                 ('<div class="element">'+
-                 '<a href="leg/'+leg.url+'" class="leg '+classes+' '+leg.tags+'" style="display:block;" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
-                 '<img data-src="' + image + '" class="leg-box-image lazy" src="">' +
+                 '<a href="leg/'+leg.url+'" class="leg" data-category="'+leg.inde+'" score=0 title="'+leg.name+'" leg="'+leg.index+'">'+
+                 '<img data-src="' + image + '" class="illustration lazy" src="">' +
                  // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf407;</p>' : '')+
                  (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf2a7;</p>' : '')+
                  // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf409;</p>' : '')+
                  '<div class="namebar">'+
-                 '<p class="name">'+leg.name+'</p>'+
+                 '<div class="name">'+leg.name+'</div>'+
                  '</div>'+
                  '<div class="iconbar">'+
                  '<table style="width:100%;">'+
@@ -982,19 +979,19 @@ function sort_lege(rankings) {
     });
 
 
-    // $("#lege").fadeOut(200);
-    $("#lege").empty();
+    // $("#elements").fadeOut(200);
+    $("#elements").empty();
     var nodes = rankings.map(function(leg) {
         return leg.document.node;
     }, this);
-    $("#lege").append(nodes);
+    $("#elements").append(nodes);
 
-    $("#lege").show();
+    $("#elements").show();
 
 
-    // $("#lege").fadeIn(200);
+    // $("#elements").fadeIn(200);
 
-    // $("#lege").isotope("updateSortData").isotope();
+    // $("#elements").isotope("updateSortData").isotope();
     var end_time = performance.now();
     $("#profiler").text("lege: "+(end_time - start_time) +" total: " + (end_time - total_time));
 
@@ -1234,7 +1231,7 @@ function lazy() {
             window.clearInterval(timer);
         }
         leg.image = true;
-        var img = leg.node.find("img.leg-box-image");
+        var img = leg.node.find("img[data-src]");
         img.attr("src", img.attr("data-src"));
     }
 }

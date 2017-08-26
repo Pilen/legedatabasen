@@ -24,9 +24,7 @@
 /*                                    TODO                                    */
 /******************************************************************************/
 
-/* should we both have element-item and leg? */
-/* merge selectors! */
-/* new selector for leg-box-image */
+/* merge selectors! where duplicates exist*/
 
 /* Why is modals iconbar transparent? */
 /* .name margin-top look into */
@@ -550,7 +548,7 @@ a[href^='/kontakt']:after {
 /******************************************************************************/
 /*                                  Elements                                  */
 /******************************************************************************/
-#lege {
+#elements {
     display: none;
     overflow: auto;
 }
@@ -560,14 +558,16 @@ a[href^='/kontakt']:after {
     float: left;
 }
 
-.leg {
+.element .leg {
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
     box-shadow: none;
     color: #1d1d1b;
+    background-color:#e4e9eb;
 
     overflow: hidden;
+    display: block;
 
     width:100%;
     height:100%;
@@ -575,17 +575,33 @@ a[href^='/kontakt']:after {
     background-size:100%;
     opacity:1.0;
 }
-.leg.default {
-    background-color:#e4e9eb;
+.element .leg img.illustration {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1.0;
+    border-radius: 5px;
+    filter: saturate(60%);
+    object-fit: cover;
+    object-position: 0 0;
 }
-.leg .namebar {
+.element .leg .namebar {
     position:absolute;
     width:100%;
     padding:0px 10px;
     color: white;
     font-weight: 300;
 }
-.leg .iconbar {
+.element .leg .name {
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    color: white;
+    font-weight: Bold;
+}
+.element .leg .iconbar {
     position:absolute;
     bottom:0px;
     background-color: rgba(249, 175, 26, 1.0);
@@ -594,7 +610,16 @@ a[href^='/kontakt']:after {
     color: white;
     font-weight: 300;
 }
-.leg .teaseroverlay {
+.element .leg .video-icon {
+    position: absolute;
+    right: 0px;
+    font-size: 20pt;
+    font-weight: 400;
+    /* padding: 10px; */
+    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    text-shadow: 1px 1px 0px  #233b52, 1px -1px 0px  #456889, -1px 1px 0px  #456889, -1px -1px 0px  #456889;
+}
+.element .leg .teaseroverlay {
     -webkit-border-top-right-radius: 5px;
     -webkit-border-top-left-radius: 5px;
     -moz-border-radius-topright: 5px;
@@ -626,42 +651,24 @@ a[href^='/kontakt']:after {
     border-width: 1px 1px 0px 1px;
     border-color: #456889;
 }
-.leg .teaseroverlay:hover {
+.element .leg .teaseroverlay:hover {
     opacity: 1.0;
 }
 
-.leg .teaseroverlay p {
+.element .leg .teaseroverlay p {
     position: relative;
     top: 5px;
     color: #1d1d1b
 }
-.leg .teaseroverlay .categories {
+.element .leg .teaseroverlay .categories {
     position: absolute;
     padding-right: 10px;
     bottom: -20%;
     width: 100%;
 }
-.leg .teaseroverlay .categories img{
+.element .leg .teaseroverlay .categories img{
     float: right;
     width: 50%;
-}
-
-.element .name {
-    position: absolute;
-    left: 10px;
-    top: 0px;
-    color: white;
-    font-weight: Bold;
-}
-
-.video-icon {
-    position: absolute;
-    right: 0px;
-    font-size: 20pt;
-    font-weight: 400;
-    /* padding: 10px; */
-    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-    text-shadow: 1px 1px 0px  #233b52, 1px -1px 0px  #456889, -1px 1px 0px  #456889, -1px -1px 0px  #456889;
 }
 
 
@@ -765,18 +772,6 @@ figure figcaption .iconbar {
     width: 30%;
 
 }
-img.leg-box-image {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 1.0;
-    border-radius: 5px;
-    filter: saturate(60%);
-    object-fit: cover;
-    object-position: 0 0;
-}
 /* figure .video-wrapper {
    position: relative;
    padding-bottom: 56.25%; // 16:9
@@ -860,7 +855,7 @@ img.leg-box-image {
     .about-balloon {
         display: none;
     }
-    #lege {
+    #elements {
         margin: 0px;
     }
     .element {
@@ -884,7 +879,7 @@ img.leg-box-image {
     .element .leg .teaseroverlay {
         display: none;
     }
-    .element .name {
+    .element .leg .name {
         font-size: 14pt;
         margin-top: 0px;
     }
@@ -914,7 +909,7 @@ img.leg-box-image {
     .about-balloon {
         display: none;
     }
-    #lege {
+    #elements {
         margin: 20px 100px 0px 100px;
     }
     .element {
@@ -933,7 +928,7 @@ img.leg-box-image {
     .element .leg .iconbar .fdficon {
         font-size: 20pt;
     }
-    .element .name {
+    .element .leg .name {
         font-size: 16pt;
         margin-top: 4px;
     }
