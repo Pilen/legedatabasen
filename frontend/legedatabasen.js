@@ -304,9 +304,7 @@ function initLege(data) {
                  // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf407;</p>' : '')+
                  (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf2a7;</p>' : '')+
                  // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf409;</p>' : '')+
-                 '<div class="namebar">'+
-                 '<div class="name">'+leg.name+'</div>'+
-                 '</div>'+
+                 '<div class="namebar">'+leg.name+'</div>'+
                  '<div class="iconbar">'+
                  '<table style="width:100%;">'+
                  '<tbody>'+

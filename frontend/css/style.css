@@ -27,8 +27,6 @@
 /* merge selectors! where duplicates exist*/
 
 /* Why is modals iconbar transparent? */
-/* .name margin-top look into */
-
 /* remove styling from javascript */
 
 /* turn .only-for-big-screens into a .hide-from-start that will be removed on load */
@@ -498,14 +496,7 @@ a[href^='/kontakt']:after {
 .element .leg .namebar {
     position:absolute;
     width:100%;
-    padding:0px 10px;
-    color: white;
-    font-weight: 300;
-}
-.element .leg .name {
-    position: absolute;
-    left: 10px;
-    top: 0px;
+    padding: 0px 10px;
     color: white;
     font-weight: Bold;
 }
@@ -777,6 +768,9 @@ figure figcaption .iconbar {
         height: 26px;
         bottom: 26px;
         background-color: rgba(35,59,82,0.4);
+
+        font-size: 14pt;
+        padding-top: 0px;
     }
     .element .leg .iconbar {
         height: 26px;
@@ -786,10 +780,6 @@ figure figcaption .iconbar {
     }
     .element .leg .teaseroverlay {
         display: none;
-    }
-    .element .leg .name {
-        font-size: 14pt;
-        margin-top: 0px;
     }
 }
 
@@ -829,16 +819,15 @@ figure figcaption .iconbar {
         height: 40px;
         bottom: 40px;
         background-color: rgba(35,59,82,0.8);
+
+        font-size: 16pt;
+        padding-top: 4px;
     }
     .element .leg .iconbar {
         height: 40px;
     }
     .element .leg .iconbar .fdficon {
         font-size: 20pt;
-    }
-    .element .leg .name {
-        font-size: 16pt;
-        margin-top: 4px;
     }
     .modal-lg {
         width: 80%;
