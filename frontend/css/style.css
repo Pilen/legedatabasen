@@ -549,15 +549,12 @@ a[href^='/kontakt']:after {
     border-style: solid;
     border-width: 1px 1px 0px 1px;
     border-color: #456889;
+    color: #1d1d1b;
+
+    padding-top: 5px;
 }
 .element .leg .teaseroverlay:hover {
     opacity: 1.0;
-}
-
-.element .leg .teaseroverlay p {
-    position: relative;
-    top: 5px;
-    color: #1d1d1b
 }
 .element .leg .teaseroverlay .categories {
     position: absolute;

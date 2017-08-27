@@ -318,8 +318,8 @@ function initLege(data) {
                  '</table>'+
                  '</div>'+
                  '<div class="teaseroverlay">'+
+                 (leg.teaser || '')+
                  '<div class="categories">' + in_categories + '</div>' +
-                 '<p>' + (leg.teaser || '') + '</p>' +
                  '</div>'+
                  '</a>'+
                  '</div>'));
