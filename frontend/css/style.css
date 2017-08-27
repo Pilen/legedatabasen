@@ -214,22 +214,19 @@ a[href^='/kontakt']:after {
     background-color: rgba(69, 104, 137, 0.9);
     z-index: 10000000000000000;
 }
-/* TODO: .menubar .left */
 .menubar .left {
     float: left;
     height: 50px;
     /* background-color: rgba(23, 200, 183, 0.3); */
 
 }
-/* TODO: .menubar .right */
-.menubar .icons {
+.menubar .right {
     float: right;
     height: 50px;
     line-height: 1px;
     /* background-color: rgba(23, 200, 183, 0.3); */
 }
-/* TODO: .menubar .middle */
-.search-span {
+.menubar .middle {
     overflow: hidden;
     height: 50px;
     /* background-color: rgb(255, 0, 0); */
@@ -301,23 +298,14 @@ a[href^='/kontakt']:after {
 #search-done-icon:hover {
     opacity: 0.7;
 }
-#search {
+input#search {
     display: block;
     width: 100%;
     position: relative;
     top: 10px;
     height: 30px;
-    // display: none; /* start hidden */
-    /* padding:0px 10px; */
-    /* position: absolute; */
-    /* position: relative; */
-    /* top: -40%; */
-    /* left: 50%; */
-    /* transform: translate(0, -50%); */
-    /* width: 50%; */
-    /* margin-left:auto; */
-    /* margin-right:auto; */
-    /* top:50%; */
+    padding-left: 4px;
+
     display: none;
 }
 
