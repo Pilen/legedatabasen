@@ -755,24 +755,20 @@ function displayLeg(leg) {
     }
 
     $("#modal-leg .modal-body .leg-header").html(
-        '<figure id="leg-presentation-image">' +
-            (video ? video : '<img src="' + image + '" class="img-responsive" id="leg-presentation-image" />') +
-            '<figcaption>' +
-            '<h3>' + leg.name + '</h3>' +
-            '<div class="iconbar">'+
-            '<table style="width:100%;">'+
-            '<tbody>'+
-            '<tr>'+
-            '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-            '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-            '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-            '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
-            '</tr>'+
-            '</tbody>'+
-            '</table>'+
-            '</div>'+
-            '</figcaption>' +
-            '</figure>');
+        ((video ? video : '<img src="' + image + '" class="img-responsive" />') +
+         '<div class="namebar">' + leg.name + '</div>'+
+         '<div class="iconbar">'+
+         '<table style="width:100%;">'+
+         '<tbody>'+
+         '<tr>'+
+         '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
+         '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
+         '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
+         '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
+         '</tr>'+
+         '</tbody>'+
+         '</table>'+
+         '</div>'));
     $("#modal-leg .modal-body .leg-content").html(
         (('<div class="leg-teaser" style="display:none"><strong>' + leg.teaser + '</strong></div>') +
          ('<div class="leg-description">' +
@@ -910,24 +906,20 @@ function display_about() {
 
     var image = "/images/om-legedatabasen.jpg";
     $("#modal-leg .modal-body .leg-header").html(
-        '<figure id="leg-presentation-image">' +
-            '<img src="' + image + '" class="img-responsive" id="leg-presentation-image"/>' +
-            '<figcaption>' +
-            '<h3>' + '-- Legens navn --' + '</h3>' +
-            '<div class="iconbar">'+
-            '<table style="width:100%;">'+
-            '<tbody>'+
-            '<tr>'+
-            '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + 'Deltagere' + '</td>'+
-            '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + 'Tid' + ' min</td>'+
-            '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + 'Alder' + '+</td>'+
-            '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + 'Areal' + '</td>'+
-            '</tr>'+
-            '</tbody>'+
-            '</table>'+
-            '</div>'+
-            '</figcaption>' +
-            '</figure>');
+        ('<img src="' + image + '" class="img-responsive"/>' +
+         '<div class="namebar">' + '-- Legens navn --' + '</div>'+
+         '<div class="iconbar">'+
+         '<table style="width:100%;">'+
+         '<tbody>'+
+         '<tr>'+
+         '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + 'Deltagere' + '</td>'+
+         '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + 'Tid' + ' min</td>'+
+         '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + 'Alder' + '+</td>'+
+         '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + 'Areal' + '</td>'+
+         '</tr>'+
+         '</tbody>'+
+         '</table>'+
+         '</div>'));
     $("#modal-leg .modal-body .leg-content").html('<div>' + description + '</div>' +
                                                   '<div>' + category_overview + '</div>' +
                                                   '<div>' + end + '</div>');

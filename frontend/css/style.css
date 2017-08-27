@@ -31,7 +31,8 @@
 /* turn .only-for-big-screens into a .hide-from-start that will be removed on load */
 
 /* Rename modal .iconbar */
-/* the modal iconbar should be a flexbox */
+
+/* the iconbars should be a flexbox */
 
 /******************************************************************************/
 /*                                    Font                                    */
@@ -556,25 +557,21 @@ input#search {
 /******************************************************************************/
 /*                                   Modal                                    */
 /******************************************************************************/
+
 .modal {
     -webkit-overflow-scrolling: auto !important;
-
     z-index: 20450;
-
     top: 50px;
-}
-
-#modal-title {
-    background-color: #233b52;
-    width: 100%;
-
 }
 .modal-body {
     padding: 0;
 }
-
-.modal-body .leg-content {
-    padding: 15px;
+.modal-backdrop {
+    background-color: white;
+}
+.modal-content {
+    border: 2px solid #456889;!important;
+    border-radius: 8px !important;
 }
 
 #modal-close-top {
@@ -588,68 +585,48 @@ input#search {
     font-size: 22pt;
     text-shadow: 3px 2px 4px rgba(35, 59, 82, 0.7), -1px -1px 2px rgba(35, 59, 82, 0.15);
 }
-.modal-backdrop {
-    z-index: 440;
-    opacity: 1.0;
-    background-color: white;
-}
 
-.modal-content {
-    border: 2px solid #456889;!important;
-    border-radius: 8px !important;
-}
-
-.modal-body .iconbar {
-    padding:0px 10px;
-}
-.mobal-body .iconbar td {
-    text-align: left;
-}
-.modal-body .iconbar .fdficon {
-    font-size: 20pt;
-}
-
-/* TODO: this is rather old? */
-.leg-content {
-    font-family: Roboto;
-    font-size: 1em;
-    color:black;
-}
-figure {
-    position: relative;
-
-}
-
-figure img {
-    width: 100%!important;
+.modal-body .leg-header img {
+    width: 100%;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-
 }
-
-figure figcaption {
-    background: rgba(35,59,82,0.8);
-    color: #FFF;
+.modal-body .leg-header .namebar {
+    background: rgba(35, 59, 82, 1.0);
+    color: white;
     bottom: 0;
     left: 0;
     padding: 0px;
     right: 0;
     font-size: 1em;
 
-}
-
-figure figcaption h3 {
     padding: 10px;
     margin-top: 0;
     margin-bottom: 0;
     font-weight: Bold;
+
+    line-height: 1.1;
+    font-size: 24px;
+}
+.modal-body .leg-header .iconbar {
+    background-color: rgba(249, 175, 26, 1.0);
+    padding:0px 10px;
+    color: white;
+    font-weight: 300;
+}
+.modal-body .leg-header .iconbar .fdficon {
+    font-size: 20pt;
+}
+.mobal-body .leg-header .iconbar td {
+    text-align: left;
 }
 
-figure figcaption .iconbar {
-    background-color: rgba(249, 175, 26, 0.90);
+.modal-body .leg-content {
+    padding: 15px;
+    font-size: 1em;
+    color: black;
 }
-
-.modal-category {
+.modal-body .leg-content .modal-category {
     width: 30%;
 
 }
