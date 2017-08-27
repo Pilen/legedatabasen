@@ -26,7 +26,6 @@
 
 /* merge selectors! where duplicates exist*/
 
-/* Why is modals iconbar transparent? */
 /* remove styling from javascript */
 
 /* turn .only-for-big-screens into a .hide-from-start that will be removed on load */
@@ -333,7 +332,6 @@ a[href^='/kontakt']:after {
     border-radius: 5px;
 }
 
-/* TODO: . this is a bad way to select. Use a specific id or something */
 #submenu .fdficon{
     color: rgb(236, 236, 232);
 }
@@ -456,7 +454,6 @@ a[href^='/kontakt']:after {
 /******************************************************************************/
 #elements {
     display: none;
-    overflow: auto;
 }
 
 .element {

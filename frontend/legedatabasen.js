@@ -624,13 +624,6 @@ function initStateActions() {
             });
             return $.when(//scrollToTop(400),
                           $("#search").slideUp(200).promise());
-            // var deferred = $.Deferred();
-            // $("#search").slideUp(200, function() {
-            //     $("#title").fadeIn(200, function() {
-            //         deferred.resolve();
-            //     });
-            // });
-            // return deferred.promise();
         }
     };
 
@@ -813,11 +806,6 @@ function displayLeg(leg) {
     //     });
     // }
     //////////////////////////////////
-
-    /*
-      $("#modal-title").text(leg.name);
-      $(".modal-body").html(description);
-    */
 
     $("#modal-leg").off("shown.bs.modal");
     $("#modal-leg").one("shown.bs.modal", function() {
