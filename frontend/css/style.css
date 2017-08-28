@@ -160,6 +160,48 @@ a[href^='/kontakt']:after {
     /* align-items: center; */
 }
 
+/******************************************************************************/
+/*                               On page stuff                                */
+/******************************************************************************/
+
+.about-balloon {
+    background-image: url("/images/balloon_yellow.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 1000px;
+    right: 10px;
+}
+.about-balloon:hover {
+    background-color: rgba(121, 134, 139, 0.5);
+    border-radius: 5px;
+}
+
+#progressbar {
+    background-color: rgb(225, 83, 16);
+    width: 0%;
+    height: 5px;
+    display: none;
+}
+.loading-balloon {
+    content: url("/images/balloon.png");
+    animation: loading-balloon-animation 1.7s infinite ease;
+    /* -webkit-animation: loading-balloon-animation 1.7s infinite ease;*/
+    width: 50%;
+    height: 50%;
+    margin: auto;
+}
+@keyframes loading-balloon-animation {
+    0%   {transform: scale(0.10, 0.10)}
+    20%  {transform: scale(0.40, 0.40)}
+    40%  {transform: scale(0.35, 0.35);}
+    60%  {transform: scale(0.75, 0.75);}
+    80% {transform: scale(0.70, 0.70);}
+    100% {transform: scale(1.0, 1.0);}
+}
 
 /******************************************************************************/
 /*                                   Header                                   */
@@ -842,54 +884,8 @@ input#search {
     }
 }
 
-/******************************************************************************/
-
 
 /******************************************************************************/
-/*                               On page stuff                                */
-/******************************************************************************/
-
-.about-balloon {
-    background-image: url("/images/balloon_yellow.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 1000px;
-    right: 10px;
-}
-.about-balloon:hover {
-    background-color: rgba(121, 134, 139, 0.5);
-    border-radius: 5px;
-}
-
-#progressbar {
-    background-color: rgb(225, 83, 16);
-    width: 0%;
-    height: 5px;
-    display: none;
-}
-.loading-balloon {
-    content: url("/images/balloon.png");
-    animation: loading-balloon-animation 1.7s infinite ease;
-    /* -webkit-animation: loading-balloon-animation 1.7s infinite ease;*/
-    width: 50%;
-    height: 50%;
-    margin: auto;
-}
-@keyframes loading-balloon-animation {
-    0%   {transform: scale(0.10, 0.10)}
-    20%  {transform: scale(0.40, 0.40)}
-    40%  {transform: scale(0.35, 0.35);}
-    60%  {transform: scale(0.75, 0.75);}
-    80% {transform: scale(0.70, 0.70);}
-    100% {transform: scale(1.0, 1.0);}
-}
-
-
-/* λ */
 /******************************************************************************/
 
 .bubble {
