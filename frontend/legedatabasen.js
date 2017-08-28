@@ -306,16 +306,22 @@ function initLege(data) {
                  // (leg.videos.length > 0 ? '<p class="fdficon video-icon">&#xf409;</p>' : '')+
                  '<div class="namebar">'+leg.name+'</div>'+
                  '<div class="iconbar">'+
-                 '<table style="width:100%;">'+
-                 '<tbody>'+
-                 '<tr>'+
-                 '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-                 '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-                 '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-                 '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
-                 '</tr>'+
-                 '</tbody>'+
-                 '</table>'+
+                 ('<div>'+
+                  '<span class="fdficon">&#xf405;</span>'+
+                  '<span>'+leg.participants+'</span>'+
+                  '</div>')+
+                 ('<div>'+
+                  '<span class="fdficon">&#xf3ba;</span>'+
+                  '<span>'+leg.duration+' min</span>'+
+                  '</div>')+
+                 ('<div>'+
+                  '<span class="fdficon">&#xf41e;</span>'+
+                  '<span>'+leg.age+'+</span>'+
+                  '</div>')+
+                 ('<div>'+
+                  '<span class="fdficon">&#xf360;</span>'+
+                  '<span>'+leg.game_area+'</span>'+
+                  '</div>')+
                  '</div>'+
                  '<div class="teaseroverlay">'+
                  (leg.teaser || '')+
@@ -758,16 +764,22 @@ function displayLeg(leg) {
         ((video ? video : '<img src="' + image + '" class="img-responsive" />') +
          '<div class="namebar">' + leg.name + '</div>'+
          '<div class="iconbar">'+
-         '<table style="width:100%;">'+
-         '<tbody>'+
-         '<tr>'+
-         '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + leg.participants + '</td>'+
-         '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + leg.duration + ' min</td>'+
-         '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + leg.age + '+</td>'+
-         '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + leg.game_area + '</td>'+
-         '</tr>'+
-         '</tbody>'+
-         '</table>'+
+         ('<div>'+
+          '<span class="fdficon">&#xf405;</span>'+
+          '<span>'+leg.participants+'</span>'+
+          '</div>')+
+         ('<div>'+
+          '<span class="fdficon">&#xf3ba;</span>'+
+          '<span>'+leg.duration+' min</span>'+
+          '</div>')+
+         ('<div>'+
+          '<span class="fdficon">&#xf41e;</span>'+
+          '<span>'+leg.age+'+</span>'+
+          '</div>')+
+         ('<div>'+
+          '<span class="fdficon">&#xf360;</span>'+
+          '<span>'+leg.game_area+'</span>'+
+          '</div>')+
          '</div>'));
     $("#modal-leg .modal-body .leg-content").html(
         (('<div class="leg-teaser" style="display:none"><strong>' + leg.teaser + '</strong></div>') +
@@ -909,16 +921,22 @@ function display_about() {
         ('<img src="' + image + '" class="img-responsive"/>' +
          '<div class="namebar">' + '-- Legens navn --' + '</div>'+
          '<div class="iconbar">'+
-         '<table style="width:100%;">'+
-         '<tbody>'+
-         '<tr>'+
-         '<td style="width:5%"><span class="fdficon">&#xf405;</span></td><td style="width:10%">' + 'Deltagere' + '</td>'+
-         '<td style="width:5%"><span class="fdficon">&#xf3ba;</span></td><td style="width:15%">' + 'Tid' + ' min</td>'+
-         '<td style="width:5%"><span class="fdficon">&#xf41e;</span></td><td style="width:10%">' + 'Alder' + '+</td>'+
-         '<td style="width:5%"><span class="fdficon">&#xf360;</span></td><td style="width:15%">' + 'Areal' + '</td>'+
-         '</tr>'+
-         '</tbody>'+
-         '</table>'+
+         ('<div>'+
+          '<span class="fdficon">&#xf405;</span>'+
+          '<span>Deltagere</span>'+
+          '</div>')+
+         ('<div>'+
+          '<span class="fdficon">&#xf3ba;</span>'+
+          '<span>Tid</span>'+
+          '</div>')+
+         ('<div>'+
+          '<span class="fdficon">&#xf41e;</span>'+
+          '<span>Alder</span>'+
+          '</div>')+
+         ('<div>'+
+          '<span class="fdficon">&#xf360;</span>'+
+          '<span>Areal</span>'+
+          '</div>')+
          '</div>'));
     $("#modal-leg .modal-body .leg-content").html('<div>' + description + '</div>' +
                                                   '<div>' + category_overview + '</div>' +

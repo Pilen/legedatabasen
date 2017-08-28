@@ -30,10 +30,6 @@
 
 /* turn .only-for-big-screens into a .hide-from-start that will be removed on load */
 
-/* Rename modal .iconbar */
-
-/* the iconbars should be a flexbox */
-
 /******************************************************************************/
 /*                                    Font                                    */
 /******************************************************************************/
@@ -487,13 +483,24 @@ input#search {
     font-weight: Bold;
 }
 .element .leg .iconbar {
-    position:absolute;
-    bottom:0px;
+    display: flex;
+    justify-content: space-around;
     background-color: rgba(249, 175, 26, 1.0);
     width:100%;
-    padding:0px 10px;
     color: white;
     font-weight: 300;
+
+    position:absolute;
+    bottom:0px;
+}
+.element .leg .iconbar div {
+    display: flex;
+}
+.element .leg .iconbar span {
+    align-self: center;
+}
+.element .leg .iconbar .fdficon {
+    padding-right: 4px;
 }
 .element .leg .video-icon {
     position: absolute;
@@ -609,16 +616,22 @@ input#search {
     font-size: 24px;
 }
 .modal-body .leg-header .iconbar {
+    display: flex;
+    justify-content: space-around;
     background-color: rgba(249, 175, 26, 1.0);
-    padding:0px 10px;
+    width:100%;
     color: white;
     font-weight: 300;
 }
+.modal-body .leg-header .iconbar div {
+    display: flex;
+}
+.modal-body .leg-header .iconbar span {
+    align-self: center;
+}
 .modal-body .leg-header .iconbar .fdficon {
     font-size: 20pt;
-}
-.mobal-body .leg-header .iconbar td {
-    text-align: left;
+    padding-right: 4px;
 }
 
 .modal-body .leg-content {
