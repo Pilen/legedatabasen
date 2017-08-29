@@ -255,35 +255,38 @@ a[href^='/kontakt']:after {
 }
 .menubar .left {
     float: left;
-    height: 50px;
+    height: 100%;
     /* background-color: rgba(23, 200, 183, 0.3); */
-
 }
 .menubar .right {
     float: right;
-    height: 50px;
-    line-height: 1px;
+    height: 100%;
     /* background-color: rgba(23, 200, 183, 0.3); */
 }
 .menubar .middle {
     overflow: hidden;
-    height: 50px;
+    height: 100%;
     /* background-color: rgb(255, 0, 0); */
 }
 
+.menubar .left a {
+    overflow: hidden;
+    height: 100%;
+}
 .balloon-icon {
     position: relative;
     height: 100%;
     padding: 5px;
 }
 .balloon-icon:hover {
-    -webkit-animation: wiggle 0.5s infinite;
+    animation: wiggle 0.5s infinite;
 }
-@-webkit-keyframes wiggle {
-    0% {-webkit-transform:rotate(10deg);}
-    50% {-webkit-transform:rotate(-10deg);}
-    100% {-webkit-transform:rotate(10deg);}
+@keyframes wiggle {
+    0% {transform:rotate(10deg);}
+    50% {transform:rotate(-10deg);}
+    100% {transform:rotate(10deg);}
 }
+
 .submenu-icon {
     height: 100%;
     /* padding: 10px; */
