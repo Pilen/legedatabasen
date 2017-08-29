@@ -136,7 +136,8 @@ function init(data) {
             event.preventDefault();
             pushState(showAbout());
             return false;
-        }).show();
+        });
+        $(".hidden-from-start").removeClass("hidden-from-start");
         //category_swiper.init();
         setTimeout(function () {category_swiper.init(); }, 1); // TODO: test om man kan bruge ovenstående linje (den er rykket i forhold til tidligere)
         lazy();

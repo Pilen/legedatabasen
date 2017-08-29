@@ -28,7 +28,6 @@
 
 /* remove styling from javascript */
 
-/* turn .only-for-big-screens into a .hide-from-start that will be removed on load */
 
 /******************************************************************************/
 /*                                    Font                                    */
@@ -66,10 +65,9 @@ input[type="text"] {
 /******************************************************************************/
 /*                                  Utility                                   */
 /******************************************************************************/
-@media (max-width: 1000px) {
-    .only-for-big-screens {
-        display: none !important;
-    }
+.hidden-from-start {
+    display: none !important;
+}
 }
 
 .anchor {
@@ -822,7 +820,7 @@ input#search {
 
 @media (min-width: 1000px) {
     .about-balloon {
-        display: none;
+        display: initial;
     }
     #elements {
         margin: 20px 100px 0px 100px;
