@@ -523,7 +523,7 @@ input#search {
 .element .leg .namebar {
     position:absolute;
     width:100%;
-    padding: 0px 10px;
+    padding-left: 10px;
     color: white;
     font-weight: Bold;
 }
