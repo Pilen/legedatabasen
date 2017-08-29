@@ -66,15 +66,16 @@
             </nav>
         </div>
         <div id="profiler" style="display:none"></div>
+        <div id="debug" style="display:none;"></div>
         <div id="submenu">
-            <div id="filters" style="ubackground-color:#456889">
+            <div id="filters">
                 <div class="filter-header">
-                    <span class="fdficon" style="position:relative; font-size:100pt;">&#xf41d;</span>
+                    <span class="fdficon">&#xf41d;</span>
                 </div>
                 <!-- Note, the entries are in reverse order -->
                 <div class="filter">
                     <span class="head">
-                        <span class="fdficon" style="font-size:20pt;">&#xf405;</span>
+                        <span class="fdficon">&#xf405;</span>
                         <span class="filter-title">Antal</span>
                     </span>
                     <input type="radio" name="participants" id="participants-30" value="30"/>
@@ -87,7 +88,7 @@
                 </div>
                 <div class="filter">
                     <span class="head">
-                        <span class="fdficon" style="font-size:20pt;">&#xf3ba;</span>
+                        <span class="fdficon">&#xf3ba;</span>
                         <span class="filter-title">Tid</span>
                     </span>
                     <input type="radio" name="duration" id="duration-60" value="60"/>
@@ -99,7 +100,7 @@
                 </div>
                 <div class="filter">
                     <span class="head">
-                        <span class="fdficon" style="font-size:20pt;">&#xf41e;</span>
+                        <span class="fdficon">&#xf41e;</span>
                         <span class="filter-title">Alder</span>
                     </span>
                     <input type="radio" name="age" id="age-13" value="13"/>
@@ -111,7 +112,7 @@
                 </div>
                 <div class="filter">
                     <span class="head">
-                        <span class="fdficon" style="font-size:20pt;">&#xf360;</span>
+                        <span class="fdficon">&#xf360;</span>
                         <span class="filter-title">Lokation</span>
                     </span>
                     <input type="radio" name="location" id="location-stor" value="stor"/>
@@ -123,11 +124,9 @@
                 </div>
             </div>
         </div>
-        <div id="debug" style="display:none;">hej</div>
         <div class="loading-balloon"></div>
         <div class="container-fluid" id="container" style="padding:0px;"> <!-- The container is actually useless here (the padding is important) -->
-            <div id="slider" style="display:none"></div>
-            <div id="selection-container">
+            <div id="category-selection-container">
                 <div class="swiper-container">
                     <div class="swiper-wrapper"></div>
                     <div class="swiper-pagination"></div>
@@ -158,7 +157,10 @@
         </div>
     </body>
 
-    <img src="/images/fdf_skjold_farve_no_padding.png" style="height:50px;visibility:hidden"/> <!-- preload image, is there a better way of doing this? -->
+    <footer>
+    </footer>
+
+    <img src="/images/fdf_skjold_farve_no_padding.png" class="preload-image"/>
 
     <script>
         if (window.location.hostname === "legedatabasen.dk") {

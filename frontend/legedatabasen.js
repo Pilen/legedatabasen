@@ -583,7 +583,7 @@ function initStateActions() {
     stateActions["category"] = {
         show: function(index) {
             scrollToTop(400);
-            $("#selection-container").slideDown(400);
+            $("#category-selection-container").slideDown(400);
             var category = categories[index];
             if (Number(category_swiper.realIndex) !== category.index) {
                 category_swiper.slideTo(category.index);

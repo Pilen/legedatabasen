@@ -68,8 +68,9 @@ input[type="text"] {
 .hidden-from-start {
     display: none !important;
 }
+.preload-image {
+    display: none;
 }
-
 .anchor {
     position: relative;
 }
@@ -370,6 +371,9 @@ input#search {
 }
 #filters .filter-header {
     float: right;
+}
+#filters .filter-header .fdficon {
+    font-size: 100pt;
 }
 .filter {
     height: 40px;
@@ -735,6 +739,13 @@ input#search {
     /* background-color: rgb(69, 104, 137); */
 }
 
+/******************************************************************************/
+/*                                   Footer                                   */
+/******************************************************************************/
+
+footer {
+    margin-top: 50px;
+}
 
 /******************************************************************************/
 /*                                 Responsive                                 */
