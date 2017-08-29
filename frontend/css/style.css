@@ -24,10 +24,7 @@
 /*                                    TODO                                    */
 /******************************************************************************/
 
-/* merge selectors! where duplicates exist*/
-
-/* remove styling from javascript */
-
+/* Look at categories */
 
 /******************************************************************************/
 /*                                    Font                                    */
@@ -96,23 +93,10 @@ a[href^='/kontakt']:after {
 }
 .fdficon {
     font-family: fdficons;
+    font-size: 20pt;
     font-weight: 400;
     padding: 0px 5px 0px 0px;
     color: #456889;
-}
-
-/* TODO This is neat: */
-.fdf-timeglas:before {
-    content: "\f3ba";
-}
-.fdf-search:before {
-    content: "\f41b";
-}
-.fdf-personer:before {
-    content: "\f405";
-}
-.fdf-alder:before {
-    content: "\f397";
 }
 
 .category {
@@ -231,7 +215,6 @@ a[href^='/kontakt']:after {
 /******************************************************************************/
 /*                                  Menubar                                   */
 /******************************************************************************/
-/* TODO can this be simplified?  */
 .menubar-filler {
     position: relative;
     height: 50px;
@@ -688,7 +671,6 @@ input#search {
 }
 .modal-body .leg-content .modal-category {
     width: 30%;
-
 }
 /* figure .video-wrapper {
    position: relative;

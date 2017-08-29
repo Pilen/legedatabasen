@@ -125,7 +125,9 @@ function init(data) {
         $(window).on('popstate', onPopState);
 
         // Setup games/scripts in each leg
-        lege_urls["mus"].script = playMus;
+        if (lege_urls["mus"]) {
+            lege_urls["mus"].script = playMus;
+        }
 
         // mus();
         defaultState = showCategory(category);
@@ -233,6 +235,7 @@ function initSelector() {
                                    row_2.map(selector).join(""));
     $("#category-selector input").on("click", function(e) {
         debug("category-selector");
+        total_time = performance.now();
         var selected = e.target.value;
         if (ignoreCategorySelectorClick) {
             ignoreCategorySelectorClick = false;
