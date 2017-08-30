@@ -609,7 +609,7 @@ function initStateActions() {
         },
         hide: function() {
             return $.when(//scrollToTop(400),
-                          $("#selection-container").slideUp(400).promise());
+                          $("#category-selection-container").slideUp(400).promise());
         }
     };
 
