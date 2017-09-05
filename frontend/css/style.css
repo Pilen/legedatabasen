@@ -1,10 +1,10 @@
 
 .fdf-farver {
-    // FDF-Blå
+    /* FDF-Blå */
     color: #5e8ab4, rgb(94, 138, 180);
-    // Skjold rød
+    /* Skjold rød */
     color: #c8102e, rgb(200, 16, 46);
-    // Mørk blå
+    /* Mørk blå */
     color: #326295, rgb(50, 98, 149);
 
     /* webdesign: */
@@ -81,7 +81,7 @@ input[type="text"] {
     position: absolute;
     height: calc(100% + 1px);
     top: 0px;
-    background-color: rgb(255, 0, 0); // Ilegal color
+    background-color: rgb(255, 0, 0); /* Ilegal color */
     width: 10px;
     visibility: hidden;
 }
@@ -113,7 +113,7 @@ a[href^='/kontakt']:after {
     font-family: Lilita, sans-serif;
     font-weight:300;
     font-size:20pt;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1); // Ilegal color
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1); /* Ilegal color */
     color: white;
     cursor:pointer;
 }
@@ -134,7 +134,7 @@ a[href^='/kontakt']:after {
     font-family: Lilita, sans-serif;
     font-weight:300;
     font-size:20pt;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1); // Ilegal color
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1); /* Ilegal color */
     color: white;
     cursor:pointer;
 
@@ -222,7 +222,7 @@ a[href^='/kontakt']:after {
     left: 0px;
     width: 100%;
     padding: 0px;
-    /* background-color: rgb(255, 0, 0); // Ilegal color */
+    /* background-color: rgb(255, 0, 0); */ /* Ilegal color */
 }
 .menubar {
     /* position: fixed; */
@@ -238,17 +238,17 @@ a[href^='/kontakt']:after {
 .menubar .left {
     float: left;
     height: 100%;
-    /* background-color: rgba(23, 200, 183, 0.3); // Ilegal color */
+    /* background-color: rgba(23, 200, 183, 0.3); */ /* Ilegal color */
 }
 .menubar .right {
     float: right;
     height: 100%;
-    /* background-color: rgba(23, 200, 183, 0.3); // Ilegal color */
+    /* background-color: rgba(23, 200, 183, 0.3); */ /* Ilegal color */
 }
 .menubar .middle {
     overflow: hidden;
     height: 100%;
-    /* background-color: rgb(255, 0, 0); // Ilegal color */
+    /* background-color: rgb(255, 0, 0); */ /* Ilegal color */
 }
 
 .menubar .left a {
@@ -301,7 +301,7 @@ a[href^='/kontakt']:after {
     /* top: 0px; */
     top: 5px;
     font-size: 22pt;
-    color: rgb(255, 255, 255); // Ilegal color
+    color: rgb(255, 255, 255); /* Ilegal color */
     opacity: 0.7;
 }
 #search-icon:hover {
@@ -416,9 +416,9 @@ input#search {
 }
 .swiper-pagination-bullet-active {
     opacity: 1;
-    background: rgb(250, 135, 0); // Ilegal color
-    /* background: rgb(249, 175, 26); // Should we use this instead? */
-    /* background: rgb(225, 83, 16); // Or this? */
+    background: rgb(250, 135, 0); /* Ilegal color */
+    /* background: rgb(249, 175, 26); */ /* Should we use this instead? */
+    /* background: rgb(225, 83, 16); */ /* Or this? */
 }
 
 .swiper-triangle {
@@ -613,8 +613,8 @@ input#search {
 
 #modal-close-top {
     position: absolute;
-    color: rgb(255, 255, 255); // Ilegal color
-    /* background-color: rgb(100, 150, 100); // Ilegal color */
+    color: rgb(255, 255, 255); /* Ilegal color */
+    /* background-color: rgb(100, 150, 100); */ /* Ilegal color */
     z-index: 100;
     border: 0px;
     padding: 10px;
@@ -674,7 +674,7 @@ input#search {
 }
 /* figure .video-wrapper {
    position: relative;
-   padding-bottom: 56.25%; // 16:9
+   padding-bottom: 56.25%; */ /*16:9*/ /*
    padding-top: 25px;
    height: 0;
    }
@@ -687,7 +687,7 @@ input#search {
    }
    #ytplayer {
    position: relative;
-   padding-bottom: 56.25%; // 16:9
+   padding-bottom: 56.25%; */ /*16:9*/ /*
    padding-top: 25px;
    height: 0;
    }
@@ -890,7 +890,7 @@ footer {
     min-height:1.5em;
     min-width: 40px;
     padding: 20px;
-    background: #FFFFFF; // Ilegal color
+    background: #FFFFFF; /* Ilegal color */
     border: rgb(121, 134, 139) solid 4px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
@@ -904,7 +904,7 @@ footer {
     left: 20%;
     border-style: solid;
     border-width: 15px 15px 0;
-    border-color: #FFFFFF transparent; // Ilegal color
+    border-color: #FFFFFF transparent; /* Ilegal color */
     display: block;
     width: 0;
     z-index: 1;
