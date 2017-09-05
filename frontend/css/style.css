@@ -1,22 +1,22 @@
 
 .fdf-farver {
     // FDF-Blå
-    color: #5e8ab4, rgb(94, 138, 180)
+    color: #5e8ab4, rgb(94, 138, 180);
     // Skjold rød
-    color: #c8102e, rgb(200, 16, 46)
+    color: #c8102e, rgb(200, 16, 46);
     // Mørk blå
-    color: #326295, rgb(50, 98, 149)
+    color: #326295, rgb(50, 98, 149);
 
     /* webdesign: */
-    color: #456889, rgb(69, 104, 137)
-    color: #233b52, rgb(35, 59, 82)
-    color: #e4e9eb, rgb(228, 233, 235)
-    color: #1d1d1b, rgb(29, 29, 27)
-    color: #b3bfc4, rgb(179, 191, 196)
-    color: #ecece8, rgb(236, 236, 232)
-    color: #e15310, rgb(225, 83, 16)
-    color: #79868b, rgb(121, 134, 139)
-    color: #f9af1a, rgb(249, 175, 26)
+    color: #456889, rgb(69, 104, 137);
+    color: #233b52, rgb(35, 59, 82);
+    color: #e4e9eb, rgb(228, 233, 235);
+    color: #1d1d1b, rgb(29, 29, 27);
+    color: #b3bfc4, rgb(179, 191, 196);
+    color: #ecece8, rgb(236, 236, 232);
+    color: #e15310, rgb(225, 83, 16);
+    color: #79868b, rgb(121, 134, 139);
+    color: #f9af1a, rgb(249, 175, 26);
 }
 
 
@@ -81,7 +81,7 @@ input[type="text"] {
     position: absolute;
     height: calc(100% + 1px);
     top: 0px;
-    background-color: rgb(255,0,0);
+    background-color: rgb(255, 0, 0); // Ilegal color
     width: 10px;
     visibility: hidden;
 }
@@ -96,7 +96,7 @@ a[href^='/kontakt']:after {
     font-size: 20pt;
     font-weight: 400;
     padding: 0px 5px 0px 0px;
-    color: #456889;
+    color: rgb(69, 104, 137);
 }
 
 .category {
@@ -113,7 +113,7 @@ a[href^='/kontakt']:after {
     font-family: Lilita, sans-serif;
     font-weight:300;
     font-size:20pt;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1); // Ilegal color
     color: white;
     cursor:pointer;
 }
@@ -134,7 +134,7 @@ a[href^='/kontakt']:after {
     font-family: Lilita, sans-serif;
     font-weight:300;
     font-size:20pt;
-    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 1); // Ilegal color
     color: white;
     cursor:pointer;
 
@@ -190,7 +190,7 @@ a[href^='/kontakt']:after {
 /*                                   Header                                   */
 /******************************************************************************/
 #top-image {
-    background-color: rgba(69, 104, 137, 0.9);
+    background-color: rgba(69, 104, 137, 0.9); /* TODO: should this be alpha 1.0? */
 }
 #top-image img {
     width: 100%;
@@ -222,7 +222,7 @@ a[href^='/kontakt']:after {
     left: 0px;
     width: 100%;
     padding: 0px;
-    /* background-color: rgb(255, 0, 0); */
+    /* background-color: rgb(255, 0, 0); // Ilegal color */
 }
 .menubar {
     /* position: fixed; */
@@ -238,17 +238,17 @@ a[href^='/kontakt']:after {
 .menubar .left {
     float: left;
     height: 100%;
-    /* background-color: rgba(23, 200, 183, 0.3); */
+    /* background-color: rgba(23, 200, 183, 0.3); // Ilegal color */
 }
 .menubar .right {
     float: right;
     height: 100%;
-    /* background-color: rgba(23, 200, 183, 0.3); */
+    /* background-color: rgba(23, 200, 183, 0.3); // Ilegal color */
 }
 .menubar .middle {
     overflow: hidden;
     height: 100%;
-    /* background-color: rgb(255, 0, 0); */
+    /* background-color: rgb(255, 0, 0); // Ilegal color */
 }
 
 .menubar .left a {
@@ -301,7 +301,7 @@ a[href^='/kontakt']:after {
     /* top: 0px; */
     top: 5px;
     font-size: 22pt;
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255); // Ilegal color
     opacity: 0.7;
 }
 #search-icon:hover {
@@ -416,7 +416,9 @@ input#search {
 }
 .swiper-pagination-bullet-active {
     opacity: 1;
-    background: rgb(250, 135, 0);
+    background: rgb(250, 135, 0); // Ilegal color
+    /* background: rgb(249, 175, 26); // Should we use this instead? */
+    /* background: rgb(225, 83, 16); // Or this? */
 }
 
 .swiper-triangle {
@@ -481,8 +483,8 @@ input#search {
     -moz-border-radius: 6px;
     border-radius: 6px;
     box-shadow: none;
-    color: #1d1d1b;
-    background-color:#e4e9eb;
+    color: rgb(29, 29, 27);
+    background-color: rgb(228, 233, 235);
 
     overflow: hidden;
     display: block;
@@ -539,7 +541,7 @@ input#search {
     font-weight: 400;
     /* padding: 10px; */
     -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-    text-shadow: 1px 1px 0px  #233b52, 1px -1px 0px  #456889, -1px 1px 0px  #456889, -1px -1px 0px  #456889;
+    text-shadow: 1px 1px 0px  rgb(35, 59, 82), 1px -1px 0px  rgb(69, 104, 137), -1px 1px 0px  rgb(69, 104, 137), -1px -1px 0px  rgb(69, 104, 137);
 }
 .element .leg .teaseroverlay {
     -webkit-border-top-right-radius: 5px;
@@ -551,7 +553,6 @@ input#search {
     position:absolute;
     top:0;
     height:calc(100% - 80px);
-    background-color: rgba(252, 252, 252, 0.0);
     width:100%;
     padding:0px 10px;
     font-weight: 300;
@@ -563,16 +564,15 @@ input#search {
        border-left-width: 0px;
        border-right-width: 0px;
        border-bottom-width: 0px;
-       border-color: #456889;
+       border-color: rgb(69, 104, 137);
      */
 
-    background: #F4F6F6;
-    /*background-color: rgba(252, 252, 252, 0.7);*/
-    background: linear-gradient(to bottom right, rgba(252,252,252,0.9),rgba(252,252,252,0.5)); /* Standard syntax */
+    background: rgb(236, 236, 232);
+    background: linear-gradient(to bottom right, rgb(236, 236, 232, 0.9), rgb(236, 236, 232, 0.5)); /* Standard syntax */
     border-style: solid;
     border-width: 1px 1px 0px 1px;
-    border-color: #456889;
-    color: #1d1d1b;
+    border-color: rgb(69, 104, 137);
+    color: rgb(29, 29, 27);
 
     padding-top: 5px;
 }
@@ -607,14 +607,14 @@ input#search {
     background-color: white;
 }
 .modal-content {
-    border: 2px solid #456889;!important;
+    border: 2px solid rgb(69, 104, 137) !important;
     border-radius: 8px !important;
 }
 
 #modal-close-top {
     position: absolute;
-    color: rgb(255, 255, 255);
-    /* background-color: rgb(100, 150, 100); */
+    color: rgb(255, 255, 255); // Ilegal color
+    /* background-color: rgb(100, 150, 100); // Ilegal color */
     z-index: 100;
     border: 0px;
     padding: 10px;
@@ -775,7 +775,7 @@ footer {
     .element .leg .namebar {
         height: 26px;
         bottom: 26px;
-        background-color: rgba(35,59,82,0.4);
+        background-color: rgba(35, 59, 82, 0.4);
 
         font-size: 14pt;
         padding-top: 0px;
@@ -826,7 +826,7 @@ footer {
     .element .leg .namebar {
         height: 40px;
         bottom: 40px;
-        background-color: rgba(35,59,82,0.8);
+        background-color: rgba(35, 59, 82, 0.8);
 
         font-size: 16pt;
         padding-top: 4px;
@@ -890,8 +890,8 @@ footer {
     min-height:1.5em;
     min-width: 40px;
     padding: 20px;
-    background: #FFFFFF;
-    border: #7F7F7F solid 4px;
+    background: #FFFFFF; // Ilegal color
+    border: rgb(121, 134, 139) solid 4px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
@@ -904,7 +904,7 @@ footer {
     left: 20%;
     border-style: solid;
     border-width: 15px 15px 0;
-    border-color: #FFFFFF transparent;
+    border-color: #FFFFFF transparent; // Ilegal color
     display: block;
     width: 0;
     z-index: 1;
@@ -917,7 +917,7 @@ footer {
     left: calc(20% - 3px) ;
     border-style: solid;
     border-width: 18px 18px 0;
-    border-color: #7F7F7F transparent;
+    border-color: rgb(121, 134, 139) transparent;
     display: block;
     width: 0;
     z-index: 0;
