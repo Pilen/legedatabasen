@@ -251,6 +251,11 @@ function SearchEngine(options) {
         return this.query("");
     };
 
+    // Schedule the search as soon as possible ignoring any specified delays.
+    this.now = function() {
+        return this._schedule_search(0);
+    };
+
     // Perform the actual seach.
     // Calculate the ranking of each document and use the filters.
     // This method uses the filters to make a selection of documents and then calculates the rankings.
@@ -321,14 +326,18 @@ function SearchEngine(options) {
     // Start the timer or immediately call search
     // If the delay is below zero or no callback is given, the search is performed immediately,
     // else null is returned and the calculation is done asynchronously.
-    this._schedule_search = function() {
-        if (this._options.delay >= 0 && this._options.callback) {
+    // The delay can either be given as an argument, else the default delay will be used.
+    this._schedule_search = function(delay) {
+        if (typeof(delay) === "undefined") {
+            delay = this._options.delay;
+        }
+        if (delay >= 0 && this._options.callback) {
             if (this._timer) {
                 window.clearTimeout(this._timer);
             }
             var _this = this; // Used to avoid javascript quirkyness. See https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout#The_this_problem
-            this._timer = window.setTimeout(function(){_this.search();}, this._options.delay);
-            return null;
+            this._timer = window.setTimeout(function(){_this.search();}, delay);
+            return this;
         } else {
             return this.search();
         }

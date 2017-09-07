@@ -261,10 +261,10 @@ function initFilters() {
         if ($filter.data("current") === radio.id) {
             $filter.data("current", null);
             radio.checked = false;
-            search.update_filter(radio.name, undefined);
+            search.update_filter(radio.name, undefined).now();
         } else {
             $filter.data("current", radio.id);
-            search.update_filter(radio.name, radio.value);
+            search.update_filter(radio.name, radio.value).now();
         }
     });
 }
@@ -595,6 +595,7 @@ function initStateActions() {
             $('#category-selector input[value="'+index+'"]').click();
             search.clear();
             search.update_filter("category", category.name);
+            search.now();
         },
         update: function(index) {
             scrollToTop(400);
@@ -606,6 +607,7 @@ function initStateActions() {
             $('#category-selector input[value="'+index+'"]').click();
             search.clear();
             search.update_filter("category", category.name);
+            search.now();
         },
         hide: function() {
             return $.when(//scrollToTop(400),
@@ -625,6 +627,7 @@ function initStateActions() {
             });
             $("#search").focus();
             search.clear();
+            search.now();
         },
         update: function() {
         },
