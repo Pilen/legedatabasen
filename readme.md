@@ -3,12 +3,13 @@ Dette er FDFs legedatabase
 Udviklet af legeudvalget, som et friviligt projekt.
 
 # Installation
-For at installere frontend
-git clone "https://github.com/Pilen/legedatabasen.git"
-cd legedatabasen/frontend
-bower install
-wget dev.legedatabasen.dk/data.json
-scp -r -P 42000 "www-data@dev.legedatabasen.dk:~/legedatabasen/frontend/images/entries/" images/entries/
+For at installere frontend:
+
+    git clone "https://github.com/Pilen/legedatabasen.git"
+    cd legedatabasen/frontend
+    bower install
+    wget dev.legedatabasen.dk/data.json
+    scp -r -P 42000 "www-data@dev.legedatabasen.dk:~/legedatabasen/frontend/images/entries/" images/entries/
 
 # Terminologi
 * Element: En lille firkant, vist i oversigten af lege, der representere én specifik leg. Når man trykker på den åbnes den tilhørende modal.
